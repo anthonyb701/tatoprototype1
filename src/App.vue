@@ -21,6 +21,22 @@
             <v-list-item-title>Create New</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item v-if="!userIsAuthenticated" to="/auth">
+          <v-list-item-action>
+            <v-icon>mdi-login</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="userIsAuthenticated"  @click="logout()">
+          <v-list-item-action>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -55,9 +71,18 @@ export default {
   components: {
     
   },
+  computed: {
+    userIsAuthenticated(){
+      return this.$store.getters.user
+    }
+  },
   methods: {
     toMain(){
       this.$router.push('/')
+    },
+    logout() {
+      this.$store.dispatch('logout').catch(()=>{});
+      this.$router.push('/auth').catch(()=>{});
     }
   },
 

@@ -27,7 +27,7 @@
     },
     methods: {
       onOpenSingle(id){
-        this.$router.push('/' + id)
+        this.$router.push('/appointment/' + id)
       }
     },
 

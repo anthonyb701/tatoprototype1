@@ -193,8 +193,18 @@ export default {
                 lastName: this.lastName
             },
             
-
-        })
+        }),
+        this.$store.dispatch('setAppointment', {
+            surgeon: this.surgeon,
+            title: this.title,
+            date: this.submittableDateTime,
+            description: this.description,
+            user: {
+                firstName: this.firstName,
+                lastName: this.lastName
+            },
+            
+        } )
         this.$router.push('/')
         console.log('sended')
       },
