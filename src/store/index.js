@@ -12,46 +12,53 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    appointments: [
-      {
-        title: 'First Appointment',
-        date: new Date(),
-        id: '42747feyoogy',
-        description:'This is first appointment',
-        user: {
-          firstName: 'Anton',
-          lastName: 'Bitner'
-      },
-        surgeon: 'Bitner Vasyl Antonovich'
-      },
-      {
-        title: 'Second Appointment',
-        date: new Date(),
-        description:'This is second appointment',
-        id: 'fhd4696443',
-        user: {
-          firstName: 'Yulia',
-          lastName: 'Bitner'
-        },
-        surgeon: 'Bitner Vasyl Antonovich'
-      },  
-    ],
+    fbAppointments: [],
     userProfile: {},
     isUser: false,
 
   },
   getters: {
-    appointments(state){
-      return state.appointments
+    currentUser(state){
+      return firebase.auth().currentUser.uid
+    },
+    fbAppointments(state){
+      return state.fbAppointments
     },
     sortedAppointments(state){
-      return state.appointments.sort((a,b) => {
-        return a.date - b.date
+      return state.fbAppointments.sort((a,b) => {
+        return a.date.toDate() - b.date.toDate()
       })
+    },
+    creatorAppointments(state,getters){
+      const creatorId = firebase.auth().currentUser.uid
+      let crAppointments = []
+       getters.sortedAppointments.find(appoint => {
+         if(appoint.creatorId == creatorId){
+           crAppointments.push(appoint)
+         }
+      })
+      if(state.isUser == false){
+        crAppointments = []
+      }
+      return crAppointments
+    },
+    userProfile(state){
+      return state.userProfile
+    },
+    featuredAppointments(state, getters){
+      let currentDate = new Date()
+      let featuredAppo = []
+      getters.sortedAppointments.forEach(appo => {
+        if(appo.date.toDate() > currentDate ) {
+          featuredAppo.push(appo)
+          
+        }
+      })
+      return featuredAppo
     },
     appointment(state){
       return id => {
-        return state.appointments.find(appoint => {
+        return state.fbAppointments.find(appoint => {
           return appoint.id === id
         })
       }
@@ -63,16 +70,26 @@ export default new Vuex.Store({
 
   },
   mutations: {
-    setAppointment(state, payload){
-      state.appointments.push(payload)
-    },
     setUserProfile(state, payload) {
       state.userProfile = payload
       state.isUser = true
       router.push('/').catch(()=>{});
     },
+    loadAppointments(state, payload){
+      state.fbAppointments = payload
+    }
   },
   actions: {
+      async deleteAppointment({commit}, payload){
+        fs.collection('posts').doc(payload).delete()
+        .then(() => {
+          console.log('Deleted')
+          router.push('/')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
       async login({ dispatch }, form) {
         // sign user in
         const { user } = await fb.auth.signInWithEmailAndPassword(form.email, form.password)
@@ -126,6 +143,18 @@ export default new Vuex.Store({
               id: id
             })
           })
+          router.go(0);
+      },
+      loadAppointments({commit}){
+        fs.collection('posts').onSnapshot(querySnapshot => {
+          let appoArray = []
+          querySnapshot.forEach(post => {
+            appoArray.push(post.data())
+          })
+          commit('loadAppointments', appoArray)
+        }, error => {
+          console.log(error)
+        })
       }
       
   },

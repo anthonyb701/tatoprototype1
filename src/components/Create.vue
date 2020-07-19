@@ -182,18 +182,18 @@ export default {
     methods: {
       submit () {
         this.$refs.observer.validate()
-        this.$store.commit('setAppointment', {
-            surgeon: this.surgeon,
-            title: this.title,
-            date: this.submittableDateTime,
-            id: '12xd47384',
-            description: this.description,
-            user: {
-                firstName: this.firstName,
-                lastName: this.lastName
-            },
+        // this.$store.commit('setAppointment', {
+        //     surgeon: this.surgeon,
+        //     title: this.title,
+        //     date: this.submittableDateTime,
+        //     id: '12xd47384',
+        //     description: this.description,
+        //     user: {
+        //         firstName: this.firstName,
+        //         lastName: this.lastName
+        //     },
             
-        }),
+        // }),
         this.$store.dispatch('setAppointment', {
             surgeon: this.surgeon,
             title: this.title,
@@ -206,7 +206,8 @@ export default {
             
         } )
         this.$router.push('/')
-        console.log('sended')
+        console.log('sended') 
+        this.$destroy();
       },
       
       clear () {

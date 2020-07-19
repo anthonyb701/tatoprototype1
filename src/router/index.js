@@ -10,7 +10,10 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'List',
-    component: List
+    component: List,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/create',
@@ -30,6 +33,15 @@ Vue.use(VueRouter)
     path: '/auth',
     name: 'authentification',
     component: () => import('../views/LLogin.vue')
+
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: () => import('../components/Profile.vue'),
+    meta: {
+      requiresAuth: true
+    }
 
   }
     // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
