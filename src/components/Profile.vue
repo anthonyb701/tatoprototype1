@@ -1,15 +1,23 @@
 <template>
   <v-layout row wrap v-if="isUser">
       <v-flex xs12>
-          <v-card>
+          <div v-if="!isShow" >
+              <upload-img v-if="!isPhoto"></upload-img>
+              <upload-img v-if="imgClick"></upload-img>
+          <v-card class="profile__div"> 
+             <img :src="userProfile.Image" @click="imgClick = !imgClick" height="150px" style="border-radius: 50%" alt="hey">
               <v-card-title primary-title>
-                  Profile:  {{userProfile.name}}
+                  Профіль:  {{userProfile.name}}
               </v-card-title>
-              <v-card-text>
-                  {{userProfile.title}} 
+              <v-card-text class="posada">
+                  Посада: {{userProfile.title}} 
               </v-card-text>
+              <!-- <button @click="imgClick = !imgClick" class=" blue btn-width white--text mb-3 ml-3 mt-3">{{photoText}}</button> -->
+              <button @click="logout" class="red btn-width white--text mb-3 ml-3 mt-3">Вийти</button>
+              
           </v-card>
-        <button @click="isShow = !isShow">Show my appointments</button>
+          </div>
+        <button @click="isShow = !isShow" class="pa-2 blue darken-2 white--text mt-3 mb-4 btn-width2">{{showText}}</button>
         <section v-if="isShow">
          <div  v-for="appointment in creatorAppointments" :key="appointment.id" @click="onOpenSingle(appointment.id)">
          <v-card >
@@ -47,25 +55,74 @@ export default {
         isUser(){
             return this.$store.getters.user
         },
+        isPhoto() {
+            if(this.userProfile.filename && this.userProfile.Image){
+                return true
+            } else {
+                return false
+            }
+        },
     },
     data(){
         return {
-            isShow: false
+            isShow: false,
+            imgClick: false,
+            photoText: 'Установити нове фото',
+            showText: 'Показати мої операції'
         }
     },
     watch: {
         isUser(){
             this.$destroy()
+        },
+        isShow(){
+            if(this.isShow){
+                this.showText = 'Закрити мої операції'
+            } else {
+                this.showText = 'Показати мої операції'
+            }
+        },
+        imgClick(){
+            if(this.imgClick){
+                this.photoText = 'Скасувати'
+            } else {
+                this.photoText = 'Установити нове фото'
+            }
         }
     },
     methods: {
         onOpenSingle(id){
             this.$router.push('/appointment/' + id)
         },
+        logout() {
+            this.$store.dispatch('logout').catch(()=>{});
+            this.$router.push('/auth').catch(()=>{});
+      
+    },
     },
 }
 </script>
 
-<style>
+<style scoped>
+    .btn-width{
+        width: 200px;
+        text-align: center;
+        padding: 8px;
+    }
+    .btn-width:last-child{
+        width: 110px;
+    }
+    .btn-width2{
+        width: 185px;
+        text-align: center;
+    }
+    .profile__div{
+        padding: 25px
+    }
+    .posada{
+        color: black!important;
+        font-size: 16px;
+    }
+</style>>
 
-</style>
+

@@ -1,45 +1,32 @@
 <template>
-<div :class="{ 'signup-form': !showLoginForm, 'login-form' : showLoginForm}" >
+<div :class="{ 'signup-form': !showLoginForm, 'login-form' : showLoginForm}" class="layout">
    <PasswordReset v-if="showPasswordReset" @close="togglePasswordReset()"></PasswordReset>
    <form v-if="showLoginForm && !showPasswordReset" @submit.prevent>
-   <h1>Welcome Back</h1>
-   <p v-if="errorMSG">{{errorMSG}}</p>
-   <div>
-      <label for="email1">Email</label>
-      <input v-model.trim="loginForm.email" type="text" placeholder="you@email.com" id="email1" />
-   </div>
-   <div>
-      <label for="password1">Password</label>
-      <input v-model.trim="loginForm.password" type="password" placeholder="******" id="password1" />
-   </div>
-   <button class="button" @click="login()">Log In</button>
+   <section class="form__login">
+      <h2 class="form__component">Авторизація</h2>
+      <p class="err__text" v-if="errorMSG">{{errorMSG}}</p>
+      <!-- <label for="email1">Email</label> -->
+      <input v-model.trim="loginForm.email" type="text" class="form__component" placeholder="E-mail" id="email1" />
+      <!-- <label for="password1">Password</label> -->
+      <input v-model.trim="loginForm.password" type="password" class="form__component" placeholder="Пароль" id="password1" />
+      <button class="button form__component" @click="login()">УВІЙТИ</button>
+      <a @click.prevent="toggleForm()" class="aButton">Створити Аккаунт</a>
+   </section>
    <div class="extras">
-      <a @click="togglePasswordReset()">Forgot Password</a>
-      <a @click.prevent="toggleForm()">Create an Account</a>
+      <!-- <a @click="togglePasswordReset()">Forgot Password</a> -->
+      
    </div>
 </form>
 <form  v-if="!showPasswordReset && !showLoginForm" @submit.prevent>
-   <h1>Get Started</h1>
-   <div>
-      <label for="name">Name</label>
-      <input v-model.trim="signupForm.name" type="text" placeholder="Savvy Apps" id="name" />
-   </div>
-   <div>
-      <label for="title">Title</label>
-      <input v-model.trim="signupForm.title" type="text" placeholder="Company" id="title" />
-   </div>
-   <div>
-      <label for="email2">Email</label>
-      <input v-model.trim="signupForm.email" type="text" placeholder="you@email.com" id="email2" />
-   </div>
-   <div>
-      <label for="password2">Password</label>
-      <input v-model.trim="signupForm.password" type="password" placeholder="min 6 characters" id="password2" />
-   </div>
-   <button @click="signup()" class="button">Sign Up</button>
-   <div class="extras">
-      <a @click.prevent="toggleForm()">Back to Log In</a>
-   </div>
+   <section class="form__login">
+   <h2 class="form__component">Реєстрація</h2>
+      <input v-model.trim="signupForm.name" type="text" placeholder="Імя" class="form__component" id="name" />
+      <input v-model.trim="signupForm.title" type="text" placeholder="Посада" class="form__component" id="title" />
+      <input v-model.trim="signupForm.email" type="text" placeholder="E-mail" class="form__component" id="email2" />
+      <input v-model.trim="signupForm.password" type="password" class="form__component" placeholder="Пароль" id="password2" />
+   <button @click="signup()" class="button form__component">ЗАРЕЄЕСТРУВАТИСЯ</button>
+   <a @click.prevent="toggleForm()" class="aButton">Перейти до входу</a>
+    </section>
 </form>
 </div>
 </template>
@@ -109,4 +96,46 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.layout{
+   justify-content: center;
+}
+.form__login{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      width: 320px;
+      margin-top: 16vh;
+      }
+.form__component{
+   width: 320px;
+}
+h2.form__component{
+   font-weight: 500;
+   margin-bottom: 20px;
+}
+input.form__component{
+   background: #ffffff;
+   height: 40px;
+   padding: 0 10px;
+   margin-bottom: 15px;
+   border-radius: 4px;
+   box-shadow: 0px 0px 24px 0px rgba(0,0,0,0.17);
+}
+.button{
+   height: 45px;
+   border-radius: 5px;
+   background: #5161be;
+   color: #ffffff;
+   letter-spacing: 1.4px;
+}
+.aButton{
+   display: block;
+   color: #5161be;
+   margin-top: 10px;
+}
+.err__text{
+   color: red;
+}
+</style>
