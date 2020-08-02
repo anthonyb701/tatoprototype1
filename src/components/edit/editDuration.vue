@@ -62,7 +62,9 @@ export default {
       onSaveChanges() {
          this.$store.dispatch('updatePost', {
             id: this.post.id,
-            duration: this.sumbittableDuration
+            duration: this.sumbittableDuration,
+            timeStart: this.timeStart,
+            timeEnd: this.timeEnd
          })
       },
       

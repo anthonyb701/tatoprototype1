@@ -5,19 +5,29 @@
               <button @click="toList" class="white--text  mr-4 blue darken-1 pa-2 mb-5">Повернутися назад</button>
               <button v-if="true == false" @click="toProfile" class="white--text  blue darken-1 pa-2 mb-5">To Profile</button>
               <v-card>
-                  <v-card-title primary-title>
-                      <h3 class="primary--text">Операція: {{singleAppointment.title}}</h3>
-                  </v-card-title>
-                  <v-card-text class="p-wrapper">
-                      <p class="p-unit">Дата операції: <span class="span-unit">{{singleAppointment.date | dateF}}</span></p>
+                  <v-card-text class="pp-wrapper">
+                     <p class="p-unit">ПІБ: <span class="span-unit">{{singleAppointment.user.firstName}} {{singleAppointment.user.lastName}}</span> &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; Рік народження: <span class="span-unit">{{singleAppointment.dateAge | dateR}}</span></p>
+                     <p class="p-unit">Категорія: <span class="span-unit">{{singleAppointment.rank}}</span> &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; Історія хвороби: <span class="span-unit">{{singleAppointment.sicknessHistory}}</span></p>
+                     <p class="p-unit">Дата поступлення: <span class="span-unit">{{singleAppointment.dateEntry | dateR}}</span> &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; Дата виписки: <span class="span-unit">{{singleAppointment.dateLeft | dateR}}</span></p>
+                     <p class="p-unit">Код за  МКХ:  <span class="span-unit">{{singleAppointment.nozologia}}</span> &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; Код операції: <span class="span-unit">{{singleAppointment.op_code}}</span></p>
+                     <p class="p-unit">Первинність:  <span class="span-unit">{{singleAppointment.timeType}}</span> &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; Терміновість: <span class="span-unit">{{singleAppointment.urgencyType}}</span></p>
+                     <p class="p-unit">Операція: <span class="span-unit">{{singleAppointment.title}}({{singleAppointment.op_code}})</span> &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; Тип анестезії: <span class="span-unit">{{singleAppointment.anesthesiaType}}</span></p>
+                     <p class="p-unit">Дата: <span class="span-unit">{{singleAppointment.date | dateR}}</span> &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; Тривалість: <span class="span-unit">{{singleAppointment.duration}} </span></p>
+                     <p class="p-unit">Початок Операції: <span class="span-unit">{{singleAppointment.timeStart}} &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; </span> Кінець Операції: <span class="span-unit">{{singleAppointment.timeEnd}}</span></p>
+                     <p class="p-unit">Тип операції: <span class="span-unit">{{singleAppointment.operationType}}</span> &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; <span class="span-unit">{{singleAppointment.spotType}} </span></p>
+                     <p class="p-unit"> <br> Опис операції: <span class="span-unit">{{singleAppointment.description}}</span></p>
+                     <p class="p-unit"><br> Післяопераційний діагноз: <span class="span-unit">{{singleAppointment.diagnosisAfter}}</span></p>
+                     <p class="p-unit"><br> Оперував: <span class="span-unit">{{singleAppointment.surgeon}}</span></p>
+                     <p class="p-unit">Асистували: <span class="span-unit">{{singleAppointment.assistant}}</span></p>
+                     <p class="p-unit">Анестезіолог: <span class="span-unit">{{singleAppointment.anesthesiologist}} </span> </p> 
+                     <p class="p-unit">Операційна сестра: <span class="span-unit">{{singleAppointment.medsister}} </span></p>
+                      <!-- <p class="p-unit">Дата операції: <span class="span-unit">{{singleAppointment.date | dateF}}</span></p>
                       <p class="p-unit">Поступив: <span class="span-unit">{{singleAppointment.dateEntry | dateF}}</span></p>
                       <p class="p-unit">Дата виписки: <span class="span-unit">{{singleAppointment.dateLeft | dateF}}</span></p>
                       <p class="p-unit">Дата народження: <span class="span-unit">{{singleAppointment.dateAge | dateF}}</span></p> 
                       <p class="p-unit">Patient: <span class="span-unit">{{singleAppointment.user.firstName}} {{singleAppointment.user.lastName}}</span></p>
                       <p class="p-unit">Вік: <span class="span-unit">{{age}}</span></p>
-                      <p class="p-unit">Історія хвороби: <span class="span-unit">{{singleAppointment.sicknessHistory}}</span></p>
-                      <p class="p-unit">Післяопераційний діагноз: <span class="span-unit">{{singleAppointment.diagnosisAfter}}</span></p>
-                      <p class="p-unit">Кінцевий діагноз: <span class="span-unit">{{singleAppointment.diagnosisUltimate}}</span></p>
+                      <p class="p-unit">Опис: <span class="span-unit">{{singleAppointment.description}}</span></p>
                       <p class="p-unit">Тривалість: <span class="span-unit">{{singleAppointment.duration}}</span></p>
                       <p class="p-unit">Первинна/ Повторна: <span class="span-unit">{{singleAppointment.timeType}}</span></p>
                       <p class="p-unit">Планова / Ургентна: <span class="span-unit">{{singleAppointment.urgencyType}}</span></p>
@@ -31,32 +41,15 @@
                       <p class="p-unit">Хірург: <span class="span-unit">{{singleAppointment.surgeon}}</span></p>
                       <p class="p-unit">Номер Операції: <span class="span-unit">{{singleAppointment.op_number}}</span></p>
                       <p class="p-unit">Код Операції: <span class="span-unit">{{singleAppointment.op_code}}</span></p>
-                      <p class="p-unit">Звання: <span class="span-unit">{{singleAppointment.rank}}</span></p>    
+                      <p class="p-unit">Звання: <span class="span-unit">{{singleAppointment.rank}}</span></p> -->
+                      <!-- <edit-date  v-if="isAuthor" :post="singleAppointment"></edit-date>
+                      <edit-dateentry v-if="isAuthor" :post="singleAppointment"></edit-dateentry>
+                      <edit-dateleft v-if="isAuthor" :post="singleAppointment"></edit-dateleft>
+                      <edit-dateage v-if="isAuthor" :post="singleAppointment"></edit-dateage>
+                      <edit-duration v-if="isAuthor" :post="singleAppointment"></edit-duration>
+                      <edit-details v-if="isAuthor" :post="singleAppointment"></edit-details> -->
                   </v-card-text>
-                  <div class="p-wrapper">
-                      <p class="p-unit">Опис: <span class="span-unit">{{singleAppointment.description}}</span></p>
-                      <edit-date   :post="singleAppointment"></edit-date>
-                      <edit-dateentry  :post="singleAppointment"></edit-dateentry>
-                      <edit-dateleft  :post="singleAppointment"></edit-dateleft>
-                      <edit-dateage  :post="singleAppointment"></edit-dateage>
-                      <edit-duration  :post="singleAppointment"></edit-duration>
-                      <edit-details  :post="singleAppointment"></edit-details>
-                  </div>
               </v-card>
-              <div>
-                  <button v-if="!onDelete" @click.prevent="onDelete = !onDelete" class="white--text red pa-2 mt-3">Видалити цю операцію</button>
-                    <form v-else @submit.prevent="onSubmit">
-                  <v-checkbox
-                    v-model="checkbox"
-                    value="1"
-                    label="Підтвердження"
-                    type="checkbox"
-                    required
-                  ></v-checkbox>
-                  <button @click="onDelete = !onDelete" class="white--text green pa-2 mr-3" >Скасувати</button>
-                  <button type="submit" class="white--text red pa-2">Видалити!</button>
-              </form>
-              </div>
           </v-flex>
       </v-layout>
   </v-layout>
@@ -119,16 +112,11 @@ export default {
 .layoutt{
     padding: 15px;
 }
-.p-wrapper{
+.pps-wrapper{
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    max-height: 750px;
-}
-div.p-wrapper{
-    padding: 15px;
-    padding-top: 0;
-    margin-top: -8px;
+    max-height: 5000px;
 }
 .p-unit{
     color: #000000;
@@ -143,13 +131,13 @@ div.p-wrapper{
     font-weight: 500;
 }
 @media (max-width: 1200px){
-    .p-wrapper{
-        max-height: 1000px;
+    .pp-wrapper{
+        max-height: 5000px;
     }
 }
 @media (max-width: 820px){
-    .p-wrapper{
-        max-height: 3000px;
+    .pp-wrapper{
+        max-height: 5000px;
     }
     
 }
@@ -159,8 +147,8 @@ div.p-wrapper{
         font-size: 14px;
     }
 
-    .p-wrapper{
-        max-height: 4000px;
+    .pp-wrapper{
+        max-height: 5000px;
         padding: 4px!important;
     }
 }

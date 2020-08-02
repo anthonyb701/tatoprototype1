@@ -30,6 +30,12 @@ Vue.use(VueRouter)
     component: () => import('../components/appointment.vue')
   },
   {
+    path: '/appointmentRelease/:id',
+    name: 'AppointmentRelease',
+    props: true,
+    component: () => import('../components/appointmentRelease.vue')
+  },
+  {
     path: '/auth',
     name: 'authentification',
     component: () => import('../views/LLogin.vue')

@@ -71,6 +71,16 @@
             <v-text-field v-model="searchNozologia" label="Нозологія.." />
          </div>
       </v-flex>
+      <v-flex xs12  class="layout-unit">
+         <div class="search-wrapper">
+            <v-text-field v-model="searchSicknessHistory" label="Історія Хвороби.." />
+         </div>
+      </v-flex>
+      <v-flex xs12  class="layout-unit">
+         <div class="search-wrapper">
+            <v-text-field v-model="searchDiagnosisUltimate" label="Кінцевий діагноз.." />
+         </div>
+      </v-flex>
       
       <v-flex xs12  class="layout-unit">
          <v-menu ref="menu" v-model="editDialog" :close-on-content-click="false" :return-value.sync="pickedDate" transition="scale-transition" offset-y min-width="290px">
@@ -125,18 +135,22 @@
       <p @click="sumOfBeforeBeds" class="info__button blue darken-4 white--text">Передопераційне ліжко: {{showSum}}</p>
       <p @click="sumOfAfterBeds" class="info__button blue  darken-4 white--text">Післяопераційне ліжко: {{showSumAfter}}</p>
    </v-layout>
+   
    <v-layout row wrap class="layoutsec">
       <section class="section">
-         <div v-for="appointment in filteredAppointments" :key="appointment.id" @click="onOpenSingle(appointment.id)" class="appo-div">
+         <div v-for="appointment in filteredAppointments" :key="appointment.id"  class="appo-div">
             <v-card>
                <v-card-title primary-title class="appo-title">
                   {{ appointment.title}}
+                  <v-btn text class="ml-3 blue darken-4 white--text" @click="onOpenSingleRelease(appointment.id)">
+                     Звіт <v-icon>assignment_turned_in</v-icon>
+                  </v-btn>
+                  
                </v-card-title>
-               <v-card-text>
+               <v-card-text @click="onOpenSingle(appointment.id)">
                   <h2 class="appo-unit">Операція: {{ appointment.date | dateF }}</h2>
                   <h2 class="appo-unit">Пацієнт: {{appointment.user.firstName}} {{appointment.user.lastName}}</h2>
                   <h2 class="appo-unit">Хірург: {{appointment.surgeon}}</h2>
-
                </v-card-text>
 
             </v-card>
@@ -185,7 +199,7 @@ export default {
             this.pickedTimeType === 'без фільтру' && this.pickedUrgencyType === 'без фільтру' && this.pickedOperationType === 'без фільтру' &&
             this.pickedAnesthesiaType === 'без фільтру' && this.pickedSpotType === 'без фільтру' && this.picekdUltimateType === 'без фільтру' &&
             this.pickedAssistant === 'без фільтру' && this.pickedAnesthesiologist === 'без фільтру' && this.pickedMedsister.trim() === 'без фільтру'
-            && this.searchAge.trim() === '') {
+            && this.searchAge.trim() === '' && this.searchSicknessHistory.trim() === '' && this.searchDiagnosisUltimate.trim() === '') {
             return this.allAppointments;
          } else {
 
@@ -256,11 +270,16 @@ export default {
             if (this.searchComplexity.trim() !== '') {
                let arrOfComplexityIndexes = []
                filteredArray.forEach(appoint => {
-                  if (this.searchComplexity.trim() !== '') {
+                  if (this.searchComplexity.trim() !== '' ) {
                      let index = filteredArray.indexOf(appoint)
-                     if (appoint.complexity.toLowerCase().includes(this.searchComplexity.toLowerCase()) == false) {
+                     if(appoint.complexity != undefined){
+                        if (appoint.complexity.toLowerCase().includes(this.searchComplexity.toLowerCase()) == false) {
                         arrOfComplexityIndexes.push(index)
                      }
+                     } else {
+                        arrOfComplexityIndexes.push(index)
+                     }
+                     
                   }
                })
                filteredArray = filteredArray.filter(function (value, index) {
@@ -422,9 +441,14 @@ export default {
                filteredArray.forEach(appoint => {
                   if (this.picekdUltimateType !== 'без фільтру') {
                      let index = filteredArray.indexOf(appoint)
-                     if (this.picekdUltimateType !== appoint.ultimateType) {
+                     if(appoint.ultimateType != undefined){
+                        if (this.picekdUltimateType !== appoint.ultimateType) {
+                        ultimateTypeIndexes.push(index)
+                        }
+                     } else {
                         ultimateTypeIndexes.push(index)
                      }
+                     
                   }
                })
                filteredArray = filteredArray.filter(function (value, index) {
@@ -473,14 +497,56 @@ export default {
                filteredArray.forEach(appoint => {
                   if (this.searchOp_number.trim() !== '') {
                      let index = filteredArray.indexOf(appoint)
-                     if (appoint.op_number.toLowerCase().includes(this.searchOp_number.toLowerCase()) == false) {
+                     if(appoint.op_number != undefined){
+                        if (appoint.op_number.toLowerCase().includes(this.searchOp_number.toLowerCase()) == false) {
                         op_numberArray.push(index)
+                     } 
+                     } else {
+                        console.log(appoint.op_number)
+                        console.log('pushed')
+                        op_numberArray.push(index)
+                     }
+                     
+                  }
+               })
+               filteredArray = filteredArray.filter(function (value, index) {
+                  return op_numberArray.indexOf(index) == -1;
+               })
+            }
+            // sickness history
+            if (this.searchSicknessHistory.trim() !== '') {
+               let sickArray = []
+               filteredArray.forEach(appoint => {
+                  if (this.searchSicknessHistory.trim() !== '') {
+                     let index = filteredArray.indexOf(appoint)
+                     if (appoint.sicknessHistory.toLowerCase().includes(this.searchSicknessHistory.toLowerCase()) == false) {
+                        sickArray.push(index)
 
                      }
                   }
                })
                filteredArray = filteredArray.filter(function (value, index) {
-                  return op_numberArray.indexOf(index) == -1;
+                  return sickArray.indexOf(index) == -1;
+               })
+            }
+            // ultimate diagnosis
+            if (this.searchDiagnosisUltimate.trim() !== '') {
+               let diagArray = []
+               filteredArray.forEach(appoint => {
+                  if (this.searchDiagnosisUltimate.trim() !== '') {
+                     let index = filteredArray.indexOf(appoint)
+                     if(appoint.diagnosisUltimate != undefined){
+                        if (appoint.diagnosisUltimate.toLowerCase().includes(this.searchDiagnosisUltimate.toLowerCase()) == false) {
+                        diagArray.push(index)
+                     } 
+                     } else {
+                        diagArray.push(index)
+                     }
+                     
+                  }
+               })
+               filteredArray = filteredArray.filter(function (value, index) {
+                  return diagArray.indexOf(index) == -1;
                })
             }
 
@@ -491,19 +557,32 @@ export default {
                filteredArray.forEach(appoint => {
                   if (this.readyDate !== null) {
                      let index = filteredArray.indexOf(appoint)
+                     let newDate1
+                     let newDate2
 
-                     if (this.readyDate.length < 3) {
+                     if (this.readyDate.length < 3 && this.readyDate[0].toString().substr(0, 15) != this.readyDate[1].toString().substr(0, 15)) {
                         const date1 = new Date(this.readyDate[0])
                         const date2 = new Date(this.readyDate[1])
-                        if (appoint.date.toDate() < date1 || appoint.date.toDate() > date2) {
+                        if(date1 < date2){
+                           newDate1 = date1
+                           newDate2 = date2
+                        } else {
+                           newDate1 = date2
+                           newDate2 = date1
+                        }
+                        if (appoint.date.toDate() < newDate1|| appoint.date.toDate() > newDate2) {
                            console.log(appoint.date.toDate())
                            console.log(this.readyDate[0])
                            arrayOfNextIndexes.push(index)
                         }
-                     } else {
+                     } else if(this.readyDate[1] == undefined){
                         if (appoint.date.toDate().toString().substr(0, 15) != this.readyDate.toString().substr(0, 15)) {
                            arrayOfNextIndexes.push(index)
                         }
+                     } else {
+                        if (appoint.date.toDate().toString().substr(0, 15) != this.readyDate[0].toString().substr(0, 15)) {
+                           arrayOfNextIndexes.push(index)
+                     } 
                      }
 
                   }
@@ -517,25 +596,35 @@ export default {
 
             if (this.readyDateEntry !== null) {
                let arrayOfDateEntryIndexes = []
-
                filteredArray.forEach(appoint => {
                   if (this.readyDateEntry !== null) {
                      let index = filteredArray.indexOf(appoint)
+                     let newDate1
+                     let newDate2
+                     if (this.readyDateEntry.length < 3 && this.readyDateEntry[0].toString().substr(0, 15) != this.readyDateEntry[1].toString().substr(0, 15)) {
 
-                     if (this.readyDateEntry.length < 3) {
                         const date1 = new Date(this.readyDateEntry[0])
                         const date2 = new Date(this.readyDateEntry[1])
-                        if (appoint.dateEntry.toDate() < date1 || appoint.dateEntry.toDate() > date2) {
-                           console.log(appoint.dateEntry.toDate())
-                           console.log(this.readyDateEntry[0])
+                        if(date1 < date2){
+                           newDate1 = date1
+                           newDate2 = date2
+                        } else {
+                           newDate1 = date2
+                           newDate2 = date1
+                        }
+                        if (appoint.dateEntry.toDate() < newDate1 || appoint.dateEntry.toDate() > newDate2) {
                            arrayOfDateEntryIndexes.push(index)
                         }
-                     } else {
+                     } else if(this.readyDateEntry[1] == undefined){
                         if (appoint.dateEntry.toDate().toString().substr(0, 15) != this.readyDateEntry.toString().substr(0, 15)) {
                            arrayOfDateEntryIndexes.push(index)
-                        }
+                     } 
+                     } else {
+                        if (appoint.dateEntry.toDate().toString().substr(0, 15) != this.readyDateEntry[0].toString().substr(0, 15)) {
+                           arrayOfDateEntryIndexes.push(index)
+                     } 
                      }
-
+                        
                   }
                })
                filteredArray = filteredArray.filter(function (value, index) {
@@ -549,23 +638,36 @@ export default {
                let arrayOfDateLeftIndexes = []
 
                filteredArray.forEach(appoint => {
-                  if (this.readyDateLeft !== null) {
+                  if (this.readyDateLeft !== null || appoint.dateLeft != undefined) {
                      let index = filteredArray.indexOf(appoint)
-
-                     if (this.readyDateLeft.length < 3) {
+                     let newDate1
+                     let newDate2
+                     if (this.readyDateLeft.length < 3 && this.readyDateLeft[0].toString().substr(0, 15) != this.readyDateLeft[1].toString().substr(0, 15)) {
                         const date1 = new Date(this.readyDateLeft[0])
                         const date2 = new Date(this.readyDateLeft[1])
-                        if (appoint.dateLeft.toDate() < date1 || appoint.dateLeft.toDate() > date2) {
-                           console.log(appoint.dateLeft.toDate())
-                           console.log(this.readyDateLeft[0])
+                        if(date1 < date2){
+                           newDate1 = date1
+                           newDate2 = date2
+                        } else {
+                           newDate1 = date2
+                           newDate2 = date1
+                        }
+                        if (appoint.dateLeft.toDate() < newDate1 || appoint.dateLeft.toDate() > newDate2) {
                            arrayOfDateLeftIndexes.push(index)
                         }
-                     } else {
+                     } else if(this.readyDateLeft[1] == undefined){
                         if (appoint.dateLeft.toDate().toString().substr(0, 15) != this.readyDateLeft.toString().substr(0, 15)) {
                            arrayOfDateLeftIndexes.push(index)
                         }
+                     } else{
+                        if (appoint.dateLeft.toDate().toString().substr(0, 15) != this.readyDateLeft[0].toString().substr(0, 15)) {
+                           arrayOfDateLeftIndexes.push(index)
+                     } 
                      }
 
+                  } else if(appoint.dateLeft == undefined){
+                     let index = filteredArray.indexOf(appoint)
+                      arrayOfDateLeftIndexes.push(index)
                   }
                })
                filteredArray = filteredArray.filter(function (value, index) {
@@ -645,6 +747,9 @@ export default {
    methods: {
       onOpenSingle(id) {
          this.$router.push('/appointment/' + id)
+      },
+      onOpenSingleRelease(id) {
+         this.$router.push('/appointmentRelease/' + id)
       },
       sumOfBeforeBeds() {
          let sumOfBeds = 0
@@ -849,6 +954,8 @@ export default {
          this.pickedAnesthesiologist = 'без фільтру'
          this.pickedMedsister = 'без фільтру'
          this.searchAge = ''
+         this.searchSicknessHistory = ''
+         this.searchDiagnosisUltimate = ''
       },
       clearFilter() {
          this.readyDate = null
@@ -877,6 +984,8 @@ export default {
          this.pickedAnesthesiologist = 'без фільтру'
          this.pickedMedsister = 'без фільтру',
          this.searchAge = ''
+         this.searchSicknessHistory = ''
+         this.searchDiagnosisUltimate = ''
       }
    },
    data: () => ({
@@ -912,6 +1021,8 @@ export default {
       pickedMedsister: 'без фільтру',
       updatedAge: false,
       searchAge: '',
+      searchSicknessHistory: '',
+      searchDiagnosisUltimate: ''
 
    }),
    created() {
@@ -974,8 +1085,9 @@ export default {
    flex: 23%;
 }
 .appo-title{
-   color: #4285f4;
+   color: #0D47A1;
    padding: 10px;
+   font-weight: 700;
    padding-bottom: 2px;
    margin-left: 5px;
 }

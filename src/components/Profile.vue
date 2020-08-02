@@ -14,7 +14,6 @@
               </v-card-text>
               <!-- <button @click="imgClick = !imgClick" class=" blue btn-width white--text mb-3 ml-3 mt-3">{{photoText}}</button> -->
               <button @click="logout" class="red btn-width white--text mb-3 ml-3 mt-3">Вийти</button>
-              
           </v-card>
           </div>
         <button @click="isShow = !isShow" class="pa-2 blue darken-2 white--text mt-3 mb-4 btn-width2">{{showText}}</button>
@@ -28,9 +27,7 @@
              <h2>Patient:  {{appointment.user.firstName}} {{appointment.user.lastName}}</h2>
              {{appointment.description}}
             <h2>Doctor: {{appointment.surgeon}}</h2>
-
            </v-card-text>
-
          </v-card>
        </div>
       </section>

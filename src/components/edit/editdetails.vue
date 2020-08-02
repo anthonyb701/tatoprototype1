@@ -63,7 +63,6 @@
                         label="Номер Операції"
                         id="op_number"
                         v-model="editedOp_number"
-                        required
               ></v-text-field>
               <v-text-field class="wrapper-unit"
                         name="nozologia"
@@ -72,6 +71,26 @@
                         v-model="editedNozologia"
                         required
               ></v-text-field>
+              <v-text-field class="wrapper-unit"
+                        name="SicknessHistory"
+                        label="Історія Хвороби"
+                        id="SicknessHistory"
+                        v-model="editedSicknessHistory"
+                        required
+              ></v-text-field>
+               <v-text-field class="wrapper-unit"
+                        name="DiagnosisAfter"
+                        label="Післяопераційний діагноз"
+                        id="DiagnosisAfter"
+                        v-model="editedDiagnosisAfter"
+                        required
+              ></v-text-field>
+              <v-text-field class="wrapper-unit"
+                        name="DiagnosisUltimate"
+                        label="Кінцевий діагноз"
+                        id="DiagnosisUltimate"
+                        v-model="editedDiagnosisUltimate"
+              ></v-text-field>
 
               <v-textarea class="wrapper-unit"
                         label="Опис операції"
@@ -79,6 +98,7 @@
                         v-model="editedDescription"
                         rows="3"
                         id="description"
+                        required
               ></v-textarea>
               <v-textarea class="wrapper-unit"
                         label="Ускладнення"
@@ -169,7 +189,6 @@
                :items="ultimateTypeItems"
                label="Виписаний/ Помер"
                data-vv-name="select"
-               required
         ></v-select>
                   </v-card-text>
                </v-flex>
@@ -213,7 +232,10 @@ export default {
          editedUltimateType: this.post.ultimateType,
          editedAssistant: this.post.assistant,
          editedAnesthesiologist: this.post.anesthesiologist,
-         editedMedsister: this.post.medsister
+         editedMedsister: this.post.medsister,
+         editedSicknessHistory: this.post.sicknessHistory,
+         editedDiagnosisAfter: this.post.diagnosisAfter,
+         editedDiagnosisUltimate: this.post.diagnosisUltimate
 
       }
    },
@@ -253,11 +275,12 @@ export default {
       onSaveChanges() {
          if(this.editedTitle.trim() === '' || this.editedDescription.trim() === '' 
          || this.editedSurgeon.trim() === '' || this.editedFirstName.trim() === '' || this.editedLastName.trim() === ''
-         || this.editedOp_number.trim() === '' || this.editedRank.trim() === '' || this.editedOp_code.trim() === ''
-         || this.editedComplexity.trim() === '' || this.editedNozologia.trim() === '' || this.editedGisto.trim() === ''
+         || this.editedRank.trim() === '' || this.editedOp_code.trim() === ''
+         || this.editedNozologia.trim() === '' || this.editedGisto.trim() === ''
          || this.editedTimeType.trim() === '' || this.editedUrgencyType.trim() === '' || this.editedOperationType.trim() === ''
-         || this.editedAnesthesiaType.trim() === '' || this.editedSpotType.trim() === '' || this.editedUltimateType.trim() === ''
-         || this.editedAssistant.trim() === '' || this.editedAnesthesiologist.trim() === '' || this.editedMedsister.trim() === ''){
+         || this.editedAnesthesiaType.trim() === '' || this.editedSpotType.trim() === ''
+         || this.editedAssistant.trim() === '' || this.editedAnesthesiologist.trim() === '' || this.editedMedsister.trim() === ''
+         || this.editedSicknessHistory.trim() === '' || this.editedDiagnosisAfter.trim() === ''){
             return 
          }
          this.editDialog = false
@@ -282,7 +305,11 @@ export default {
             ultimateType: this.editedUltimateType,
             assistant: this.editedAssistant,
             anesthesiologist: this.editedAnesthesiologist,
-            medsister: this.editedMedsister
+            medsister: this.editedMedsister,
+            sicknessHistory: this.editedSicknessHistory,
+            diagnosisAfter: this.editedDiagnosisAfter,
+            diagnosisUltimate: this.editedDiagnosisUltimate
+
          })
       },
       onClose(){
@@ -307,6 +334,9 @@ export default {
          this.editedAssistant = this.post.editedAssistant
          this.editedAnesthesiologist = this.post.anesthesiologist
          this.editedMedsister = this.post.medsister
+         this.editedSicknessHistory = this.post.sicknessHistory
+         this.editedDiagnosisAfter = this.post.diagnosisAfter
+         this.editedDiagnosisUltimate = this.post.diagnosisAfter
       }
    }
 }

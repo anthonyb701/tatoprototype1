@@ -1,61 +1,70 @@
 <template>
 <v-layout row wrap class="main-wrap-main">
-   <ValidationObserver ref="observer" v-slot="{  }">
+   <ValidationObserver ref="observer" v-slot="{ validate, reset }">
       <!-- v-slot {validate, reset} -->
       <form v-on:submit.prevent="submit">
-
+         <!-- v-on:submit.prevent="submit" -->
          <div class="form_section">
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name" rules="required">
-               <v-text-field v-model="firstName" :error-messages="errors" class="create__component" label="Прізвище" required></v-text-field>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name1" rules="required">
+               <v-text-field v-model="firstName" :error-messages="errors" class="create__component" label="Прізвище" ></v-text-field>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name" rules="required">
-               <v-text-field v-model="lastName" :error-messages="errors" class="create__component" label="Імя" required></v-text-field>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name2" rules="required">
+               <v-text-field v-model="lastName" :error-messages="errors" class="create__component" label="Імя"></v-text-field>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name" rules="required">
-               <v-text-field v-model="title" :error-messages="errors" class="create__component" label="Назва Операції" required></v-text-field>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name3" rules="required">
+               <v-text-field v-model="title" :error-messages="errors" class="create__component" label="Назва Операції"></v-text-field>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name" rules="required">
-               <v-text-field v-model="op_code" :error-messages="errors" class="create__component" label="Код Операції" required></v-text-field>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name4" rules="required">
+               <v-text-field v-model="op_code" :error-messages="errors" class="create__component" label="Код Операції"></v-text-field>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name" rules="required">
-               <v-text-field v-model="nozologia" :error-messages="errors" class="create__component" label="Нозологія" required></v-text-field>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name5" rules="required">
+               <v-text-field v-model="nozologia" :error-messages="errors" class="create__component" label="Нозологія"></v-text-field>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name" rules="required">
-               <v-text-field v-model="op_number" :error-messages="errors" class="create__component" label="Номер Операції" required></v-text-field>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name6">
+               <v-text-field v-model="op_number" :error-messages="errors" class="create__component" label="Номер Операції"></v-text-field>
+            </ValidationProvider>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name7" rules="required">
+               <v-text-field v-model="sicknessHistory" :error-messages="errors" class="create__component" label="Історія хвороби"></v-text-field>
+            </ValidationProvider>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name8" rules="required">
+               <v-text-field v-model="diagnosisAfter" :error-messages="errors" class="create__component" label="Післяопераційний діагноз"></v-text-field>
+            </ValidationProvider>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name9">
+               <v-text-field v-model="diagnosisUltimate" :error-messages="errors" class="create__component" label="Кінцевий діагноз"></v-text-field>
             </ValidationProvider>
 
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="surgeon" :items="items" :error-messages="errors" class="create__component" label="Хірург" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select1" rules="required">
+               <v-select v-model="surgeon" :items="items" :error-messages="errors"  class="create__component" label="Хірург" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="assistant" :items="items" :error-messages="errors" class="create__component" label="Асистент" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select2" rules="required">
+               <v-select v-model="assistant" :items="items" :error-messages="errors" class="create__component" label="Асистент" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="anesthesiologist" :items="anesthesiologistItems" :error-messages="errors" class="create__component" label="Анестезіолог" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select3" rules="required">
+               <v-select v-model="anesthesiologist" :items="anesthesiologistItems" :error-messages="errors" class="create__component" label="Анестезіолог" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="medsister" :items="medsisterItems" :error-messages="errors" class="create__component" label="Операційна Сестра" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select4" rules="required">
+               <v-select v-model="medsister" :items="medsisterItems" :error-messages="errors" class="create__component" label="Операційна Сестра" data-vv-name="select" ></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="rank" :items="rankItems" :error-messages="errors" class="create__component" label="Звання" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select5" rules="required">
+               <v-select v-model="rank" :items="rankItems" :error-messages="errors" class="create__component" label="Звання" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="timeType" :items="timeTypeItems" :error-messages="errors" class="create__component" label="Первинна/ Повторна" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select6" rules="required">
+               <v-select v-model="timeType" :items="timeTypeItems" :error-messages="errors" class="create__component" label="Первинна/ Повторна" data-vv-name="select" ></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="urgencyType" :items="urgencyTypeItems" :error-messages="errors" class="create__component" label="Планова / Ургентна" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select7" rules="required">
+               <v-select v-model="urgencyType" :items="urgencyTypeItems" :error-messages="errors" class="create__component" label="Планова / Ургентна" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="operationType" :items="operationTypeItems" :error-messages="errors" class="create__component" label="Тип операції" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select8" rules="required">
+               <v-select v-model="operationType" :items="operationTypeItems" :error-messages="errors" class="create__component" label="Тип операції" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="anesthesiaType" :items="anesthesiaTypeItems" :error-messages="errors" class="create__component" label="Тип анестезії" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select9" rules="required">
+               <v-select v-model="anesthesiaType" :items="anesthesiaTypeItems" :error-messages="errors" class="create__component" label="Тип анестезії" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="spotType" :items="spotTypeItems" :error-messages="errors" class="create__component" label="Стаціонарна/ Амбулаторна" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select10" rules="required">
+               <v-select v-model="spotType" :items="spotTypeItems" :error-messages="errors" class="create__component" label="Стаціонарна/ Амбулаторна" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select" rules="required">
-               <v-select v-model="ultimateType" :items="ultimateTypeItems" :error-messages="errors" class="create__component" label="Виписаний / Помер" data-vv-name="select" required></v-select>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select11">
+               <v-select v-model="ultimateType" :items="ultimateTypeItems" :error-messages="errors" class="create__component" label="Виписаний / Помер" data-vv-name="select"></v-select>
             </ValidationProvider>
 
             <!-- <v-date-picker v-model="date"></v-date-picker> -->
@@ -88,11 +97,11 @@
           <v-btn text color="primary" @click="modal2 = false">Cancel</v-btn>
           <v-btn text color="primary" @click="$refs.dialog.save(time)" >OK</v-btn>
         </v-time-picker>
-      </v-dialog> -->
+      </v-dialog> -->   
             <div class="form-comp">
                <v-menu ref="menu1" v-model="modalEntry" :close-on-content-click="false" :return-value.sync="dateEntry" transition="scale-transition" offset-y min-width="290px">
                   <template v-slot:activator="{ on, attrs }">
-                     <v-text-field v-model="dateEntry" class="create__component date__component" label="Дата поступлення" prepend-icon="event" readonly v-bind="attrs" v-on="on"></v-text-field>
+                     <v-text-field v-model="dateEntry" class="create__component date__component" label="Дата поступлення" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
                   </template>
                   <v-date-picker v-model="dateEntry" no-title scrollable locale="uk-UA"> 
                      <v-spacer></v-spacer>
@@ -116,7 +125,7 @@
             <div class="form-comp">
                <v-menu ref="menu" v-model="modal" :close-on-content-click="false" :return-value.sync="date" transition="scale-transition" offset-y min-width="290px">
                   <template v-slot:activator="{ on, attrs }">
-                     <v-text-field v-model="date" class="create__component date__component" label="Дата операції" prepend-icon="event" readonly v-bind="attrs" v-on="on"></v-text-field>
+                     <v-text-field v-model="date" class="create__component date__component" label="Дата операції" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
                   </template>
                   <v-date-picker v-model="date" no-title scrollable locale="uk-UA">
                      <v-spacer></v-spacer>
@@ -128,7 +137,9 @@
             <div class="form-comp">
                <v-menu ref="menu4" v-model="modalAge" :close-on-content-click="false" :return-value.sync="dateAge" transition="scale-transition" offset-y min-width="290px">
                   <template v-slot:activator="{ on, attrs }">
-                     <v-text-field v-model="dateAge" class="create__component date__component" label="Дата народження" prepend-icon="event" readonly v-bind="attrs" v-on="on"></v-text-field>
+                     
+                     <v-text-field v-model="dateAge" class="create__component date__component" label="Дата народження" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
+                     
                   </template>
                   <v-date-picker v-model="dateAge" no-title scrollable locale="uk-UA">
                      <v-spacer></v-spacer>
@@ -140,7 +151,9 @@
             <div class="form-comp">
                <v-menu ref="menuStart" v-model="menuStart" :close-on-content-click="false" :nudge-right="40" :return-value.sync="timeStart" transition="scale-transition" offset-y max-width="290px" min-width="290px">
                   <template v-slot:activator="{ on, attrs }">
-                     <v-text-field v-model="timeStart" class="create__component date__component" label="Початок операції" prepend-icon="access_time" readonly v-bind="attrs" v-on="on"></v-text-field>
+                     <ValidationProvider class="form-comp" v-slot="{ errors }" name="textarea1" rules="required">
+                     <v-text-field v-model="timeStart"  :error-messages="errors" class="create__component date__component" label="Початок операції" prepend-icon="access_time" readonly required v-bind="attrs" v-on="on"></v-text-field>
+                     </ValidationProvider>
                   </template>
                   <v-time-picker v-if="menuStart" format="24hr" v-model="timeStart" full-width :max="timeEnd" @click:minute="$refs.menuStart.save(timeStart)"></v-time-picker>
                </v-menu>
@@ -148,20 +161,24 @@
             <div class="form-comp">
                <v-menu ref="menuEnd" v-model="menuEnd" :close-on-content-click="false" :nudge-right="40" :return-value.sync="timeEnd" transition="scale-transition" offset-y max-width="290px" min-width="290px">
                   <template v-slot:activator="{ on, attrs }">
-                     <v-text-field v-model="timeEnd" class="create__component date__component" label="Кінець операції" prepend-icon="access_time" readonly v-bind="attrs" v-on="on"></v-text-field>
+                     <ValidationProvider class="form-comp" v-slot="{ errors }" name="textarea1" rules="required">
+                     <v-text-field v-model="timeEnd" :error-messages="errors" class="create__component date__component" label="Кінець операції" prepend-icon="access_time" required readonly v-bind="attrs" v-on="on"></v-text-field>
+                     </ValidationProvider>
                   </template>
                   <v-time-picker v-if="menuEnd" format="24hr" v-model="timeEnd" :min="timeStart" full-width @click:minute="$refs.menuEnd.save(timeEnd)"></v-time-picker>
                </v-menu>
             </div>
 
             <div class="form-comp">
-               <v-textarea name="textarea" v-model="description" class="create__component" label="Опис Операції" hint="Введіть текст" required></v-textarea>
+               <ValidationProvider class="form-comp" v-slot="{ errors }" name="textarea1" rules="required">
+               <v-textarea name="textarea" :error-messages="errors" v-model="description" class="create__component" label="Опис Операції" hint="Введіть текст"></v-textarea>
+               </ValidationProvider>
             </div>
             <div class="form-comp">
-               <v-textarea name="textarea" v-model="complexity" class="create__component" label="Ускладнення" hint="Введіть текст" required></v-textarea>
+               <v-textarea name="textarea" v-model="complexity" class="create__component" label="Ускладнення" hint="Введіть текст"></v-textarea>
             </div>
             <div class="form-comp">
-               <v-textarea name="textarea" v-model="gisto" class="create__component" label="Гістологічне Заключення" hint="Введіть текст" required></v-textarea>
+               <v-textarea name="textarea" v-model="gisto" class="create__component" label="Гістологічне Заключення" hint="Введіть текст"></v-textarea>
             </div>
          </div>
          <div class="section__action">
@@ -172,9 +189,9 @@
                <div class="section__buttons">
                   <v-btn @click="clear" class="pa-2 mr-2 white--text red darken-2 btn-width1">Стерти <v-icon class="ml-2">mdi-delete-sweep-outline</v-icon>
                   </v-btn>
-                  <v-btn type="submit" class=" pa-2 white--text blue darken-2 btn-width1">Відправити <v-icon class="ml-2">mdi-playlist-check</v-icon>
+                  <v-btn type="submit" @click="validate" class=" pa-2 white--text blue darken-2 btn-width1">Відправити <v-icon class="ml-2">mdi-playlist-check</v-icon>
                   </v-btn>
-               </div>
+               </div> 
             </div>
          </div>
       </form>
@@ -272,6 +289,9 @@ export default {
       assistant: '',
       anesthesiologist: '',
       medsister: '',
+      sicknessHistory: '',
+      diagnosisAfter: '',
+      diagnosisUltimate: '',
    }),
    computed: {
       submittableDateTime() {
@@ -429,7 +449,12 @@ export default {
             anesthesiologist: this.anesthesiologist,
             medsister: this.medsister,
             age: this.ageNumber,
-            duration: this.sumbittableDuration
+            duration: this.sumbittableDuration,
+            timeStart: this.timeStart,
+            timeEnd: this.timeEnd,
+            sicknessHistory: this.sicknessHistory,
+            diagnosisAfter: this.diagnosisAfter,
+            diagnosisUltimate: this.diagnosisUltimate
          })
          this.$router.push('/')
          console.log('sended')
@@ -458,6 +483,9 @@ export default {
          this.medsister = ''
          this.ageNumber = ''
          this.sumbittableDuration = ''
+         this.diagnosisAfter = ''
+         this.diagnosisUltimate = ''
+         this.sicknessHistory = ''
          this.timeStart = null
          this.timeEnd = null
          this.date = new Date().toISOString().substr(0, 10)
@@ -590,6 +618,9 @@ export default {
    color: #4285f4 !important;
    font-size: 18px !important;
    font-weight: 500;
+}
+.v-select__slot>.v-label.error--text {
+   color: #ff5252 !important;
 }
 
 .v-select__selection--comma {

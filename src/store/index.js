@@ -20,13 +20,13 @@ export default new Vuex.Store({
     isLoading: false,
     isUpdatedAge: false,
     items: [
-      'Бітнер',
-      'Поліщук',
-      'Леськів Я.О',
-      'Терешенко',
-      'Кльофа',
-      'Леськів Д.Я',
-      'Дурач',
+      'В.Бітнер',
+      'М.Поліщук',
+      'Я.Леськів',
+      'С.Терешенко',
+      'Т.Кльофа',
+      'Д.Леськів',
+      'М.Дурач',
       'Інший',
       
     ],
@@ -69,16 +69,17 @@ export default new Vuex.Store({
       'Помер', 
     ],
     anesthesiologistItems: [
-      'Зачепа',
-      'Медвідь', 
-      'Скуратівський',
-      'Шонгофер',
-      'Дмитришин',
+      'О.Зачепа',
+      'А.Медвідь', 
+      'Ю.Скуратівський',
+      'І.Шонгофер',
+      'Р.Дмитришин',
       'Інший'
     ],
     medsisterItems: [
-      'Пилипчук',
-      'Непилипчук', 
+      'С.Пилипчук',
+      'І.Сидір', 
+      'А.Яковлева'
     ]
   },
   getters: {
@@ -277,6 +278,11 @@ export default new Vuex.Store({
             dateAge: payload.dateAge,
             age: payload.age,
             duration: payload.duration,
+            timeStart: payload.timeStart,
+            timeEnd: payload.timeEnd,
+            sicknessHistory: payload.sicknessHistory,
+            diagnosisAfter: payload.diagnosisAfter,
+            diagnosisUltimate: payload.diagnosisUltimate
             }
           await fs.collection('posts').add(appoObj)
           .then(data => {
@@ -392,6 +398,21 @@ export default new Vuex.Store({
         }
         if(payload.duration) {
           updatedObj.duration = payload.duration
+        }
+        if(payload.timeStart) {
+          updatedObj.timeStart = payload.timeStart
+        }
+        if(payload.timeEnd) {
+          updatedObj.timeEnd = payload.timeEnd
+        }
+        if(payload.sicknessHistory) {
+          updatedObj.sicknessHistory = payload.sicknessHistory
+        }
+        if(payload.diagnosisAfter) {
+          updatedObj.diagnosisAfter = payload.diagnosisAfter
+        }
+        if(payload.diagnosisUltimate) {
+          updatedObj.diagnosisUltimate = payload.diagnosisUltimate
         }
         // fi
         // firebase.database().ref('meetups').child(payload.id).update(updatedObj)
