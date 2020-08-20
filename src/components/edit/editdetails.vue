@@ -273,10 +273,11 @@ export default {
    },
    methods: {
       onSaveChanges() {
+         console.log('save changes')
          if(this.editedTitle.trim() === '' || this.editedDescription.trim() === '' 
          || this.editedSurgeon.trim() === '' || this.editedFirstName.trim() === '' || this.editedLastName.trim() === ''
          || this.editedRank.trim() === '' || this.editedOp_code.trim() === ''
-         || this.editedNozologia.trim() === '' || this.editedGisto.trim() === ''
+         || this.editedNozologia.trim() === ''
          || this.editedTimeType.trim() === '' || this.editedUrgencyType.trim() === '' || this.editedOperationType.trim() === ''
          || this.editedAnesthesiaType.trim() === '' || this.editedSpotType.trim() === ''
          || this.editedAssistant.trim() === '' || this.editedAnesthesiologist.trim() === '' || this.editedMedsister.trim() === ''
@@ -291,7 +292,7 @@ export default {
             surgeon: this.editedSurgeon,
             firstName: this.editedFirstName,
             lastName: this.editedLastName,
-            op_number: this.editedOp_number,
+            op_number_of_counter: this.editedOp_number,
             op_code: this.editedOp_code,
             rank: this.editedRank,
             complexity: this.editedComplexity,

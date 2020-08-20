@@ -29,7 +29,10 @@
                       <p class="p-unit">Гістологічне заключення: <span class="span-unit">{{singleAppointment.gisto}}</span></p>
                       <p class="p-unit">Нозологія: <span class="span-unit">{{singleAppointment.nozologia}}</span></p>
                       <p class="p-unit">Хірург: <span class="span-unit">{{singleAppointment.surgeon}}</span></p>
-                      <p class="p-unit">Номер Операції: <span class="span-unit">{{singleAppointment.op_number}}</span></p>
+                      <p class="p-unit">Ассистент: <span class="span-unit">{{singleAppointment.assistant}}</span></p>
+                      <p class="p-unit">Анестезіолог: <span class="span-unit">{{singleAppointment.anesthesiologist}}</span></p>
+                      <p class="p-unit">Операційна сестра: <span class="span-unit">{{singleAppointment.medsister}}</span></p>
+                      <p class="p-unit">Номер Операції: <span class="span-unit">{{singleAppointment.op_number_of_counter}}</span></p>
                       <p class="p-unit">Код Операції: <span class="span-unit">{{singleAppointment.op_code}}</span></p>
                       <p class="p-unit">Звання: <span class="span-unit">{{singleAppointment.rank}}</span></p> 
                       <p class="p-unit">До: <span class="span-unit">{{sumOfBeforeBeds}} днів</span></p>   
@@ -94,18 +97,14 @@ export default {
         age(){
             const nowDate = new Date()
             let ageNumber = (nowDate.getTime() - this.singleAppointment.dateAge.toDate().getTime()) / (1000 * 3600 * 24 * 365) 
-            console.log(ageNumber)
             ageNumber = ageNumber - 0.012
-            console.log(ageNumber)
             ageNumber = Math.floor(ageNumber) 
-            console.log(ageNumber)
             return ageNumber
         },
     sumOfBeforeBeds() {
          let sumOfBeds = 0
         let numberOfTime = this.singleAppointment.date.toDate().getTime() - this.singleAppointment.dateEntry.toDate().getTime()
         numberOfTime = numberOfTime / (1000 * 3600 * 24)
-        console.log(numberOfTime)
         sumOfBeds += parseInt(numberOfTime, 10)
         return sumOfBeds
       },
@@ -113,7 +112,6 @@ export default {
          let sumOfAfterBeds = 0
         let numberOfTime = this.singleAppointment.dateLeft.toDate().getTime() - this.singleAppointment.date.toDate().getTime()
         numberOfTime = numberOfTime / (1000 * 3600 * 24)
-        console.log(numberOfTime)
         sumOfAfterBeds += parseInt(numberOfTime, 10)
         return sumOfAfterBeds
       },
