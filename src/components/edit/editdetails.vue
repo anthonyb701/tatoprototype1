@@ -218,7 +218,7 @@ export default {
          editedSurgeon: this.post.surgeon,
          editedFirstName: this.post.user.firstName,
          editedLastName: this.post.user.lastName,
-         editedOp_number: this.post.op_number,
+         editedOp_number: this.post.op_number_of_counter,
          editedRank: this.post.rank,
          editedOp_code: this.post.op_code,
          editedComplexity: this.post.complexity,
@@ -319,7 +319,7 @@ export default {
          this.editedSurgeon = this.post.surgeon
          this.editedFirstName = this.post.user.firstName
          this.editedLastName = this.post.user.lastName
-         this.editedOp_number = this.post.op_number
+         this.editedOp_number = this.post.op_number_of_counter
          this.editedOp_code = this.post.op_code
          this.editedRank = this.post.rank
          this.editedComplexity = this.post.complexity

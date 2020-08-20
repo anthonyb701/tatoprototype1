@@ -149,6 +149,7 @@
                </v-card-title>
                <v-card-text @click="onOpenSingle(appointment.id)">
                   <h2 class="appo-unit">Операція: {{ appointment.date | dateF }}</h2>
+                  <h2 class="appo-unit">Код операції: {{ appointment.op_code}}</h2>
                   <h2 class="appo-unit">Пацієнт: {{appointment.user.firstName}} {{appointment.user.lastName}}</h2>
                   <h2 class="appo-unit">Хірург: {{appointment.surgeon}}</h2>
                </v-card-text>
@@ -497,8 +498,8 @@ export default {
                filteredArray.forEach(appoint => {
                   if (this.searchOp_number.trim() !== '') {
                      let index = filteredArray.indexOf(appoint)
-                     if(appoint.op_number != undefined){
-                        if (appoint.op_number.toLowerCase().includes(this.searchOp_number.toLowerCase()) == false) {
+                     if(appoint.op_number_of_counter != undefined){
+                        if (appoint.op_number_of_counter.toString().toLowerCase().includes(this.searchOp_number.toLowerCase()) == false) {
                         op_numberArray.push(index)
                      } 
                      } else {

@@ -28,12 +28,12 @@
             <v-divider></v-divider>
             <v-layout row wrap >
                <v-flex xs12 sm6 md5 offset-md-1 >
-                  <v-time-picker v-model="timeStart" format="24hr" :max="timeEnd">
+                  <v-time-picker v-model="timeStart" format="24hr">
                      
                   </v-time-picker>
                </v-flex>
                <v-flex xs12 sm6 md5 offset-md-1 class="layout">
-                  <v-time-picker v-model="timeEnd" format="24hr" :min="timeStart">
+                  <v-time-picker v-model="timeEnd" format="24hr">
                      
                   </v-time-picker>
                </v-flex>
@@ -82,10 +82,13 @@ export default {
          let ultimateHours
          let ultimateMinutes
          let ultimateTime
+         let difference
+         let sumReverse
          if (this.timeStart !== null) {
             let startHours = parseInt(this.timeStart.substr(0, 2), 10) * 60
             let startMinutes = parseInt(this.timeStart.substr(3, 5), 10)
             sumStart = startHours + startMinutes
+            console.log(sumStart)
 
          }
          if (this.timeEnd !== null) {
@@ -93,11 +96,20 @@ export default {
             let endMinutes = parseInt(this.timeEnd.substr(3, 5), 10)
 
             sumEnd = endHours + endMinutes
+            console.log(sumEnd)
 
          }
-         if (this.timeStart !== null && this.timeEnd !== null) {
-            let difference = (sumEnd - sumStart)
 
+         if (this.timeStart !== null && this.timeEnd !== null) {
+            console.log(sumEnd > sumStart)
+            
+            difference = (sumEnd - sumStart)
+            // console.log(difference)
+            if(sumEnd < sumStart){
+               sumReverse = (1440 - sumStart)
+               difference = (sumEnd + sumReverse)
+               console.log(difference)
+            }
             let hours = Math.floor(difference / 60)
 
             let minutes = difference - (hours * 60)

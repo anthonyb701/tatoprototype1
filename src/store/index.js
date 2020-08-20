@@ -192,9 +192,11 @@ export default new Vuex.Store({
   actions: {
       async deleteAppointment({commit}, payload){
         commit('setLoading', true)
-        fs.collection('posts').doc(payload).delete()
+        fs.collection('posts').doc(payload.id).delete()
         .then(() => {
           console.log('Deleted')
+          // fs.collection('counter').doc(payload.counterId).delete()
+          console.log('all deleted')
           commit('setLoading', false)
           router.push('/')
         })
@@ -249,7 +251,7 @@ export default new Vuex.Store({
         router.push('/auth').catch(()=>{});
         commit('setLoading', false)
       },
-      async setAppointment({commit}, payload){
+      async setAppointment({commit, dispatch}, payload){
         commit('setLoading', true)
           let appoObj = {
             surgeon: payload.surgeon,
@@ -260,7 +262,6 @@ export default new Vuex.Store({
             date: payload.date,
             dateEntry: payload.dateEntry,
             dateLeft: payload.dateLeft,
-            op_number: payload.op_number,
             op_code: payload.op_code,
             complexity: payload.complexity,
             rank: payload.rank,
@@ -290,9 +291,62 @@ export default new Vuex.Store({
             fs.collection('posts').doc(id).update({
               id: id
             })
+            dispatch('setCounter', id)
           })
+          // await fs.collection('counter').add(id)
+          // .then(data => {
+          //   const idCounter = data.id
+          //   // fs.collection('counter').doc(idCounter).update({
+          //   //   id: id
+          //   // })
+          // })
+          // fs.collection('counter').onSnapshot(querySnapshot => {
+          //   const op_number_of_counter = querySnapshot.length
+          // }, error => {
+          //   console.log(error)
+          //   commit('setLoading', false)
+          // })
+          // await fs.collection('posts').doc(id).update({
+          //   counterId: idCounter,
+          //   op_number_of_counter: op_number_of_counter
+          // })
           commit('setLoading', false)
           // router.go(0);
+      },
+      async setCounter({dispatch}, payload){
+        console.log(payload)
+         fs.collection('counter').add({
+           id: payload
+         })
+          .then(data => {
+            const idCounter = data.id
+            fs.collection('counter').doc(idCounter).update({
+              idCounter: idCounter
+            })
+             fs.collection('posts').doc(payload).update({
+              counterId: idCounter,
+            })
+            fs.collection('counter').get()
+            .then(querySnapshot => {
+              console.log(querySnapshot.size)
+              console.log(querySnapshot.docs.length)
+              const op_number_of_counter = querySnapshot.size
+              dispatch('updateDocWithCounter', {
+                op_number_of_counter: op_number_of_counter,
+                id: payload
+              })
+            }, error => {
+              console.log(error)
+              commit('setLoading', false)
+            })
+          })
+          
+      },
+      async updateDocWithCounter({commit},payload){
+        console.log(payload)  
+        await fs.collection('posts').doc(payload.id).update({
+            op_number_of_counter: payload.op_number_of_counter
+          })
       },
       loadAppointments({commit}){
         commit('setLoading', true)
@@ -325,7 +379,7 @@ export default new Vuex.Store({
           updatedObj.description = payload.description
         }
         if(payload.op_number){
-          updatedObj.op_number = payload.op_number
+          updatedObj.op_number_of_counter = payload.op_number
         }
         if(payload.rank){
           updatedObj.rank = payload.rank

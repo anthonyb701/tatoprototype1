@@ -31,7 +31,9 @@
                       <p class="p-unit">Хірург: <span class="span-unit">{{singleAppointment.surgeon}}</span></p>
                       <p class="p-unit">Номер Операції: <span class="span-unit">{{singleAppointment.op_number}}</span></p>
                       <p class="p-unit">Код Операції: <span class="span-unit">{{singleAppointment.op_code}}</span></p>
-                      <p class="p-unit">Звання: <span class="span-unit">{{singleAppointment.rank}}</span></p>    
+                      <p class="p-unit">Звання: <span class="span-unit">{{singleAppointment.rank}}</span></p> 
+                      <p class="p-unit">До: <span class="span-unit">{{sumOfBeforeBeds}} днів</span></p>   
+                      <p class="p-unit">Після: <span class="span-unit">{{sumOfAfterBeds}} днів</span></p>     
                   </v-card-text>
                   <div class="p-wrapper">
                       <p class="p-unit">Опис: <span class="span-unit">{{singleAppointment.description}}</span></p>
@@ -71,6 +73,8 @@ export default {
             checkbox: '',
             onDelete: false,
             toDelete: false,
+            showSum: '',
+            showSumAfter: ''
         }
     },
     computed: {
@@ -96,13 +100,32 @@ export default {
             ageNumber = Math.floor(ageNumber) 
             console.log(ageNumber)
             return ageNumber
-        }
+        },
+    sumOfBeforeBeds() {
+         let sumOfBeds = 0
+        let numberOfTime = this.singleAppointment.date.toDate().getTime() - this.singleAppointment.dateEntry.toDate().getTime()
+        numberOfTime = numberOfTime / (1000 * 3600 * 24)
+        console.log(numberOfTime)
+        sumOfBeds += parseInt(numberOfTime, 10)
+        return sumOfBeds
+      },
+      sumOfAfterBeds() {
+         let sumOfAfterBeds = 0
+        let numberOfTime = this.singleAppointment.dateLeft.toDate().getTime() - this.singleAppointment.date.toDate().getTime()
+        numberOfTime = numberOfTime / (1000 * 3600 * 24)
+        console.log(numberOfTime)
+        sumOfAfterBeds += parseInt(numberOfTime, 10)
+        return sumOfAfterBeds
+      },
 
     },
     methods: {
         onSubmit(){
             this.toDelete = true
-            this.$store.dispatch('deleteAppointment', this.id)
+            this.$store.dispatch('deleteAppointment', {
+                id: this.id,
+                counterId: this.singleAppointment.counterId 
+            })
         },
         toProfile(){
             this.$router.push('/profile').catch(()=>{})
@@ -123,7 +146,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    max-height: 750px;
+    max-height: 800px;
 }
 div.p-wrapper{
     padding: 15px;
@@ -144,7 +167,7 @@ div.p-wrapper{
 }
 @media (max-width: 1200px){
     .p-wrapper{
-        max-height: 1000px;
+        max-height: 1100px;
     }
 }
 @media (max-width: 820px){

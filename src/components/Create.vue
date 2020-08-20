@@ -1,6 +1,6 @@
 <template>
 <v-layout row wrap class="main-wrap-main">
-   <ValidationObserver ref="observer" v-slot="{ validate, reset }">
+   <ValidationObserver ref="observer" v-slot="{ validate}">
       <!-- v-slot {validate, reset} -->
       <form v-on:submit.prevent="submit">
          <!-- v-on:submit.prevent="submit" -->
@@ -20,9 +20,9 @@
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name5" rules="required">
                <v-text-field v-model="nozologia" :error-messages="errors" class="create__component" label="Нозологія"></v-text-field>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name6">
+            <!-- <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name6">
                <v-text-field v-model="op_number" :error-messages="errors" class="create__component" label="Номер Операції"></v-text-field>
-            </ValidationProvider>
+            </ValidationProvider> -->
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name7" rules="required">
                <v-text-field v-model="sicknessHistory" :error-messages="errors" class="create__component" label="Історія хвороби"></v-text-field>
             </ValidationProvider>
@@ -151,26 +151,26 @@
             <div class="form-comp">
                <v-menu ref="menuStart" v-model="menuStart" :close-on-content-click="false" :nudge-right="40" :return-value.sync="timeStart" transition="scale-transition" offset-y max-width="290px" min-width="290px">
                   <template v-slot:activator="{ on, attrs }">
-                     <ValidationProvider class="form-comp" v-slot="{ errors }" name="textarea1" rules="required">
+                     <ValidationProvider  v-slot="{ errors }" name="textarea1" rules="required">
                      <v-text-field v-model="timeStart"  :error-messages="errors" class="create__component date__component" label="Початок операції" prepend-icon="access_time" readonly required v-bind="attrs" v-on="on"></v-text-field>
                      </ValidationProvider>
                   </template>
-                  <v-time-picker v-if="menuStart" format="24hr" v-model="timeStart" full-width :max="timeEnd" @click:minute="$refs.menuStart.save(timeStart)"></v-time-picker>
+                  <v-time-picker v-if="menuStart" format="24hr" v-model="timeStart" full-width @click:minute="$refs.menuStart.save(timeStart)"></v-time-picker>
                </v-menu>
             </div>
             <div class="form-comp">
                <v-menu ref="menuEnd" v-model="menuEnd" :close-on-content-click="false" :nudge-right="40" :return-value.sync="timeEnd" transition="scale-transition" offset-y max-width="290px" min-width="290px">
                   <template v-slot:activator="{ on, attrs }">
-                     <ValidationProvider class="form-comp" v-slot="{ errors }" name="textarea1" rules="required">
+                     <ValidationProvider v-slot="{ errors }" name="textarea1" rules="required">
                      <v-text-field v-model="timeEnd" :error-messages="errors" class="create__component date__component" label="Кінець операції" prepend-icon="access_time" required readonly v-bind="attrs" v-on="on"></v-text-field>
                      </ValidationProvider>
                   </template>
-                  <v-time-picker v-if="menuEnd" format="24hr" v-model="timeEnd" :min="timeStart" full-width @click:minute="$refs.menuEnd.save(timeEnd)"></v-time-picker>
+                  <v-time-picker v-if="menuEnd" format="24hr" v-model="timeEnd"  full-width @click:minute="$refs.menuEnd.save(timeEnd)"></v-time-picker>
                </v-menu>
             </div>
 
             <div class="form-comp">
-               <ValidationProvider class="form-comp" v-slot="{ errors }" name="textarea1" rules="required">
+               <ValidationProvider v-slot="{ errors }" name="textarea1" rules="required">
                <v-textarea name="textarea" :error-messages="errors" v-model="description" class="create__component" label="Опис Операції" hint="Введіть текст"></v-textarea>
                </ValidationProvider>
             </div>
@@ -332,6 +332,8 @@ export default {
          let ultimateHours
          let ultimateMinutes
          let ultimateTime
+         let difference
+         let sumReverse
          if (this.timeStart !== null) {
             let startHours = parseInt(this.timeStart.substr(0, 2), 10) * 60
             let startMinutes = parseInt(this.timeStart.substr(3, 5), 10)
@@ -346,7 +348,13 @@ export default {
 
          }
          if (this.timeStart !== null && this.timeEnd !== null) {
-            let difference = (sumEnd - sumStart)
+            console.log(sumEnd > sumStart)
+            difference = (sumEnd - sumStart)
+            if(sumEnd < sumStart){
+               sumReverse = (1440 - sumStart)
+               difference = (sumEnd + sumReverse)
+               console.log(difference)
+            }
 
             let hours = Math.floor(difference / 60)
 
@@ -433,7 +441,7 @@ export default {
                firstName: this.firstName,
                lastName: this.lastName
             },
-            op_number: this.op_number,
+            // op_number: this.op_number,
             op_code: this.op_code,
             complexity: this.complexity,
             rank: this.rank,
