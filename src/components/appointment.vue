@@ -48,7 +48,7 @@
                       <edit-details  :post="singleAppointment"></edit-details>
                   </div>
               </v-card>
-              <div>
+              <div v-if="isAuthor || isAdmin">
                   <button v-if="!onDelete" @click.prevent="onDelete = !onDelete" class="white--text red pa-2 mt-3">Видалити цю операцію</button>
                     <form v-else @submit.prevent="onSubmit">
                   <v-checkbox
@@ -86,6 +86,15 @@ export default {
         },
         currentUser(){
             return this.$store.getters.onUserChanged
+        },
+        isAdmin(){  
+            const admin = 'mvkV9wQRXfT4ZhOjtXGDUOB8ZTB2'
+            if(this.currentUser === admin){
+                return true
+            } else {
+                return false
+            }
+            
         },
         isAuthor(){
             if(this.singleAppointment.creatorId === this.currentUser){
@@ -132,6 +141,11 @@ export default {
             this.$router.push('/').catch(()=>{})
             this.$destroy()
         }
+    },
+    created(){
+        setTimeout(() => {
+            console.log(this.isAdmin)
+        }, 5000)
     }
 }
 </script>
@@ -144,7 +158,10 @@ export default {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    max-height: 800px;
+    
+}
+.v-card__text.p-wrapper{
+    max-height: 860px;
 }
 div.p-wrapper{
     padding: 15px;
@@ -164,13 +181,13 @@ div.p-wrapper{
     font-weight: 500;
 }
 @media (max-width: 1200px){
-    .p-wrapper{
-        max-height: 1100px;
+    .v-card__text.p-wrapper{
+        max-height: 860px;
     }
 }
 @media (max-width: 820px){
-    .p-wrapper{
-        max-height: 3000px;
+    .v-card__text.p-wrapper{
+        max-height: 3200px;
     }
     
 }
@@ -179,10 +196,11 @@ div.p-wrapper{
         padding: 15px;
         font-size: 14px;
     }
-
     .p-wrapper{
-        max-height: 4000px;
         padding: 4px!important;
+    }
+    .v-card__text.p-wrapper{
+        max-height: 4200px; 
     }
 }
 

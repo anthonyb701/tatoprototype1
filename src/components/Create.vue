@@ -94,7 +94,7 @@
           full-width
         >
           <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="modal2 = false">Cancel</v-btn>
+          <v-btn text color="primary" @click="modal2 = false">Скасувати</v-btn>
           <v-btn text color="primary" @click="$refs.dialog.save(time)" >OK</v-btn>
         </v-time-picker>
       </v-dialog> -->   
@@ -105,8 +105,8 @@
                   </template>
                   <v-date-picker v-model="dateEntry" no-title scrollable locale="uk-UA"> 
                      <v-spacer></v-spacer>
-                     <v-btn text color="primary" @click="modalEntry = false">Cancel</v-btn>
-                     <v-btn text color="primary" @click="$refs.menu1.save(dateEntry)">OK</v-btn>
+                     <v-btn text color="primary" @click="modalEntry = false">Скасувати</v-btn>
+                     <v-btn text color="primary" @click="$refs.menu1.save(dateEntry); counterDateEntry++">OK</v-btn>
                   </v-date-picker>
                </v-menu>
             </div>
@@ -117,7 +117,7 @@
                   </template>
                   <v-date-picker v-model="dateLeft" no-title scrollable locale="uk-UA">
                      <v-spacer></v-spacer>
-                     <v-btn text color="primary" @click="modalLeft = false">Cancel</v-btn>
+                     <v-btn text color="primary" @click="modalLeft = false">Скасувати</v-btn>
                      <v-btn text color="primary" @click="$refs.menu2.save(dateLeft)">OK</v-btn>
                   </v-date-picker>
                </v-menu>
@@ -129,8 +129,8 @@
                   </template>
                   <v-date-picker v-model="date" no-title scrollable locale="uk-UA">
                      <v-spacer></v-spacer>
-                     <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
-                     <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                     <v-btn text color="primary" @click="modal = false">Скасувати</v-btn>
+                     <v-btn text color="primary" @click="$refs.menu.save(date); counterDate++">OK</v-btn>
                   </v-date-picker>
                </v-menu>
             </div>
@@ -143,8 +143,8 @@
                   </template>
                   <v-date-picker v-model="dateAge" no-title scrollable locale="uk-UA">
                      <v-spacer></v-spacer>
-                     <v-btn text color="primary" @click="modalAge = false">Cancel</v-btn>
-                     <v-btn text color="primary" @click="$refs.menu4.save(dateAge)">OK</v-btn>
+                     <v-btn text color="primary" @click="modalAge = false">Скасувати</v-btn>
+                     <v-btn text color="primary" @click="$refs.menu4.save(dateAge); counterDateAge++">OK</v-btn>
                   </v-date-picker>
                </v-menu>
             </div>
@@ -233,6 +233,14 @@ export default {
       ValidationProvider,
       ValidationObserver,
    },
+   // created(){
+   //    setTimeout(() => {
+   //       console.log(this.submittableDateTime)
+   //       console.log(this.submittableDateEntry)
+   //       console.log(this.submittableDateLeft)
+   //       console.log(this.submittableDateAge)
+   //    }, 4000)
+   // },
    data: () => ({
       modal: false,
       modal2: false,
@@ -241,7 +249,10 @@ export default {
       modalAge: false,
       menuStart: false,
       menuEnd: false,
-      firstName: '',
+      counterDateEntry: 0,
+      counterDateAge: 0,
+      counterDate: 0, 
+      firstName: '', 
       lastName: '',
       surgeon: null,
       title: '',
@@ -299,7 +310,6 @@ export default {
          date.setHours(0)
          date.setMinutes(0)
          date.setSeconds(0)
-         console.log(date)
          return date
       },
       submittableDateEntry() {
@@ -307,7 +317,6 @@ export default {
          dateEntry.setHours(0)
          dateEntry.setMinutes(0)
          dateEntry.setSeconds(0)
-         console.log(dateEntry)
          return dateEntry
       },
       submittableDateLeft() {
@@ -315,7 +324,6 @@ export default {
          dateLeft.setHours(0)
          dateLeft.setMinutes(0)
          dateLeft.setSeconds(0)
-         console.log(dateLeft)
          return dateLeft
       },
       submittableDateAge() {
@@ -323,7 +331,6 @@ export default {
          dateAge.setHours(0)
          dateAge.setMinutes(0)
          dateAge.setSeconds(0)
-         console.log(dateAge)
          return dateAge
       },
       sumbittableDuration() {
@@ -348,12 +355,10 @@ export default {
 
          }
          if (this.timeStart !== null && this.timeEnd !== null) {
-            console.log(sumEnd > sumStart)
             difference = (sumEnd - sumStart)
             if(sumEnd < sumStart){
                sumReverse = (1440 - sumStart)
                difference = (sumEnd + sumReverse)
-               console.log(difference)
             }
 
             let hours = Math.floor(difference / 60)
@@ -413,23 +418,35 @@ export default {
          return this.$store.getters.anesthesiologistItems
       },
    },
-
    methods: {
       submit() {
+         let resultat = false
          this.$refs.observer.validate()
-         // this.$store.commit('setAppointment', {
-         //     surgeon: this.surgeon,
-         //     title: this.title,
-         //     date: this.submittableDateTime,
-         //     id: '12xd47384',
-         //     description: this.description,
-         //     user: {
-         //         firstName: this.firstName,
-         //         lastName: this.lastName
-         //     },
-
-         // }),
-         this.$store.dispatch('setAppointment', {
+         .then(result => {
+            if(result == true){
+               resultat = true
+            } else {
+               resultat = false
+            }
+            console.log(resultat)
+            if(resultat){
+            if(this.counterDateEntry < 1){
+               alert('Вкажіть дату поступлення')
+               return
+            }
+            if(this.counterDateAge < 1){
+               alert('Вкажіть дату народження')
+               return
+            } 
+            if(this.counterDate < 1){
+               alert('Вкажіть дату операції')
+               return
+            }   
+            if(this.timeStart == null || this.timeEnd == null){
+               alert('Будь ласка, вкажіть тривалість операції')
+               return
+            } else {
+               this.$store.dispatch('setAppointment', {
             surgeon: this.surgeon,
             title: this.title,
             date: this.submittableDateTime,
@@ -467,6 +484,10 @@ export default {
          this.$router.push('/')
          console.log('sended')
          this.$destroy();
+            }   
+            
+         }
+         }) 
       },
 
       clear() {
@@ -593,9 +614,9 @@ export default {
 <style lang="scss">
 .v-input--checkbox>.v-input__control>.v-input__slot>.v-label {
    color: black !important;
-   font-weight: 400;
+   font-weight: 500;
    letter-spacing: 1.1px;
-   font-size: 16px;
+   font-size: 18px;
 }
 
 .v-application--wrap {
