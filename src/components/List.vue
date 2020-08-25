@@ -89,7 +89,7 @@
             </template>
             <v-date-picker v-model="pickedDate" range locale="uk-UA" no-title scrollable>
                <v-spacer></v-spacer>
-               <v-btn text color="primary" @click="onClose">Cancel</v-btn>
+               <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
                <v-btn text color="primary" @click="onSaveChanges(); $refs.menu.save(pickedDate); ">OK</v-btn>
             </v-date-picker>
          </v-menu>
@@ -101,7 +101,7 @@
             </template>
             <v-date-picker v-model="pickedDateEntry" range locale="uk-UA" no-title scrollable>
                <v-spacer></v-spacer>
-               <v-btn text color="primary" @click="onClose">Cancel</v-btn>
+               <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
                <v-btn text color="primary" @click="onSaveChangesEntry(); $refs.menuEntry.save(pickedDateEntry); ">OK</v-btn>
             </v-date-picker>
          </v-menu>
@@ -113,7 +113,7 @@
             </template>
             <v-date-picker v-model="pickedDateLeft" range locale="uk-UA" no-title scrollable>
                <v-spacer></v-spacer>
-               <v-btn text color="primary" @click="onClose">Cancel</v-btn>
+               <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
                <v-btn text color="primary" @click="onSaveChangesLeft(); $refs.menuLeft.save(pickedDateLeft); ">OK</v-btn>
             </v-date-picker>
          </v-menu>
