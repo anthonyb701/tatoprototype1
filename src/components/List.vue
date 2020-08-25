@@ -126,9 +126,9 @@
    </v-layout>
    <v-flex xs12 sm12>
          <!-- <button @click="clearDate" class="pa-1 red white--text darken-2">Clear Date</button> -->
-         <button @click="clearFilter" class=" blue white--text darken-2 btn-archive">Очистити фільтер</button>
-         <button v-if="!isFilter" @click="isFilter = !isFilter" class="btn-archive green white--text">Відкрити фільтер</button>
-         <button v-else @click="closeFilter" class=" btn-archive white--text red">Закрити фільтер</button>
+         <button @click="clearFilter" class=" blue white--text darken-2 btn-archive">Очистити фільтр</button>
+         <button v-if="!isFilter" @click="isFilter = !isFilter" class="btn-archive green white--text">Відкрити фільтр</button>
+         <button v-else @click="closeFilter" class=" btn-archive white--text red">Закрити фільтр</button>
       </v-flex>
    <v-layout row wrap class="buttons__section">
       <p class="info__button blue darken-4 white--text">Кількість пацієнтів: {{filteredAppointments.length}}</p>
