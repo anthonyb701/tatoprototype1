@@ -88,7 +88,7 @@ export default {
             return this.$store.getters.onUserChanged
         },
         isAdmin(){  
-            const admin = 'mvkV9wQRXfT4ZhOjtXGDUOB8ZTB2'
+            const admin = 'qfJufwBf9UeGTTmOtYhnho0MPs32'
             if(this.currentUser === admin){
                 return true
             } else {
