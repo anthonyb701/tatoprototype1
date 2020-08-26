@@ -89,7 +89,7 @@
             </template>
             <v-date-picker v-model="pickedDate" range locale="uk-UA" no-title scrollable>
                <v-spacer></v-spacer>
-               <v-btn text color="primary" @click="onClose">Cancel</v-btn>
+               <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
                <v-btn text color="primary" @click="onSaveChanges(); $refs.menu.save(pickedDate); ">OK</v-btn>
             </v-date-picker>
          </v-menu>
@@ -101,7 +101,7 @@
             </template>
             <v-date-picker v-model="pickedDateEntry" range locale="uk-UA" no-title scrollable>
                <v-spacer></v-spacer>
-               <v-btn text color="primary" @click="onClose">Cancel</v-btn>
+               <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
                <v-btn text color="primary" @click="onSaveChangesEntry(); $refs.menuEntry.save(pickedDateEntry); ">OK</v-btn>
             </v-date-picker>
          </v-menu>
@@ -113,7 +113,7 @@
             </template>
             <v-date-picker v-model="pickedDateLeft" range locale="uk-UA" no-title scrollable>
                <v-spacer></v-spacer>
-               <v-btn text color="primary" @click="onClose">Cancel</v-btn>
+               <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
                <v-btn text color="primary" @click="onSaveChangesLeft(); $refs.menuLeft.save(pickedDateLeft); ">OK</v-btn>
             </v-date-picker>
          </v-menu>
@@ -142,9 +142,12 @@
             <v-card>
                <v-card-title primary-title class="appo-title">
                   {{ appointment.title}}
-                  <v-btn text class="ml-3 blue darken-4 white--text" @click="onOpenSingleRelease(appointment.id)">
+                <div class="zvit-wrapper">
+                  <v-btn text class="ml-3 blue darken-4 white--text btn-zvit" @click="onOpenSingleRelease(appointment.id)">
                      Звіт <v-icon>assignment_turned_in</v-icon>
                   </v-btn>
+                </div>
+                  
                   
                </v-card-title>
                <v-card-text @click="onOpenSingle(appointment.id)">
@@ -571,10 +574,14 @@ export default {
                            newDate1 = date2
                            newDate2 = date1
                         }
-                        if (appoint.date.toDate() < newDate1|| appoint.date.toDate() > newDate2) {
-                           console.log(appoint.date.toDate())
-                           console.log(this.readyDate[0])
-                           arrayOfNextIndexes.push(index)
+
+                        if (appoint.date.toDate() < newDate1 || appoint.date.toDate() > newDate2) {
+                           if(appoint.date.toDate().toString().substr(0, 15) !== newDate1.toString().substr(0, 15)){
+                              console.log(appoint.date.toDate())
+                              console.log(newDate1)
+                              console.log(newDate2)
+                              arrayOfNextIndexes.push(index)
+                           }     
                         }
                      } else if(this.readyDate[1] == undefined){
                         if (appoint.date.toDate().toString().substr(0, 15) != this.readyDate.toString().substr(0, 15)) {
@@ -614,7 +621,10 @@ export default {
                            newDate2 = date1
                         }
                         if (appoint.dateEntry.toDate() < newDate1 || appoint.dateEntry.toDate() > newDate2) {
-                           arrayOfDateEntryIndexes.push(index)
+                           if(appoint.dateEntry.toDate().toString().substr(0, 15) !== newDate1.toString().substr(0, 15)){
+                              arrayOfDateEntryIndexes.push(index)
+                           }     
+                           
                         }
                      } else if(this.readyDateEntry[1] == undefined){
                         if (appoint.dateEntry.toDate().toString().substr(0, 15) != this.readyDateEntry.toString().substr(0, 15)) {
@@ -654,7 +664,10 @@ export default {
                            newDate2 = date1
                         }
                         if (appoint.dateLeft.toDate() < newDate1 || appoint.dateLeft.toDate() > newDate2) {
-                           arrayOfDateLeftIndexes.push(index)
+                           if(appoint.dateLeft.toDate().toString().substr(0, 15) !== newDate1.toString().substr(0, 15)){
+                              arrayOfDateLeftIndexes.push(index)
+                           }
+                           
                         }
                      } else if(this.readyDateLeft[1] == undefined){
                         if (appoint.dateLeft.toDate().toString().substr(0, 15) != this.readyDateLeft.toString().substr(0, 15)) {
@@ -1029,6 +1042,12 @@ export default {
    created() {
       this.$store.dispatch('loadAppointments')
    },
+   watch: {
+      filteredAppointments(){
+         this.showSum = 'Показати'
+         this.showSumAfter = 'Показати'
+      }
+   }
    // mounted() {
    //    setTimeout(() => {
    //       if (this.$store.state.isUpdatedAge == false) {
@@ -1071,6 +1090,13 @@ export default {
    justify-content: flex-start;
 
 }
+.zvit-wrapper{
+   display: flex;
+   justify-content: center;
+}
+.btn-zvit{
+   display: flex;
+}
 .layoutTT{
    padding: 10px;
    display: flex;
@@ -1091,6 +1117,8 @@ export default {
    font-weight: 700;
    padding-bottom: 2px;
    margin-left: 5px;
+   display: block;
+   text-align: center;
 }
 .appo-unit{
    color: #000000;

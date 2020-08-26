@@ -285,6 +285,7 @@ export default {
             return 
          }
          this.editDialog = false
+         console.log(this.editedOp_number)
          this.$store.dispatch('updatePost', {
             id: this.post.id,
             title: this.editedTitle,

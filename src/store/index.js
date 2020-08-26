@@ -234,7 +234,9 @@ export default new Vuex.Store({
         // create user profile object in userCollections
         await fb.usersCollection.doc(user.uid).set({
           name: form.name,
-          title: form.title
+          title: form.title,
+          email: form.email,
+          password: form.password
         })
         // fetch user profile and set in state
         dispatch('fetchUserProfile', user)
@@ -378,8 +380,8 @@ export default new Vuex.Store({
         if(payload.description){
           updatedObj.description = payload.description
         }
-        if(payload.op_number){
-          updatedObj.op_number_of_counter = payload.op_number
+        if(payload.op_number_of_counter){
+          updatedObj.op_number_of_counter = payload.op_number_of_counter
         }
         if(payload.rank){
           updatedObj.rank = payload.rank
