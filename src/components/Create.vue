@@ -9,26 +9,106 @@
                <v-text-field v-model="firstName" :error-messages="errors" class="create__component" label="Прізвище" ></v-text-field>
             </ValidationProvider>
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name2" rules="required">
-               <v-text-field v-model="lastName" :error-messages="errors" class="create__component" label="Імя"></v-text-field>
+               <v-text-field v-model="lastName" :error-messages="errors" class="create__component" label="Ім'я, По-батькові"></v-text-field>
+            </ValidationProvider>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select5" rules="required">
+               <v-select v-model="rank" :items="rankItems" :error-messages="errors" class="create__component" label="Звання" data-vv-name="select"></v-select>
+            </ValidationProvider>
+            <div class="form-comp">
+               <v-menu ref="menu4" v-model="modalAge" :close-on-content-click="false" :return-value.sync="dateAge" transition="scale-transition" offset-y min-width="290px">
+                  <template v-slot:activator="{ on, attrs }">
+                     
+                     <v-text-field v-model="dateAge" class="create__component date__component" label="Дата народження" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
+                     
+                  </template>
+                  <v-date-picker v-model="dateAge" no-title scrollable locale="uk-UA">
+                     <v-spacer></v-spacer>
+                     <v-btn text color="primary" @click="modalAge = false">Скасувати</v-btn>
+                     <v-btn text color="primary" @click="$refs.menu4.save(dateAge); counterDateAge++">OK</v-btn>
+                  </v-date-picker>
+               </v-menu>
+            </div>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name7" rules="required">
+               <v-text-field v-model="sicknessHistory" :error-messages="errors" class="create__component" label="Історія хвороби"></v-text-field>
+            </ValidationProvider>
+            <div class="form-comp">
+               <v-menu ref="menu1" v-model="modalEntry" :close-on-content-click="false" :return-value.sync="dateEntry" transition="scale-transition" offset-y min-width="290px">
+                  <template v-slot:activator="{ on, attrs }">
+                     <v-text-field v-model="dateEntry" class="create__component date__component" label="Дата поступлення" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
+                  </template>
+                  <v-date-picker v-model="dateEntry" no-title scrollable locale="uk-UA"> 
+                     <v-spacer></v-spacer>
+                     <v-btn text color="primary" @click="modalEntry = false">Скасувати</v-btn>
+                     <v-btn text color="primary" @click="$refs.menu1.save(dateEntry); counterDateEntry++">OK</v-btn>
+                  </v-date-picker>
+               </v-menu>
+            </div>
+            <div class="form-comp">
+               <v-menu ref="menu" v-model="modal" :close-on-content-click="false" :return-value.sync="date" transition="scale-transition" offset-y min-width="290px">
+                  <template v-slot:activator="{ on, attrs }">
+                     <v-text-field v-model="date" class="create__component date__component" label="Дата операції" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
+                  </template>
+                  <v-date-picker v-model="date" no-title scrollable locale="uk-UA">
+                     <v-spacer></v-spacer>
+                     <v-btn text color="primary" @click="modal = false">Скасувати</v-btn>
+                     <v-btn text color="primary" @click="$refs.menu.save(date); counterDate++">OK</v-btn>
+                  </v-date-picker>
+               </v-menu>
+            </div>
+            <div class="form-comp">
+               <v-menu ref="menu2" v-model="modalLeft" :close-on-content-click="false" :return-value.sync="dateLeft" transition="scale-transition" offset-y min-width="290px">
+                  <template v-slot:activator="{ on, attrs }">
+                     <v-text-field v-model="dateLeft" class="create__component date__component" label="Дата виписки" prepend-icon="event" readonly v-bind="attrs" v-on="on"></v-text-field>
+                  </template>
+                  <v-date-picker v-model="dateLeft" no-title scrollable locale="uk-UA">
+                     <v-spacer></v-spacer>
+                     <v-btn text color="primary" @click="modalLeft = false">Скасувати</v-btn>
+                     <v-btn text color="primary" @click="$refs.menu2.save(dateLeft); counterDateLeft++">OK</v-btn>
+                  </v-date-picker>
+               </v-menu>
+            </div>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name5" rules="required">
+               <v-text-field v-model="nozologia" :error-messages="errors" class="create__component" label="Нозологія"></v-text-field>
+            </ValidationProvider>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name8" rules="required">
+               <v-text-field v-model="diagnosisAfter" :error-messages="errors" class="create__component" label="Передопераційний діагноз"></v-text-field>
             </ValidationProvider>
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name3" rules="required">
                <v-text-field v-model="title" :error-messages="errors" class="create__component" label="Назва Операції"></v-text-field>
             </ValidationProvider>
+            
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name4" rules="required">
                <v-text-field v-model="op_code" :error-messages="errors" class="create__component" label="Код Операції"></v-text-field>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name5" rules="required">
-               <v-text-field v-model="nozologia" :error-messages="errors" class="create__component" label="Нозологія"></v-text-field>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select9" rules="required">
+               <v-select v-model="anesthesiaType" :items="anesthesiaTypeItems" :error-messages="errors" class="create__component" label="Тип анестезії" data-vv-name="select"></v-select>
             </ValidationProvider>
+            <div class="form-comp">
+               <v-menu ref="menuStart" v-model="menuStart" :close-on-content-click="false" :nudge-right="40" :return-value.sync="timeStart" transition="scale-transition" offset-y max-width="290px" min-width="290px">
+                  <template v-slot:activator="{ on, attrs }">
+                     <ValidationProvider  v-slot="{ errors }" name="textarea1" rules="required">
+                     <v-text-field v-model="timeStart"  :error-messages="errors" class="create__component date__component" label="Початок операції" prepend-icon="access_time" readonly required v-bind="attrs" v-on="on"></v-text-field>
+                     </ValidationProvider>
+                  </template>
+                  <v-time-picker v-if="menuStart" format="24hr" v-model="timeStart" full-width @click:minute="$refs.menuStart.save(timeStart)"></v-time-picker>
+               </v-menu>
+            </div>
+            <div class="form-comp">
+               <v-menu ref="menuEnd" v-model="menuEnd" :close-on-content-click="false" :nudge-right="40" :return-value.sync="timeEnd" transition="scale-transition" offset-y max-width="290px" min-width="290px">
+                  <template v-slot:activator="{ on, attrs }">
+                     <ValidationProvider v-slot="{ errors }" name="textarea1" rules="required">
+                     <v-text-field v-model="timeEnd" :error-messages="errors" class="create__component date__component" label="Кінець операції" prepend-icon="access_time" required readonly v-bind="attrs" v-on="on"></v-text-field>
+                     </ValidationProvider>
+                  </template>
+                  <v-time-picker v-if="menuEnd" format="24hr" v-model="timeEnd"  full-width @click:minute="$refs.menuEnd.save(timeEnd)"></v-time-picker>
+               </v-menu>
+            </div>
+            
             <!-- <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name6">
                <v-text-field v-model="op_number" :error-messages="errors" class="create__component" label="Номер Операції"></v-text-field>
             </ValidationProvider> -->
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name7" rules="required">
-               <v-text-field v-model="sicknessHistory" :error-messages="errors" class="create__component" label="Історія хвороби"></v-text-field>
-            </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name8" rules="required">
-               <v-text-field v-model="diagnosisAfter" :error-messages="errors" class="create__component" label="Післяопераційний діагноз"></v-text-field>
-            </ValidationProvider>
+            
+            
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="Name9">
                <v-text-field v-model="diagnosisUltimate" :error-messages="errors" class="create__component" label="Кінцевий діагноз"></v-text-field>
             </ValidationProvider>
@@ -39,14 +119,11 @@
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="select2" rules="required">
                <v-select v-model="assistant" :items="items" :error-messages="errors" class="create__component" label="Асистент" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select3" rules="required">
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select3" rules="required" v-if="anesthesiaType != 'Місцева'">
                <v-select v-model="anesthesiologist" :items="anesthesiologistItems" :error-messages="errors" class="create__component" label="Анестезіолог" data-vv-name="select"></v-select>
             </ValidationProvider>
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="select4" rules="required">
                <v-select v-model="medsister" :items="medsisterItems" :error-messages="errors" class="create__component" label="Операційна Сестра" data-vv-name="select" ></v-select>
-            </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select5" rules="required">
-               <v-select v-model="rank" :items="rankItems" :error-messages="errors" class="create__component" label="Звання" data-vv-name="select"></v-select>
             </ValidationProvider>
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="select6" rules="required">
                <v-select v-model="timeType" :items="timeTypeItems" :error-messages="errors" class="create__component" label="Первинна/ Повторна" data-vv-name="select" ></v-select>
@@ -57,11 +134,12 @@
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="select8" rules="required">
                <v-select v-model="operationType" :items="operationTypeItems" :error-messages="errors" class="create__component" label="Тип операції" data-vv-name="select"></v-select>
             </ValidationProvider>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select9" rules="required">
-               <v-select v-model="anesthesiaType" :items="anesthesiaTypeItems" :error-messages="errors" class="create__component" label="Тип анестезії" data-vv-name="select"></v-select>
-            </ValidationProvider>
+            
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="select10" rules="required">
                <v-select v-model="spotType" :items="spotTypeItems" :error-messages="errors" class="create__component" label="Стаціонарна/ Амбулаторна" data-vv-name="select"></v-select>
+            </ValidationProvider>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select12" rules="required">
+               <v-select v-model="complication" :items="complicationItems" :error-messages="errors" class="create__component" label="Складність" data-vv-name="select"></v-select>
             </ValidationProvider>
             <ValidationProvider class="form-comp" v-slot="{ errors }" name="select11">
                <v-select v-model="ultimateType" :items="ultimateTypeItems" :error-messages="errors" class="create__component" label="Виписаний / Помер" data-vv-name="select"></v-select>
@@ -98,76 +176,9 @@
           <v-btn text color="primary" @click="$refs.dialog.save(time)" >OK</v-btn>
         </v-time-picker>
       </v-dialog> -->   
-            <div class="form-comp">
-               <v-menu ref="menu1" v-model="modalEntry" :close-on-content-click="false" :return-value.sync="dateEntry" transition="scale-transition" offset-y min-width="290px">
-                  <template v-slot:activator="{ on, attrs }">
-                     <v-text-field v-model="dateEntry" class="create__component date__component" label="Дата поступлення" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
-                  </template>
-                  <v-date-picker v-model="dateEntry" no-title scrollable locale="uk-UA"> 
-                     <v-spacer></v-spacer>
-                     <v-btn text color="primary" @click="modalEntry = false">Скасувати</v-btn>
-                     <v-btn text color="primary" @click="$refs.menu1.save(dateEntry); counterDateEntry++">OK</v-btn>
-                  </v-date-picker>
-               </v-menu>
-            </div>
-            <div class="form-comp">
-               <v-menu ref="menu2" v-model="modalLeft" :close-on-content-click="false" :return-value.sync="dateLeft" transition="scale-transition" offset-y min-width="290px">
-                  <template v-slot:activator="{ on, attrs }">
-                     <v-text-field v-model="dateLeft" class="create__component date__component" label="Дата виписки" prepend-icon="event" readonly v-bind="attrs" v-on="on"></v-text-field>
-                  </template>
-                  <v-date-picker v-model="dateLeft" no-title scrollable locale="uk-UA">
-                     <v-spacer></v-spacer>
-                     <v-btn text color="primary" @click="modalLeft = false">Скасувати</v-btn>
-                     <v-btn text color="primary" @click="$refs.menu2.save(dateLeft)">OK</v-btn>
-                  </v-date-picker>
-               </v-menu>
-            </div>
-            <div class="form-comp">
-               <v-menu ref="menu" v-model="modal" :close-on-content-click="false" :return-value.sync="date" transition="scale-transition" offset-y min-width="290px">
-                  <template v-slot:activator="{ on, attrs }">
-                     <v-text-field v-model="date" class="create__component date__component" label="Дата операції" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
-                  </template>
-                  <v-date-picker v-model="date" no-title scrollable locale="uk-UA">
-                     <v-spacer></v-spacer>
-                     <v-btn text color="primary" @click="modal = false">Скасувати</v-btn>
-                     <v-btn text color="primary" @click="$refs.menu.save(date); counterDate++">OK</v-btn>
-                  </v-date-picker>
-               </v-menu>
-            </div>
-            <div class="form-comp">
-               <v-menu ref="menu4" v-model="modalAge" :close-on-content-click="false" :return-value.sync="dateAge" transition="scale-transition" offset-y min-width="290px">
-                  <template v-slot:activator="{ on, attrs }">
-                     
-                     <v-text-field v-model="dateAge" class="create__component date__component" label="Дата народження" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
-                     
-                  </template>
-                  <v-date-picker v-model="dateAge" no-title scrollable locale="uk-UA">
-                     <v-spacer></v-spacer>
-                     <v-btn text color="primary" @click="modalAge = false">Скасувати</v-btn>
-                     <v-btn text color="primary" @click="$refs.menu4.save(dateAge); counterDateAge++">OK</v-btn>
-                  </v-date-picker>
-               </v-menu>
-            </div>
-            <div class="form-comp">
-               <v-menu ref="menuStart" v-model="menuStart" :close-on-content-click="false" :nudge-right="40" :return-value.sync="timeStart" transition="scale-transition" offset-y max-width="290px" min-width="290px">
-                  <template v-slot:activator="{ on, attrs }">
-                     <ValidationProvider  v-slot="{ errors }" name="textarea1" rules="required">
-                     <v-text-field v-model="timeStart"  :error-messages="errors" class="create__component date__component" label="Початок операції" prepend-icon="access_time" readonly required v-bind="attrs" v-on="on"></v-text-field>
-                     </ValidationProvider>
-                  </template>
-                  <v-time-picker v-if="menuStart" format="24hr" v-model="timeStart" full-width @click:minute="$refs.menuStart.save(timeStart)"></v-time-picker>
-               </v-menu>
-            </div>
-            <div class="form-comp">
-               <v-menu ref="menuEnd" v-model="menuEnd" :close-on-content-click="false" :nudge-right="40" :return-value.sync="timeEnd" transition="scale-transition" offset-y max-width="290px" min-width="290px">
-                  <template v-slot:activator="{ on, attrs }">
-                     <ValidationProvider v-slot="{ errors }" name="textarea1" rules="required">
-                     <v-text-field v-model="timeEnd" :error-messages="errors" class="create__component date__component" label="Кінець операції" prepend-icon="access_time" required readonly v-bind="attrs" v-on="on"></v-text-field>
-                     </ValidationProvider>
-                  </template>
-                  <v-time-picker v-if="menuEnd" format="24hr" v-model="timeEnd"  full-width @click:minute="$refs.menuEnd.save(timeEnd)"></v-time-picker>
-               </v-menu>
-            </div>
+            
+            
+            
 
             <div class="form-comp">
                <ValidationProvider v-slot="{ errors }" name="textarea1" rules="required">
@@ -177,8 +188,11 @@
             <div class="form-comp">
                <v-textarea name="textarea" v-model="complexity" class="create__component" label="Ускладнення" hint="Введіть текст"></v-textarea>
             </div>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select13">
+               <v-select v-model="gistoPicked" :items="gistoItems" :error-messages="errors" class="create__component" label="Гістологічне заключення" data-vv-name="select"></v-select>
+            </ValidationProvider>
             <div class="form-comp">
-               <v-textarea name="textarea" v-model="gisto" class="create__component" label="Гістологічне Заключення" hint="Введіть текст"></v-textarea>
+               <v-textarea name="textarea" v-model="gisto" class="create__component" label="Гістологічне заключення" hint="Введіть текст"></v-textarea>
             </div>
          </div>
          <div class="section__action">
@@ -241,6 +255,30 @@ export default {
    //       console.log(this.submittableDateAge)
    //    }, 4000)
    // },
+   watch: {
+      counterDateLeft(){
+         this.ultimateType = 'Виписаний'
+      },
+      anesthesiaType(){
+         if(this.anesthesiaType = 'Місцева'){
+            this.anesthesiologist = ''
+         } 
+      },
+      diagnosisAfter(){
+         this.diagnosisUltimate = this.diagnosisAfter
+      },
+      diagnosisUltimate(){
+         if(this.diagnosisUltimate == ''){
+            if(this.counterOfTimes > 0){
+               this.counterOfTimes = 0
+            } else {
+               this.diagnosisUltimate = this.diagnosisAfter
+               this.counterOfTimes++
+            }
+            
+         } 
+      }
+   },
    data: () => ({
       modal: false,
       modal2: false,
@@ -251,7 +289,9 @@ export default {
       menuEnd: false,
       counterDateEntry: 0,
       counterDateAge: 0,
-      counterDate: 0, 
+      counterDate: 0,
+      counterDateLeft: 0, 
+      counterOfTimes: 0,
       firstName: '', 
       lastName: '',
       surgeon: null,
@@ -303,6 +343,8 @@ export default {
       sicknessHistory: '',
       diagnosisAfter: '',
       diagnosisUltimate: '',
+      complication: '',
+      gistoPicked: ''
    }),
    computed: {
       submittableDateTime() {
@@ -417,6 +459,12 @@ export default {
       anesthesiologistItems() {
          return this.$store.getters.anesthesiologistItems
       },
+      complicationItems(){
+         return this.$store.getters.complication
+      },
+      gistoItems(){
+         return this.$store.getters.gistoItems
+      }
    },
    methods: {
       submit() {
@@ -479,7 +527,9 @@ export default {
             timeEnd: this.timeEnd,
             sicknessHistory: this.sicknessHistory,
             diagnosisAfter: this.diagnosisAfter,
-            diagnosisUltimate: this.diagnosisUltimate
+            diagnosisUltimate: this.diagnosisUltimate,
+            complication: this.complication,
+            gistoPicked: this.gistoPicked
          })
          this.$router.push('/')
          console.log('sended')
@@ -517,6 +567,7 @@ export default {
          this.sicknessHistory = ''
          this.timeStart = null
          this.timeEnd = null
+         this.complication = ''
          this.date = new Date().toISOString().substr(0, 10)
          this.dateEntry = new Date().toISOString().substr(0, 10)
          this.dateEntry = new Date().toISOString().substr(0, 10)

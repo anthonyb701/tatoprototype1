@@ -16,9 +16,11 @@ export default new Vuex.Store({
     fbAppointments: [],
     userProfile: {},
     isUser: false,
+    users: [],
     currentUser: '',
     isLoading: false,
     isUpdatedAge: false,
+    admin: 'qfJufwBf9UeGTTmOtYhnho0MPs32',
     items: [
       'В.Бітнер',
       'М.Поліщук',
@@ -72,14 +74,26 @@ export default new Vuex.Store({
       'О.Зачепа',
       'А.Медвідь', 
       'Ю.Скуратівський',
-      'І.Шонгофер',
+      'І.Шенгофер',
       'Р.Дмитришин',
+      "В.Остап'юк",
+      'Т.Лобойко',
       'Інший'
     ],
     medsisterItems: [
       'С.Пилипчук',
       'І.Сидір', 
       'А.Яковлева'
+    ],
+    complication: [
+      'Більшої',
+      'Меншої'
+    ],
+    gistoItems: [
+      '1',
+      '2',
+      '3',
+      '4'
     ]
   },
   getters: {
@@ -88,6 +102,9 @@ export default new Vuex.Store({
     },
     onUserChanged(state){
       return state.currentUser
+    },
+    isAdmin(state){
+      return state.admin
     },
     items(state){
       return state.items
@@ -118,6 +135,12 @@ export default new Vuex.Store({
     },
     ultimateTypeItems(state){
       return state.ultimateTypeItems
+    },
+    complication(state){
+      return state.complication
+    },
+    gistoItems(state){
+      return state.gistoItems
     },
     fbAppointments(state){
       return state.fbAppointments
@@ -185,6 +208,15 @@ export default new Vuex.Store({
     setCurrentUser(state, payload){
       state.currentUser = payload
     },
+    setUsersArray(state, payload){
+      let usersFilteredArray = []
+      payload.forEach(user => {
+        if(user.id !== state.currentUser && user.id !== '2OzZisF4d7OzBHUZsNyu5Xbipuw2'){
+          usersFilteredArray.push(user)
+        }
+      })
+      state.users = usersFilteredArray
+    },
     setLoading(state, payload){
       state.isLoading = payload
     }
@@ -236,7 +268,8 @@ export default new Vuex.Store({
           name: form.name,
           title: form.title,
           email: form.email,
-          password: form.password
+          password: form.password,
+          id: user.uid
         })
         // fetch user profile and set in state
         dispatch('fetchUserProfile', user)
@@ -285,7 +318,9 @@ export default new Vuex.Store({
             timeEnd: payload.timeEnd,
             sicknessHistory: payload.sicknessHistory,
             diagnosisAfter: payload.diagnosisAfter,
-            diagnosisUltimate: payload.diagnosisUltimate
+            diagnosisUltimate: payload.diagnosisUltimate,
+            complication: payload.complication,
+            gistoPicked: payload.gistoPicked
             }
           await fs.collection('posts').add(appoObj)
           .then(data => {
@@ -364,6 +399,17 @@ export default new Vuex.Store({
           commit('setLoading', false)
         })
         commit('setLoading', false)
+      },
+      loadUsers({commit}){
+        fs.collection('users').onSnapshot(querySnapshot => {
+          let usersArray = []
+          querySnapshot.forEach(user => {
+              usersArray.push(user.data())
+            })
+            commit('setUsersArray', usersArray) 
+        }, error => {
+          console.log(error)
+        })
       },
       updatePost ({commit}, payload){
         // if(payload.notToLoading !== 'yes'){
@@ -469,6 +515,12 @@ export default new Vuex.Store({
         }
         if(payload.diagnosisUltimate) {
           updatedObj.diagnosisUltimate = payload.diagnosisUltimate
+        }
+        if(payload.complication) {
+          updatedObj.complication = payload.complication
+        }
+        if(payload.gistoPicked) {
+          updatedObj.gistoPicked = payload.gistoPicked
         }
         // fi
         // firebase.database().ref('meetups').child(payload.id).update(updatedObj)

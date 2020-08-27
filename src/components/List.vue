@@ -35,6 +35,9 @@
          <v-select :items="spotTypeItems" label="Стаціонарна/ Амбулаторна" v-model="pickedSpotType"></v-select>
       </v-flex>
       <v-flex xs12  class="layout-unit">
+         <v-select :items="complicationItems" label="Складність..." v-model="searchComplication"></v-select>
+      </v-flex>
+      <v-flex xs12  class="layout-unit">
          <v-select :items="ultimateTypeItems" label="Виписаний / Помер" v-model="picekdUltimateType"></v-select>
       </v-flex>
       <v-flex xs12  class="layout-unit">
@@ -123,6 +126,9 @@
             <v-textarea name="textarea" v-model="searchComplexity" label="Ускладнення" hint="Введіть текст" rows="2"></v-textarea>
          </div>
       </v-flex>
+      <v-flex xs12  class="layout-unit">
+         <v-select :items="pickedGistoItems" label="Гістологічне заключення.." v-model="pickedGisto"></v-select>
+      </v-flex>
    </v-layout>
    <v-flex xs12 sm12>
          <!-- <button @click="clearDate" class="pa-1 red white--text darken-2">Clear Date</button> -->
@@ -203,7 +209,8 @@ export default {
             this.pickedTimeType === 'без фільтру' && this.pickedUrgencyType === 'без фільтру' && this.pickedOperationType === 'без фільтру' &&
             this.pickedAnesthesiaType === 'без фільтру' && this.pickedSpotType === 'без фільтру' && this.picekdUltimateType === 'без фільтру' &&
             this.pickedAssistant === 'без фільтру' && this.pickedAnesthesiologist === 'без фільтру' && this.pickedMedsister.trim() === 'без фільтру'
-            && this.searchAge.trim() === '' && this.searchSicknessHistory.trim() === '' && this.searchDiagnosisUltimate.trim() === '') {
+            && this.searchAge.trim() === '' && this.searchSicknessHistory.trim() === '' && this.searchDiagnosisUltimate.trim() === '' && this.searchComplication === 'без фільтру' &&
+            this.pickedGisto === 'без фільтру') {
             return this.allAppointments;
          } else {
 
@@ -422,7 +429,39 @@ export default {
                   return anesthesiaTypeIndexes.indexOf(index) == -1;
                })
             }
+            // complication
 
+            if (this.searchComplication !== 'без фільтру') {
+               let complicationIndexes = []
+               filteredArray.forEach(appoint => {
+                  if (this.searchComplication !== 'без фільтру') {
+                     let index = filteredArray.indexOf(appoint)
+                     if (this.searchComplication !== appoint.complication) {
+                        complicationIndexes.push(index)
+                     }
+                  }
+               })
+               filteredArray = filteredArray.filter(function (value, index) {
+                  return complicationIndexes.indexOf(index) == -1;
+               })
+               
+            }
+            // Picked gisto
+            if (this.pickedGisto !== 'без фільтру') {
+               let pickedGistoIndexes = []
+               filteredArray.forEach(appoint => {
+                  if (this.pickedGisto !== 'без фільтру') {
+                     let index = filteredArray.indexOf(appoint)
+                     if (this.pickedGisto !== appoint.gistoPicked) {
+                        pickedGistoIndexes.push(index)
+                     }
+                  }
+               })
+               filteredArray = filteredArray.filter(function (value, index) {
+                  return pickedGistoIndexes.indexOf(index) == -1;
+               })
+               
+            }
             // spot type
             if (this.pickedSpotType !== 'без фільтру') {
                let spotTypeIndexes = []
@@ -690,8 +729,9 @@ export default {
             }
 
             return filteredArray
-         }
+         
 
+      }
       },
       rankItems() {
          let retArr = [
@@ -756,6 +796,20 @@ export default {
          ]
          return retArr
       },
+      complicationItems(){
+         let retArr = [
+            'без фільтру',
+            ...this.$store.getters.complication
+         ]
+         return retArr
+      },
+      pickedGistoItems(){
+         let retArr = [
+            'без фільтру',
+            ...this.$store.getters.gistoItems
+         ]
+         return retArr
+      }
 
    },
    methods: {
@@ -970,6 +1024,8 @@ export default {
          this.searchAge = ''
          this.searchSicknessHistory = ''
          this.searchDiagnosisUltimate = ''
+         this.searchComplication = 'без фільтру'
+         this.pickedGisto = 'без фільтру'
       },
       clearFilter() {
          this.readyDate = null
@@ -1000,6 +1056,8 @@ export default {
          this.searchAge = ''
          this.searchSicknessHistory = ''
          this.searchDiagnosisUltimate = ''
+         this.searchComplication = 'без фільтру'
+         this.pickedGisto = 'без фільтру'
       }
    },
    data: () => ({
@@ -1036,7 +1094,9 @@ export default {
       updatedAge: false,
       searchAge: '',
       searchSicknessHistory: '',
-      searchDiagnosisUltimate: ''
+      searchDiagnosisUltimate: '',
+      searchComplication: 'без фільтру',
+      pickedGisto: 'без фільтру'
 
    }),
    created() {

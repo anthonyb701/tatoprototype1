@@ -16,10 +16,10 @@
                      <p class="p-unit">Початок Операції: <span class="span-unit">{{singleAppointment.timeStart}} &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; </span> Кінець Операції: <span class="span-unit">{{singleAppointment.timeEnd}}</span></p>
                      <p class="p-unit">Тип операції: <span class="span-unit">{{singleAppointment.operationType}}</span> &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; &zwnj; <span class="span-unit">{{singleAppointment.spotType}} </span></p>
                      <p class="p-unit"> <br> Опис операції: <span class="span-unit">{{singleAppointment.description}}</span></p>
-                     <p class="p-unit"><br> Післяопераційний діагноз: <span class="span-unit">{{singleAppointment.diagnosisAfter}}</span></p>
+                     <p class="p-unit"><br> Передопераційний діагноз: <span class="span-unit">{{singleAppointment.diagnosisAfter}}</span></p>
                      <p class="p-unit"><br> Оперував: <span class="span-unit">{{singleAppointment.surgeon}}</span></p>
                      <p class="p-unit">Асистували: <span class="span-unit">{{singleAppointment.assistant}}</span></p>
-                     <p class="p-unit">Анестезіолог: <span class="span-unit">{{singleAppointment.anesthesiologist}} </span> </p> 
+                     <p class="p-unit" v-if="singleAppointment.anesthesiaType != 'Місцева'">Анестезіолог: <span class="span-unit">{{singleAppointment.anesthesiologist}} </span> </p> 
                      <p class="p-unit">Операційна сестра: <span class="span-unit">{{singleAppointment.medsister}} </span></p>
                       <!-- <p class="p-unit">Дата операції: <span class="span-unit">{{singleAppointment.date | dateF}}</span></p>
                       <p class="p-unit">Поступив: <span class="span-unit">{{singleAppointment.dateEntry | dateF}}</span></p>

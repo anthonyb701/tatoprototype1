@@ -107,6 +107,13 @@
                         rows="3"
                         id="complexity"
               ></v-textarea>
+              <v-select class="wrapper-unit"
+               v-model="editedGistoPicked"
+               :items="gistoItems"
+               label="Гістологічне заключення"
+               data-vv-name="select"
+               required
+               ></v-select>
               <v-textarea class="wrapper-unit"
                         label="Гістологічне Заключення"
                         name="gisto"
@@ -180,7 +187,7 @@
         <v-select class="wrapper-unit"
                v-model="editedSpotType"
                :items="spotTypeItems"
-               label="Тип анастезії"
+               label="Стаціонарна / Амбулаторна"
                data-vv-name="select"
                required
         ></v-select>
@@ -188,6 +195,12 @@
                v-model="editedUltimateType"
                :items="ultimateTypeItems"
                label="Виписаний/ Помер"
+               data-vv-name="select"
+        ></v-select>
+        <v-select class="wrapper-unit"
+               v-model="editedComplication"
+               :items="complicationItems"
+               label="Складність"
                data-vv-name="select"
         ></v-select>
                   </v-card-text>
@@ -235,7 +248,9 @@ export default {
          editedMedsister: this.post.medsister,
          editedSicknessHistory: this.post.sicknessHistory,
          editedDiagnosisAfter: this.post.diagnosisAfter,
-         editedDiagnosisUltimate: this.post.diagnosisUltimate
+         editedDiagnosisUltimate: this.post.diagnosisUltimate,
+         editedComplication: this.post.complication,
+         editedGistoPicked: this.post.gistoPicked
 
       }
    },
@@ -269,6 +284,19 @@ export default {
       },
       medsisterItems(){
          return this.$store.getters.medsisterItems
+      },
+      complicationItems(){
+         return this.$store.getters.complication
+      },
+      gistoItems(){
+         return this.$store.getters.gistoItems
+      }
+   },
+   watch: {
+      editedAnesthesiaType(){
+         if(this.editedAnesthesiaType == 'Місцева'){
+            this.editedAnesthesiologist= ''
+         }
       }
    },
    methods: {
@@ -280,8 +308,8 @@ export default {
          || this.editedNozologia.trim() === ''
          || this.editedTimeType.trim() === '' || this.editedUrgencyType.trim() === '' || this.editedOperationType.trim() === ''
          || this.editedAnesthesiaType.trim() === '' || this.editedSpotType.trim() === ''
-         || this.editedAssistant.trim() === '' || this.editedAnesthesiologist.trim() === '' || this.editedMedsister.trim() === ''
-         || this.editedSicknessHistory.trim() === '' || this.editedDiagnosisAfter.trim() === ''){
+         || this.editedAssistant.trim() === '' || this.editedMedsister.trim() === ''
+         || this.editedSicknessHistory.trim() === '' || this.editedDiagnosisAfter.trim() === '' || this.editedComplication.trim() === ''){
             return 
          }
          this.editDialog = false
@@ -310,7 +338,9 @@ export default {
             medsister: this.editedMedsister,
             sicknessHistory: this.editedSicknessHistory,
             diagnosisAfter: this.editedDiagnosisAfter,
-            diagnosisUltimate: this.editedDiagnosisUltimate
+            diagnosisUltimate: this.editedDiagnosisUltimate,
+            complication: this.editedComplication,
+            gistoPicked: this.editedGistoPicked
 
          })
       },
@@ -339,6 +369,8 @@ export default {
          this.editedSicknessHistory = this.post.sicknessHistory
          this.editedDiagnosisAfter = this.post.diagnosisAfter
          this.editedDiagnosisUltimate = this.post.diagnosisAfter
+         this.editedComplication = this.post.complication
+         this.editedGistoPicked = this.post.gistoPicked
       }
    }
 }

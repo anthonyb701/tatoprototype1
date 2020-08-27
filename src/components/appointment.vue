@@ -16,7 +16,7 @@
                       <p class="p-unit">Patient: <span class="span-unit">{{singleAppointment.user.firstName}} {{singleAppointment.user.lastName}}</span></p>
                       <p class="p-unit">Вік: <span class="span-unit">{{age}}</span></p>
                       <p class="p-unit">Історія хвороби: <span class="span-unit">{{singleAppointment.sicknessHistory}}</span></p>
-                      <p class="p-unit">Післяопераційний діагноз: <span class="span-unit">{{singleAppointment.diagnosisAfter}}</span></p>
+                      <p class="p-unit">Передопераційний діагноз: <span class="span-unit">{{singleAppointment.diagnosisAfter}}</span></p>
                       <p class="p-unit">Кінцевий діагноз: <span class="span-unit">{{singleAppointment.diagnosisUltimate}}</span></p>
                       <p class="p-unit">Тривалість: <span class="span-unit">{{singleAppointment.duration}}</span></p>
                       <p class="p-unit">Первинна/ Повторна: <span class="span-unit">{{singleAppointment.timeType}}</span></p>
@@ -24,13 +24,14 @@
                       <p class="p-unit">Тип операції: <span class="span-unit">{{singleAppointment.operationType}}</span></p>
                       <p class="p-unit">Тип анестезії: <span class="span-unit">{{singleAppointment.anesthesiaType}}</span></p>
                       <p class="p-unit">Стаціонарна/ Амбулаторна: <span class="span-unit">{{singleAppointment.spotType}}</span></p>
+                      <p class="p-unit">Складність: <span class="span-unit">{{singleAppointment.complication}}</span></p>
                       <p class="p-unit">Виписаний / Помер: <span class="span-unit">{{singleAppointment.ultimateType}}</span></p>
                       <p class="p-unit">Ускладнення: <span class="span-unit">{{singleAppointment.complexity}}</span></p>
-                      <p class="p-unit">Гістологічне заключення: <span class="span-unit">{{singleAppointment.gisto}}</span></p>
+                      <p class="p-unit">Гістологічне заключення: <span class="span-unit">{{singleAppointment.gistoPicked}},</span> <span class="span-unit">{{singleAppointment.gisto}}</span></p>
                       <p class="p-unit">Нозологія: <span class="span-unit">{{singleAppointment.nozologia}}</span></p>
                       <p class="p-unit">Хірург: <span class="span-unit">{{singleAppointment.surgeon}}</span></p>
                       <p class="p-unit">Ассистент: <span class="span-unit">{{singleAppointment.assistant}}</span></p>
-                      <p class="p-unit">Анестезіолог: <span class="span-unit">{{singleAppointment.anesthesiologist}}</span></p>
+                      <p class="p-unit" v-if="singleAppointment.anesthesiaType !== 'Місцева'">Анестезіолог: <span class="span-unit">{{singleAppointment.anesthesiologist}}</span></p>
                       <p class="p-unit">Операційна сестра: <span class="span-unit">{{singleAppointment.medsister}}</span></p>
                       <p class="p-unit">Номер Операції: <span class="span-unit">{{singleAppointment.op_number_of_counter}}</span></p>
                       <p class="p-unit">Код Операції: <span class="span-unit">{{singleAppointment.op_code}}</span></p>
@@ -141,11 +142,6 @@ export default {
             this.$router.push('/').catch(()=>{})
             this.$destroy()
         }
-    },
-    created(){
-        setTimeout(() => {
-            console.log(this.isAdmin)
-        }, 5000)
     }
 }
 </script>
@@ -161,7 +157,7 @@ export default {
     
 }
 .v-card__text.p-wrapper{
-    max-height: 860px;
+    max-height: 900px;
 }
 div.p-wrapper{
     padding: 15px;
@@ -182,12 +178,12 @@ div.p-wrapper{
 }
 @media (max-width: 1200px){
     .v-card__text.p-wrapper{
-        max-height: 860px;
+        max-height: 900px;
     }
 }
 @media (max-width: 820px){
     .v-card__text.p-wrapper{
-        max-height: 3200px;
+        max-height: 3300px;
     }
     
 }
@@ -200,7 +196,7 @@ div.p-wrapper{
         padding: 4px!important;
     }
     .v-card__text.p-wrapper{
-        max-height: 4200px; 
+        max-height: 4300px; 
     }
 }
 
