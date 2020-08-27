@@ -92,6 +92,7 @@
             </template>
             <v-date-picker v-model="pickedDate" range locale="uk-UA" no-title scrollable>
                <v-spacer></v-spacer>
+               <v-btn text color="primary" @click="onResetDate(); $refs.menu.save(pickedDate);">Очистити</v-btn>
                <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
                <v-btn text color="primary" @click="onSaveChanges(); $refs.menu.save(pickedDate); ">OK</v-btn>
             </v-date-picker>
@@ -104,6 +105,7 @@
             </template>
             <v-date-picker v-model="pickedDateEntry" range locale="uk-UA" no-title scrollable>
                <v-spacer></v-spacer>
+               <v-btn text color="primary" @click="onResetEntry(); $refs.menuEntry.save(pickedDateEntry);">Очистити</v-btn>
                <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
                <v-btn text color="primary" @click="onSaveChangesEntry(); $refs.menuEntry.save(pickedDateEntry); ">OK</v-btn>
             </v-date-picker>
@@ -116,6 +118,7 @@
             </template>
             <v-date-picker v-model="pickedDateLeft" range locale="uk-UA" no-title scrollable>
                <v-spacer></v-spacer>
+               <v-btn text color="primary" @click="onResetLeft(); $refs.menuLeft.save(pickedDateLeft)">Очистити</v-btn>
                <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
                <v-btn text color="primary" @click="onSaveChangesLeft(); $refs.menuLeft.save(pickedDateLeft); ">OK</v-btn>
             </v-date-picker>
@@ -819,6 +822,23 @@ export default {
       onOpenSingleRelease(id) {
          this.$router.push('/appointmentRelease/' + id)
       },
+      onResetDate(){
+         this.readyDate = null
+         this.editDialog = false
+         console.log(this.pickedDate)
+         this.pickedDate = [new Date().toISOString().substr(0, 10)]
+         console.log(this.pickedDate)
+      },
+      onResetEntry(){
+         this.readyDateEntry = null
+         this.editDialog1 = false
+         this.pickedDateEntry = [new Date().toISOString().substr(0, 10)]
+      },
+      onResetLeft(){
+         this.readyDateLeft = null
+         this.editDialog2 = false
+         this.pickedDateLeft = [new Date().toISOString().substr(0, 10)]
+      },
       sumOfBeforeBeds() {
          let sumOfBeds = 0
          this.filteredAppointments.forEach(appoint => {
@@ -853,7 +873,6 @@ export default {
             this.pickedDateLeft = [new Date().toISOString().substr(0, 10)]
             this.editDialog2 = false
          }
-
       },
       clearDate() {
          this.readyDate = null

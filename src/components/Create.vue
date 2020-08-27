@@ -62,6 +62,7 @@
                   </template>
                   <v-date-picker v-model="dateLeft" no-title scrollable locale="uk-UA">
                      <v-spacer></v-spacer>
+                     <v-btn text color="primary" @click="resetDateLeft(); $refs.menu2.save(dateLeft)">Очистити</v-btn>
                      <v-btn text color="primary" @click="modalLeft = false">Скасувати</v-btn>
                      <v-btn text color="primary" @click="$refs.menu2.save(dateLeft); counterDateLeft++">OK</v-btn>
                   </v-date-picker>
@@ -361,12 +362,22 @@ export default {
          dateEntry.setSeconds(0)
          return dateEntry
       },
-      submittableDateLeft() {
-         const dateLeft = new Date(this.dateLeft)
-         dateLeft.setHours(0)
-         dateLeft.setMinutes(0)
-         dateLeft.setSeconds(0)
-         return dateLeft
+      submittableDateLeft: {
+         // const dateLeft = new Date(this.dateLeft)
+         // dateLeft.setHours(0)
+         // dateLeft.setMinutes(0)
+         // dateLeft.setSeconds(0)
+         // return dateLeft
+         get(){
+            const dateLeft = new Date(this.dateLeft)
+            dateLeft.setHours(0)
+            dateLeft.setMinutes(0)
+            dateLeft.setSeconds(0)
+            return dateLeft
+         },
+         set(){
+
+         }
       },
       submittableDateAge() {
          const dateAge = new Date(this.dateAge)
@@ -539,7 +550,12 @@ export default {
          }
          }) 
       },
-
+      resetDateLeft(){
+         this.dateLeft = new Date().toISOString().substr(0, 10)
+         this.submittableDateLeft = ''
+         this.ultimateType = ''
+         this.modalLeft = false
+      },
       clear() {
          this.firstName = ''
          this.lastName = ''
@@ -570,7 +586,7 @@ export default {
          this.complication = ''
          this.date = new Date().toISOString().substr(0, 10)
          this.dateEntry = new Date().toISOString().substr(0, 10)
-         this.dateEntry = new Date().toISOString().substr(0, 10)
+         this.dateLeft = new Date().toISOString().substr(0, 10)
          this.dateAge = new Date().toISOString().substr(0, 10)
          this.$refs.observer.reset()
       },

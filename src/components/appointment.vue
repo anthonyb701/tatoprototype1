@@ -11,7 +11,8 @@
                   <v-card-text class="p-wrapper">
                       <p class="p-unit">Дата операції: <span class="span-unit">{{singleAppointment.date | dateF}}</span></p>
                       <p class="p-unit">Поступив: <span class="span-unit">{{singleAppointment.dateEntry | dateF}}</span></p>
-                      <p class="p-unit">Дата виписки: <span class="span-unit">{{singleAppointment.dateLeft | dateF}}</span></p>
+                      <p class="p-unit" v-if="singleAppointment.ultimateType == 'Виписаний'">Дата виписки: <span class="span-unit">{{singleAppointment.dateLeft | dateF}}</span></p>
+                      <p class="p-unit" v-else-if="singleAppointment.ultimateType !== ''">Дата смерті: <span class="span-unit">{{singleAppointment.dateLeft | dateF}}</span></p>
                       <p class="p-unit">Дата народження: <span class="span-unit">{{singleAppointment.dateAge | dateF}}</span></p> 
                       <p class="p-unit">Patient: <span class="span-unit">{{singleAppointment.user.firstName}} {{singleAppointment.user.lastName}}</span></p>
                       <p class="p-unit">Вік: <span class="span-unit">{{age}}</span></p>
