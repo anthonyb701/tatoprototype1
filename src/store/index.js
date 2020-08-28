@@ -400,8 +400,8 @@ export default new Vuex.Store({
         })
         commit('setLoading', false)
       },
-      loadUsers({commit}){
-        fs.collection('users').onSnapshot(querySnapshot => {
+      async loadUsers({commit}){
+       fs.collection('users').onSnapshot(querySnapshot => {
           let usersArray = []
           querySnapshot.forEach(user => {
               usersArray.push(user.data())
