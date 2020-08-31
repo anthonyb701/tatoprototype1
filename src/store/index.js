@@ -89,11 +89,15 @@ export default new Vuex.Store({
       'Більшої',
       'Меншої'
     ],
-    gistoItems: [
-      '1',
-      '2',
-      '3',
-      '4'
+    complexityItems: [
+      'Кровотеча',
+      'Нагноєння',
+      'Шок',
+      'Гострий пієлоніфрит',
+      'Сепсіс',
+      'Тромбоемболія',
+      'Дихальна недостатність',
+      'Інфаркт міокарда'
     ]
   },
   getters: {
@@ -139,8 +143,8 @@ export default new Vuex.Store({
     complication(state){
       return state.complication
     },
-    gistoItems(state){
-      return state.gistoItems
+    complexityItems(state){
+      return state.complexityItems
     },
     fbAppointments(state){
       return state.fbAppointments
@@ -320,7 +324,7 @@ export default new Vuex.Store({
             diagnosisAfter: payload.diagnosisAfter,
             diagnosisUltimate: payload.diagnosisUltimate,
             complication: payload.complication,
-            gistoPicked: payload.gistoPicked
+            complexityPicked: payload.complexityPicked
             }
           await fs.collection('posts').add(appoObj)
           .then(data => {
@@ -519,8 +523,8 @@ export default new Vuex.Store({
         if(payload.complication) {
           updatedObj.complication = payload.complication
         }
-        if(payload.gistoPicked) {
-          updatedObj.gistoPicked = payload.gistoPicked
+        if(payload.complexityPicked) {
+          updatedObj.complexityPicked = payload.complexityPicked
         }
         // fi
         // firebase.database().ref('meetups').child(payload.id).update(updatedObj)

@@ -21,7 +21,10 @@
                      <v-text-field v-model="dateAge" class="create__component date__component" label="Дата народження" prepend-icon="event" readonly v-bind="attrs" v-on="on" required></v-text-field>
                      
                   </template>
-                  <v-date-picker v-model="dateAge" no-title scrollable locale="uk-UA">
+                  <v-date-picker v-model="dateAge" no-title scrollable locale="uk-UA" 
+                  :max="new Date().toISOString().substr(0, 10)"
+                  min="1900-01-01"
+                  ref="pickerAge">
                      <v-spacer></v-spacer>
                      <v-btn text color="primary" @click="modalAge = false">Скасувати</v-btn>
                      <v-btn text color="primary" @click="$refs.menu4.save(dateAge); counterDateAge++">OK</v-btn>
@@ -186,12 +189,12 @@
                <v-textarea name="textarea" :error-messages="errors" v-model="description" class="create__component" label="Опис Операції" hint="Введіть текст"></v-textarea>
                </ValidationProvider>
             </div>
+            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select13">
+               <v-select v-model="complexityPicked" :items="complexityItems" :error-messages="errors" class="create__component" label="Тип ускладнення..." data-vv-name="select"></v-select>
+            </ValidationProvider>
             <div class="form-comp">
                <v-textarea name="textarea" v-model="complexity" class="create__component" label="Ускладнення" hint="Введіть текст"></v-textarea>
             </div>
-            <ValidationProvider class="form-comp" v-slot="{ errors }" name="select13">
-               <v-select v-model="gistoPicked" :items="gistoItems" :error-messages="errors" class="create__component" label="Гістологічне заключення" data-vv-name="select"></v-select>
-            </ValidationProvider>
             <div class="form-comp">
                <v-textarea name="textarea" v-model="gisto" class="create__component" label="Гістологічне заключення" hint="Введіть текст"></v-textarea>
             </div>
@@ -257,11 +260,14 @@ export default {
    //    }, 4000)
    // },
    watch: {
+      modalAge(val){
+         val && setTimeout(() => (this.$refs.pickerAge.activePicker = 'YEAR'))
+      },
       counterDateLeft(){
          this.ultimateType = 'Виписаний'
       },
       anesthesiaType(){
-         if(this.anesthesiaType = 'Місцева'){
+         if(this.anesthesiaType === 'Місцева'){
             this.anesthesiologist = ''
          } 
       },
@@ -301,7 +307,8 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       dateEntry: new Date().toISOString().substr(0, 10),
       dateLeft: new Date().toISOString().substr(0, 10),
-      dateAge: new Date().toISOString().substr(0, 10),
+      // dateAge: new Date().toISOString().substr(0, 10),
+      dateAge: null,
       time: new Date(),
       timeStart: null,
       timeEnd: null,
@@ -345,7 +352,7 @@ export default {
       diagnosisAfter: '',
       diagnosisUltimate: '',
       complication: '',
-      gistoPicked: ''
+      complexityPicked: ''
    }),
    computed: {
       submittableDateTime() {
@@ -473,8 +480,8 @@ export default {
       complicationItems(){
          return this.$store.getters.complication
       },
-      gistoItems(){
-         return this.$store.getters.gistoItems
+      complexityItems(){
+         return this.$store.getters.complexityItems
       }
    },
    methods: {
@@ -497,7 +504,7 @@ export default {
                alert('Вкажіть дату народження')
                return
             } 
-            if(this.counterDate < 1){
+            if(this.counterDate < 1 && this.dateAge == null){
                alert('Вкажіть дату операції')
                return
             }   
@@ -540,7 +547,7 @@ export default {
             diagnosisAfter: this.diagnosisAfter,
             diagnosisUltimate: this.diagnosisUltimate,
             complication: this.complication,
-            gistoPicked: this.gistoPicked
+            complexityPicked: this.complexityPicked
          })
          this.$router.push('/')
          console.log('sended')
@@ -584,6 +591,7 @@ export default {
          this.timeStart = null
          this.timeEnd = null
          this.complication = ''
+         this.complexityPicked = ''
          this.date = new Date().toISOString().substr(0, 10)
          this.dateEntry = new Date().toISOString().substr(0, 10)
          this.dateLeft = new Date().toISOString().substr(0, 10)

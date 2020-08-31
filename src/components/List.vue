@@ -125,12 +125,12 @@
          </v-menu>
       </v-flex>
       <v-flex xs12  class="layout-unit">
+         <v-select :items="pickedComplexityItems" label="Тип ускладнення..." v-model="pickedComplexity"></v-select>
+      </v-flex>
+      <v-flex xs12  class="layout-unit">
          <div class="search-wrapper">
             <v-textarea name="textarea" v-model="searchComplexity" label="Ускладнення" hint="Введіть текст" rows="2"></v-textarea>
          </div>
-      </v-flex>
-      <v-flex xs12  class="layout-unit">
-         <v-select :items="pickedGistoItems" label="Гістологічне заключення.." v-model="pickedGisto"></v-select>
       </v-flex>
    </v-layout>
    <v-flex xs12 sm12>
@@ -213,7 +213,7 @@ export default {
             this.pickedAnesthesiaType === 'без фільтру' && this.pickedSpotType === 'без фільтру' && this.picekdUltimateType === 'без фільтру' &&
             this.pickedAssistant === 'без фільтру' && this.pickedAnesthesiologist === 'без фільтру' && this.pickedMedsister.trim() === 'без фільтру'
             && this.searchAge.trim() === '' && this.searchSicknessHistory.trim() === '' && this.searchDiagnosisUltimate.trim() === '' && this.searchComplication === 'без фільтру' &&
-            this.pickedGisto === 'без фільтру') {
+            this.pickedComplexity === 'без фільтру') {
             return this.allAppointments;
          } else {
 
@@ -449,19 +449,19 @@ export default {
                })
                
             }
-            // Picked gisto
-            if (this.pickedGisto !== 'без фільтру') {
-               let pickedGistoIndexes = []
+            // Picked complexity
+            if (this.pickedComplexity !== 'без фільтру') {
+               let pickedComplexityIndexes = []
                filteredArray.forEach(appoint => {
-                  if (this.pickedGisto !== 'без фільтру') {
+                  if (this.pickedComplexity !== 'без фільтру') {
                      let index = filteredArray.indexOf(appoint)
-                     if (this.pickedGisto !== appoint.gistoPicked) {
-                        pickedGistoIndexes.push(index)
+                     if (this.pickedComplexity !== appoint.complexityPicked) {
+                        pickedComplexityIndexes.push(index)
                      }
                   }
                })
                filteredArray = filteredArray.filter(function (value, index) {
-                  return pickedGistoIndexes.indexOf(index) == -1;
+                  return pickedComplexityIndexes.indexOf(index) == -1;
                })
                
             }
@@ -806,10 +806,10 @@ export default {
          ]
          return retArr
       },
-      pickedGistoItems(){
+      pickedComplexityItems(){
          let retArr = [
             'без фільтру',
-            ...this.$store.getters.gistoItems
+            ...this.$store.getters.complexityItems
          ]
          return retArr
       }
@@ -1044,7 +1044,7 @@ export default {
          this.searchSicknessHistory = ''
          this.searchDiagnosisUltimate = ''
          this.searchComplication = 'без фільтру'
-         this.pickedGisto = 'без фільтру'
+         this.pickedComplexity = 'без фільтру'
       },
       clearFilter() {
          this.readyDate = null
@@ -1076,7 +1076,7 @@ export default {
          this.searchSicknessHistory = ''
          this.searchDiagnosisUltimate = ''
          this.searchComplication = 'без фільтру'
-         this.pickedGisto = 'без фільтру'
+         this.pickedComplexity = 'без фільтру'
       }
    },
    data: () => ({
@@ -1115,7 +1115,7 @@ export default {
       searchSicknessHistory: '',
       searchDiagnosisUltimate: '',
       searchComplication: 'без фільтру',
-      pickedGisto: 'без фільтру'
+      pickedComplexity: 'без фільтру'
 
    }),
    created() {

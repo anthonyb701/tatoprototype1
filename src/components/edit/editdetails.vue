@@ -108,9 +108,9 @@
                         id="complexity"
               ></v-textarea>
               <v-select class="wrapper-unit"
-               v-model="editedGistoPicked"
-               :items="gistoItems"
-               label="Гістологічне заключення"
+               v-model="editedComplexityPicked"
+               :items="complexityItems"
+               label="Тип ускладнення"
                data-vv-name="select"
                required
                ></v-select>
@@ -250,7 +250,7 @@ export default {
          editedDiagnosisAfter: this.post.diagnosisAfter,
          editedDiagnosisUltimate: this.post.diagnosisUltimate,
          editedComplication: this.post.complication,
-         editedGistoPicked: this.post.gistoPicked
+         editedComplexityPicked: this.post.complexityPicked
 
       }
    },
@@ -288,8 +288,8 @@ export default {
       complicationItems(){
          return this.$store.getters.complication
       },
-      gistoItems(){
-         return this.$store.getters.gistoItems
+      complexityItems(){
+         return this.$store.getters.complexityItems
       }
    },
    watch: {
@@ -340,7 +340,7 @@ export default {
             diagnosisAfter: this.editedDiagnosisAfter,
             diagnosisUltimate: this.editedDiagnosisUltimate,
             complication: this.editedComplication,
-            gistoPicked: this.editedGistoPicked
+            complexityPicked: this.editedComplexityPicked
 
          })
       },
@@ -370,7 +370,7 @@ export default {
          this.editedDiagnosisAfter = this.post.diagnosisAfter
          this.editedDiagnosisUltimate = this.post.diagnosisAfter
          this.editedComplication = this.post.complication
-         this.editedGistoPicked = this.post.gistoPicked
+         this.editedComplexityPicked = this.post.complexityPicked
       }
    }
 }

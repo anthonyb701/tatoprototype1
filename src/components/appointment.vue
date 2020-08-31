@@ -27,8 +27,8 @@
                       <p class="p-unit">Стаціонарна/ Амбулаторна: <span class="span-unit">{{singleAppointment.spotType}}</span></p>
                       <p class="p-unit">Складність: <span class="span-unit">{{singleAppointment.complication}}</span></p>
                       <p class="p-unit">Виписаний / Помер: <span class="span-unit">{{singleAppointment.ultimateType}}</span></p>
-                      <p class="p-unit">Ускладнення: <span class="span-unit">{{singleAppointment.complexity}}</span></p>
-                      <p class="p-unit">Гістологічне заключення: <span class="span-unit">{{singleAppointment.gistoPicked}},</span> <span class="span-unit">{{singleAppointment.gisto}}</span></p>
+                      <p class="p-unit">Ускладнення: <span class="span-unit">{{singleAppointment.complexityPicked}}</span>, <span class="span-unit">{{singleAppointment.complexity}}</span></p>
+                      <p class="p-unit">Гістологічне заключення: <span class="span-unit">{{singleAppointment.gisto}}</span></p>
                       <p class="p-unit">Нозологія: <span class="span-unit">{{singleAppointment.nozologia}}</span></p>
                       <p class="p-unit">Хірург: <span class="span-unit">{{singleAppointment.surgeon}}</span></p>
                       <p class="p-unit">Ассистент: <span class="span-unit">{{singleAppointment.assistant}}</span></p>
