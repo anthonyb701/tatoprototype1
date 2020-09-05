@@ -17,8 +17,8 @@
                       <p class="p-unit">Пацієнт: <span class="span-unit">{{singleAppointment.user.firstName}} {{singleAppointment.user.lastName}}</span></p>
                       <p class="p-unit">Вік: <span class="span-unit">{{age}}</span></p>
                       <p class="p-unit">Історія хвороби: <span class="span-unit">{{singleAppointment.sicknessHistory}}</span></p>
-                      <p class="p-unit">Передопераційний діагноз: <span class="span-unit width-unit">{{singleAppointment.diagnosisAfter}}</span></p>
-                      <p class="p-unit">Кінцевий діагноз: <span class="span-unit width-unit">{{singleAppointment.diagnosisUltimate}}</span></p>
+                      <p class="p-unit">Передопераційний діагноз: <span class="span-unit">{{singleAppointment.diagnosisAfter}}</span></p>
+                      <p class="p-unit">Кінцевий діагноз: <span class="span-unit">{{singleAppointment.diagnosisUltimate}}</span></p>
                       <p class="p-unit">Тривалість: <span class="span-unit">{{singleAppointment.duration}}</span></p>
                       <p class="p-unit">Первинна/ Повторна: <span class="span-unit">{{singleAppointment.timeType}}</span></p>
                       <p class="p-unit">Планова / Ургентна: <span class="span-unit">{{singleAppointment.urgencyType}}</span></p>
@@ -27,8 +27,8 @@
                       <p class="p-unit">Стаціонарна/ Амбулаторна: <span class="span-unit">{{singleAppointment.spotType}}</span></p>
                       <p class="p-unit">Складність: <span class="span-unit">{{singleAppointment.complication}}</span></p>
                       <p class="p-unit">Виписаний / Помер: <span class="span-unit">{{singleAppointment.ultimateType}}</span></p>
-                      <p class="p-unit">Ускладнення: <span class="span-unit ">{{singleAppointment.complexityPicked}}</span>, <span class="span-unit width-unit">{{singleAppointment.complexity}}</span></p>
-                      <p class="p-unit">Гістологічне заключення: <span class="span-unit width-unit">{{singleAppointment.gisto}}</span></p>
+                      <p class="p-unit">Ускладнення: <span class="span-unit ">{{singleAppointment.complexityPicked}}</span>, <span class="span-unit">{{singleAppointment.complexity}}</span></p>
+                      <p class="p-unit">Гістологічне заключення: <span class="span-unit">{{singleAppointment.gisto}}</span></p>
                       <p class="p-unit">Нозологія: <span class="span-unit">{{singleAppointment.nozologia}}</span></p>
                       <p class="p-unit">Хірург: <span class="span-unit">{{singleAppointment.surgeon}}</span></p>
                       <p class="p-unit">Ассистент: <span class="span-unit">{{singleAppointment.assistant}}</span></p>
@@ -38,10 +38,10 @@
                       <p class="p-unit">Код Операції: <span class="span-unit">{{singleAppointment.op_code}}</span></p>
                       <p class="p-unit">Звання: <span class="span-unit">{{singleAppointment.rank}}</span></p> 
                       <p class="p-unit">До: <span class="span-unit">{{sumOfBeforeBeds}} днів</span></p>   
-                      <p class="p-unit">Після: <span class="span-unit">{{sumOfAfterBeds}} днів</span></p>     
+                      <p class="p-unit">Після: <span class="span-unit">{{sumOfAfterBeds}} днів</span></p>
+                      <p class="p-unit">Опис: <span class="span-unit">{{singleAppointment.description}}</span></p>     
                   </v-card-text>
-                  <div class="p-wrapper">
-                      <p class="p-unit">Опис: <span class="span-unit">{{singleAppointment.description}}</span></p>
+                  <div class="p-wrapper p-wrapper-2">
                       <edit-date   :post="singleAppointment"></edit-date>
                       <edit-dateentry  :post="singleAppointment"></edit-dateentry>
                       <edit-dateleft  :post="singleAppointment"></edit-dateleft>
@@ -154,16 +154,21 @@ export default {
 .p-wrapper{
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
+    flex-direction: row;
     
 }
-.v-card__text.p-wrapper{
-    max-height: 1000px;
-}
+// .v-card__text.p-wrapper{
+//     max-height: 1000px;
+// }
 div.p-wrapper{
     padding: 15px;
     padding-top: 0;
-    margin-top: -8px;
+    margin-top: -8px;;
+}
+.p-wrapper-2{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column!important;
 }
 .p-unit{
     color: #000000;
@@ -173,28 +178,28 @@ div.p-wrapper{
     margin: 0px 5px!important;
     margin-bottom: 7px!important;
     box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.26);
+    flex: 49%;
+}
+.p-unit:last-child{
+    flex: 100%;
 }
 .span-unit{
     font-weight: 500;
 }
-.width-unit{
-    display: block;
-    max-width: 470px;
-}
 .btn-del{
     border-radius: 5px!important;
 }
-@media (max-width: 1200px){
-    .v-card__text.p-wrapper{
-        max-height: 1000px;
-    }
-}
-@media (max-width: 820px){
-    .v-card__text.p-wrapper{
-        max-height: 3300px;
-    }
+// @media (max-width: 1200px){
+//     .v-card__text.p-wrapper{
+//         max-height: 1000px;
+//     }
+// }
+// @media (max-width: 820px){
+//     .v-card__text.p-wrapper{
+//         max-height: 3300px;
+//     }
     
-}
+// }
 @media (max-width: 430px){
     .p-unit{
         padding: 15px;
@@ -203,9 +208,9 @@ div.p-wrapper{
     .p-wrapper{
         padding: 4px!important;
     }
-    .v-card__text.p-wrapper{
-        max-height: 4300px; 
-    }
+    // .v-card__text.p-wrapper{
+    //     max-height: 4300px; 
+    // }
 }
 
 </style>

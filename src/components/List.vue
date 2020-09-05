@@ -135,22 +135,22 @@
    </v-layout>
    
    <v-layout row wrap class="buttons__section">
-      <v-btn @click="weekZvit" class="info__button zvit blue  darken-4 white--text">Звіт за тиждень <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="monthZvit" class="info__button zvit blue  darken-4 white--text">Звіт за місяць <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="kvartalZvit(0,3)" class="info__button zvit blue  darken-4 white--text">Звіт за &#8544; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="kvartalZvit(3,6)" class="info__button zvit blue  darken-4 white--text">Звіт за &#8545; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="kvartalZvit(6,9)" class="info__button blue zvit darken-4 white--text">Звіт за 	&#8546; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="kvartalZvit(9,0,true)" class="info__button zvit blue  darken-4 white--text">Звіт за &#8547; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-btn @click="weekZvit" class="info__button zvit white--text">Звіт за тиждень <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-btn @click="monthZvit" class="info__button zvit white--text">Звіт за місяць <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-btn @click="kvartalZvit($event, 0, 3)" class="info__button zvit white--text">Звіт за &#8544; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-btn @click="kvartalZvit($event,3,6)" class="info__button zvit white--text">Звіт за &#8545; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-btn @click="kvartalZvit($event, 6,9)" class="info__button blue zvit white--text">Звіт за 	&#8546; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-btn @click="kvartalZvit($event, 9,0,true); " class="info__button zvit  white--text">Звіт за &#8547; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
    </v-layout>
    <v-layout row wrap class="buttons__section">
-      <v-btn @click="halfYearZvit(0, 6, false)" class="info__button zvit blue  darken-4 white--text">Звіт за &#8544; півроку <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="halfYearZvit(6, 0, true)" class="info__button zvit blue  darken-4 white--text">Звіт за &#8545; півроку <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="halfYearZvit(0, 0, true)" class="info__button zvit blue  darken-4 white--text">Звіт за рік<v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-btn @click="halfYearZvit($event, 0, 6, false)" class="info__button zvit white--text">Звіт за &#8544; півроку <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-btn @click="halfYearZvit($event, 6, 0, true)" class="info__button zvit white--text">Звіт за &#8545; півроку <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-btn @click="halfYearZvit($event, 0, 0, true)" class="info__button zvit white--text">Звіт за рік<v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
    </v-layout>
    <v-layout row wrap class="buttons__section">
-      <p class="info__button blue darken-4 white--text">Кількість операцій: {{filteredAppointments.length}}</p>
-      <v-btn @click="sumOfBeforeBeds" class="info__button blue darken-4 white--text">Передопераційне ліжко: {{showSum}}</v-btn>
-      <v-btn @click="sumOfAfterBeds" class="info__button blue  darken-4 white--text">Післяопераційне ліжко: {{showSumAfter}}</v-btn>
+      <p class="info__button-text blue darken-4 white--text">Кількість операцій: {{filteredAppointments.length}}</p>
+      <v-btn @click="sumOfBeforeBeds" class="info__button white--text">Передопераційне ліжко: {{showSum}}</v-btn>
+      <v-btn @click="sumOfAfterBeds" class="info__button white--text">Післяопераційне ліжко: {{showSumAfter}}</v-btn>
    </v-layout>
    <v-flex xs12 sm12>
          <!-- <button @click="clearDate" class="pa-1 red white--text darken-2">Clear Date</button> -->
@@ -933,7 +933,30 @@ export default {
 
    },
    methods: {
-      weekZvit(){
+      clearClassesOfZvit(target){
+
+         let buttons = document.querySelectorAll('.info__button')
+         buttons.forEach(button => {
+            if(button.classList.contains('clicked-zvit')){
+               button.classList.remove('clicked-zvit')
+            }
+            if(button.childNodes[0].classList.contains('clicked-zvit')){
+               button.childNodes[0].classList.remove('clicked-zvit')
+            }
+         })
+         if(target == false){
+            return
+         }
+         if(target.nodeName !== 'SPAN'){
+            target.classList.add('clicked-zvit')
+            
+         } else {
+            target.parentElement.classList.add('clicked-zvit')
+         }
+      },
+      weekZvit(e){
+         this.zvitTimes = true
+         this.pickedDate = new Date().toISOString().substr(0, 10)
          // let DaTE = new Date(this.pickedDate)
          // DaTE.setHours(0)
          // let result = new Date(DaTE);
@@ -967,9 +990,15 @@ export default {
          dateForPickedDate.setDate(pickedDay + 1)
          this.pickedDate.push(dateForPickedDate.toISOString().substr(0, 10))
          this.pickedDate.push(DaTE.toISOString().substr(0, 10))
+         this.clearClassesOfZvit(e.target)
+         setTimeout(() => {
+            this.zvitTimes = false
+         }, 150)
+         
          this.$refs.menu.save(this.pickedDate);
       },
-      monthZvit(){
+      monthZvit(e){
+         this.zvitTimes = true
          let currentDate
          if(this.pickedDate.length > 1){
             currentDate = new Date(this.pickedDate[1])
@@ -986,7 +1015,6 @@ export default {
             currentDate.setMonth(currentMonth + 1)
          } 
          currentDate.setDate(1)
-         console.log(currentDate)
          let firstDate = new Date(currentDate)
          if(currentMonth < 0){
            firstDate.setMonth(11)
@@ -997,14 +1025,11 @@ export default {
          firstDate.setHours(0)
          firstDate.setMinutes(0)
          firstDate.setSeconds(0)
-         console.log(firstDate)
          let secondDate = new Date(currentDate)
          if(currentMonth < 0){
             secondDate.setMonth(0)
             secondDate.setFullYear(currentYear)
-            console.log(secondDate)
          }
-         console.log(secondDate)
          secondDate.setDate(secondDate.getDate() - 1)
          secondDate.setHours(23)
          secondDate.setMinutes(59)
@@ -1018,10 +1043,13 @@ export default {
          this.pickedDate.push(dateForPickedFirstDate.toISOString().substr(0, 10))
          // this.pickedDate.push(firstDate.toISOString().substr(0, 10))
          this.pickedDate.push(secondDate.toISOString().substr(0, 10))
-         console.log(this.readyDate)
-         console.log(this.pickedDate)
+         setTimeout(() => {
+            this.zvitTimes = false
+         }, 150)
+         this.clearClassesOfZvit(e.target)
       },
-      kvartalZvit(fMonth, sMonth, isFourKvartal){
+      kvartalZvit(event, fMonth, sMonth, isFourKvartal){
+         this.zvitTimes = true
          this.pickedDate = []
          this.readyDate = []
          let firstDate = new Date()
@@ -1044,15 +1072,19 @@ export default {
          let secondProtoDay = secondProtoDate.getDate() - 1
          secondDate.setDate(secondProtoDay)
          this.readyDate.push(firstDate, secondDate)
-         console.log(this.readyDate)
          let dateForPickedFirstDate = new Date(firstDate)
          let pickedDay = dateForPickedFirstDate.getDate()
          dateForPickedFirstDate.setDate(pickedDay + 1)
          this.pickedDate.push(dateForPickedFirstDate.toISOString().substr(0, 10))
          this.pickedDate.push(secondDate.toISOString().substr(0, 10))
-         console.log(this.pickedDate)
+         console.log(event.target)
+         setTimeout(() => {
+            this.zvitTimes = false
+         }, 150)
+         this.clearClassesOfZvit(event.target)
       },
-      halfYearZvit(fMonth, sMonth, isSecondHalf){
+      halfYearZvit(event, fMonth, sMonth, isSecondHalf){
+         this.zvitTimes = true
          this.pickedDate = []
          this.readyDate = []
          let firstDate = new Date()
@@ -1075,13 +1107,15 @@ export default {
          let secondProtoDay = secondProtoDate.getDate() - 1
          secondDate.setDate(secondProtoDay)
          this.readyDate.push(firstDate, secondDate)
-         console.log(this.readyDate)
          let dateForPickedFirstDate = new Date(firstDate)
          let pickedDay = dateForPickedFirstDate.getDate()
          dateForPickedFirstDate.setDate(pickedDay + 1)
          this.pickedDate.push(dateForPickedFirstDate.toISOString().substr(0, 10))
          this.pickedDate.push(secondDate.toISOString().substr(0, 10))
-         console.log(this.pickedDate)
+         setTimeout(() => {
+            this.zvitTimes = false
+         }, 150)
+         this.clearClassesOfZvit(event.target)
       },
       onOpenSingle(id) {
          this.$router.push('/appointment/' + id)
@@ -1359,6 +1393,7 @@ export default {
       }
    },
    data: () => ({
+      zvitTimes: false,
       isArchive: true,
       showSum: 'Показати',
       showSumAfter: 'Показати',
@@ -1404,6 +1439,20 @@ export default {
       filteredAppointments(){
          this.showSum = 'Показати'
          this.showSumAfter = 'Показати'
+      },
+      pickedDate(){
+            
+            if(this.zvitTimes == false){
+               this.clearClassesOfZvit(false)
+            }
+            
+         
+      },
+      readyDate(){
+         if(this.zvitTimes == false){
+            this.clearClassesOfZvit(false)
+         }
+         
       }
    }
    // mounted() {
@@ -1523,6 +1572,32 @@ export default {
    text-decoration: none;
    text-indent: 0;
    text-transform: none;
+   background-color: #0D47A1!important;
+}
+.info__button-text{
+   font-size: 18px;
+   height: 41px!important;
+   padding: 7px!important;
+   width: 315px;
+   margin-left: 12px;
+   margin-top: 3px;
+   margin-bottom: 0;
+   border-radius: 6px;
+   align-items: center;
+   font-weight: 400;
+   letter-spacing: 0.3px;
+   justify-content: flex-start;
+   position: relative;
+   text-decoration: none;
+   text-indent: 0;
+   text-transform: none;
+   background-color: #0D47A1!important;
+}
+/* .info__button > span.clicked-zvit .info__button{
+   background-color: violet!important;
+} */
+.clicked-zvit{
+   background-color: #d83535!important;
 }
 .info__button.zvit{
    width: 200px;
@@ -1590,5 +1665,6 @@ export default {
 .appo-div > .v-card{
    min-height: 228px;
 }
+
 
 </style>
