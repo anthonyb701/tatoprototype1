@@ -2,7 +2,7 @@
   <v-layout class="layoutt" v-if="!toDelete">
       <v-layout row wrap>
           <v-flex xs12>
-              <button @click="toList" class="white--text  mr-4 blue darken-1 pa-2 mb-5">Повернутися назад</button>
+              <button @click="toList" class="white--text  mr-4 blue darken-1 btn-del pa-2 mb-5">Повернутися назад</button>
               <button v-if="true == false" @click="toProfile" class="white--text  blue darken-1 pa-2 mb-5">To Profile</button>
               <v-card>
                   <v-card-title primary-title>
@@ -14,11 +14,11 @@
                       <p class="p-unit" v-if="singleAppointment.ultimateType == 'Виписаний'">Дата виписки: <span class="span-unit">{{singleAppointment.dateLeft | dateF}}</span></p>
                       <p class="p-unit" v-else-if="singleAppointment.ultimateType !== ''">Дата смерті: <span class="span-unit">{{singleAppointment.dateLeft | dateF}}</span></p>
                       <p class="p-unit">Дата народження: <span class="span-unit">{{singleAppointment.dateAge | dateF}}</span></p> 
-                      <p class="p-unit">Patient: <span class="span-unit">{{singleAppointment.user.firstName}} {{singleAppointment.user.lastName}}</span></p>
+                      <p class="p-unit">Пацієнт: <span class="span-unit">{{singleAppointment.user.firstName}} {{singleAppointment.user.lastName}}</span></p>
                       <p class="p-unit">Вік: <span class="span-unit">{{age}}</span></p>
                       <p class="p-unit">Історія хвороби: <span class="span-unit">{{singleAppointment.sicknessHistory}}</span></p>
-                      <p class="p-unit">Передопераційний діагноз: <span class="span-unit">{{singleAppointment.diagnosisAfter}}</span></p>
-                      <p class="p-unit">Кінцевий діагноз: <span class="span-unit">{{singleAppointment.diagnosisUltimate}}</span></p>
+                      <p class="p-unit">Передопераційний діагноз: <span class="span-unit width-unit">{{singleAppointment.diagnosisAfter}}</span></p>
+                      <p class="p-unit">Кінцевий діагноз: <span class="span-unit width-unit">{{singleAppointment.diagnosisUltimate}}</span></p>
                       <p class="p-unit">Тривалість: <span class="span-unit">{{singleAppointment.duration}}</span></p>
                       <p class="p-unit">Первинна/ Повторна: <span class="span-unit">{{singleAppointment.timeType}}</span></p>
                       <p class="p-unit">Планова / Ургентна: <span class="span-unit">{{singleAppointment.urgencyType}}</span></p>
@@ -27,8 +27,8 @@
                       <p class="p-unit">Стаціонарна/ Амбулаторна: <span class="span-unit">{{singleAppointment.spotType}}</span></p>
                       <p class="p-unit">Складність: <span class="span-unit">{{singleAppointment.complication}}</span></p>
                       <p class="p-unit">Виписаний / Помер: <span class="span-unit">{{singleAppointment.ultimateType}}</span></p>
-                      <p class="p-unit">Ускладнення: <span class="span-unit">{{singleAppointment.complexityPicked}}</span>, <span class="span-unit">{{singleAppointment.complexity}}</span></p>
-                      <p class="p-unit">Гістологічне заключення: <span class="span-unit">{{singleAppointment.gisto}}</span></p>
+                      <p class="p-unit">Ускладнення: <span class="span-unit ">{{singleAppointment.complexityPicked}}</span>, <span class="span-unit width-unit">{{singleAppointment.complexity}}</span></p>
+                      <p class="p-unit">Гістологічне заключення: <span class="span-unit width-unit">{{singleAppointment.gisto}}</span></p>
                       <p class="p-unit">Нозологія: <span class="span-unit">{{singleAppointment.nozologia}}</span></p>
                       <p class="p-unit">Хірург: <span class="span-unit">{{singleAppointment.surgeon}}</span></p>
                       <p class="p-unit">Ассистент: <span class="span-unit">{{singleAppointment.assistant}}</span></p>
@@ -51,7 +51,7 @@
                   </div>
               </v-card>
               <div v-if="isAuthor || isAdmin">
-                  <button v-if="!onDelete" @click.prevent="onDelete = !onDelete" class="white--text red pa-2 mt-3">Видалити цю операцію</button>
+                  <button v-if="!onDelete" @click.prevent="onDelete = !onDelete" class="white--text btn-del red pa-2 mt-3">Видалити цю операцію</button>
                     <form v-else @submit.prevent="onSubmit">
                   <v-checkbox
                     v-model="checkbox"
@@ -158,7 +158,7 @@ export default {
     
 }
 .v-card__text.p-wrapper{
-    max-height: 900px;
+    max-height: 1000px;
 }
 div.p-wrapper{
     padding: 15px;
@@ -177,9 +177,16 @@ div.p-wrapper{
 .span-unit{
     font-weight: 500;
 }
+.width-unit{
+    display: block;
+    max-width: 470px;
+}
+.btn-del{
+    border-radius: 5px!important;
+}
 @media (max-width: 1200px){
     .v-card__text.p-wrapper{
-        max-height: 900px;
+        max-height: 1000px;
     }
 }
 @media (max-width: 820px){

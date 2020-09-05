@@ -151,6 +151,7 @@ export default {
         width: 200px;
         text-align: center;
         padding: 8px;
+        border-radius: 6px;
     }
     /* .btn-width:last-child{
         width: 110px;
@@ -158,6 +159,7 @@ export default {
     .btn-width2{
         width: 185px;
         text-align: center;
+        border-radius: 6px;
     }
     .profile__div{
         padding: 25px
