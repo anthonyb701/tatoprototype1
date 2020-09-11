@@ -135,12 +135,217 @@
    </v-layout>
    
    <v-layout row wrap class="buttons__section">
-      <v-btn @click="weekZvit" class="info__button zvit white--text">Звіт за тиждень <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="monthZvit" class="info__button zvit white--text">Звіт за місяць <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="kvartalZvit($event, 0, 3)" class="info__button zvit white--text">Звіт за &#8544; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="kvartalZvit($event,3,6)" class="info__button zvit white--text">Звіт за &#8545; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="kvartalZvit($event, 6,9)" class="info__button blue zvit white--text">Звіт за 	&#8546; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="kvartalZvit($event, 9,0,true); " class="info__button zvit  white--text">Звіт за &#8547; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <!-- <v-btn @click="weekZvit" class="info__button zvit white--text">Звіт за тиждень <v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
+      <v-dialog v-model="dialogWeek" scrollable max-width="800px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          @click="weekZvit($event); zvitFilter()"
+          v-bind="attrs"
+          v-on="on"
+          class="info__button zvit white--text"
+        >
+          Звіт за тиждень
+          <v-icon class="white--text">assignment_turned_in</v-icon>
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>Звіт за тиждень</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 600px;">
+           <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+
+            
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" class="ml-auto mr-5" text @click="dialogWeek = false; clearDialog()">Закрити</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialogMonth" scrollable max-width="800px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          @click="monthZvit($event); zvitFilter()"
+          v-bind="attrs"
+          v-on="on"
+          class="info__button zvit white--text"
+        >
+          Звіт за місяць
+          <v-icon class="white--text">assignment_turned_in</v-icon>
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>Звіт за місяць</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 600px;">
+           <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+
+            
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" class="ml-auto mr-5" text @click="dialogMonth = false; clearDialog()">Закрити</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialog1kvartal" scrollable max-width="800px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          @click="kvartalZvit($event, 0, 3); zvitFilter()"
+          v-bind="attrs"
+          v-on="on"
+          class="info__button zvit white--text"
+        >
+          Звіт за &#8544; квартал
+          <v-icon class="white--text">assignment_turned_in</v-icon>
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>Звіт за &#8544; квартал</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 600px;">
+           <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+
+            
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" class="ml-auto mr-5" text @click="dialog1kvartal = false; clearDialog()">Закрити</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialog2kvartal" scrollable max-width="800px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          @click="kvartalZvit($event,3,6); zvitFilter()"
+          v-bind="attrs"
+          v-on="on"
+          class="info__button zvit white--text"
+        >
+          Звіт за &#8545; квартал
+          <v-icon class="white--text">assignment_turned_in</v-icon>
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>Звіт за &#8545; квартал</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 600px;">
+           <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+
+            
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" class="ml-auto mr-5" text @click="dialog2kvartal = false; clearDialog()">Закрити</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialog3kvartal" scrollable max-width="800px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          @click="kvartalZvit($event, 6,9); zvitFilter()"
+          v-bind="attrs"
+          v-on="on"
+          class="info__button zvit white--text"
+        >
+          Звіт за &#8546; квартал
+          <v-icon class="white--text">assignment_turned_in</v-icon>
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>Звіт за &#8546; квартал</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 600px;">
+           <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+
+            
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" class="ml-auto mr-5" text @click="dialog3kvartal = false; clearDialog()">Закрити</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialog4kvartal" scrollable max-width="800px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          @click="kvartalZvit($event, 9,0,true); zvitFilter()"
+          v-bind="attrs"
+          v-on="on"
+          class="info__button zvit white--text"
+        >
+          Звіт за &#8547; квартал
+          <v-icon class="white--text">assignment_turned_in</v-icon>
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>Звіт за &#8547; квартал</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 600px;">
+           <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+
+            
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" class="ml-auto mr-5" text @click="dialog4kvartal = false; clearDialog()">Закрити</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    
+      <!-- <v-btn @click="monthZvit" class="info__button zvit white--text">Звіт за місяць <v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
+      <!-- <v-btn @click="kvartalZvit($event, 0, 3)" class="info__button zvit white--text">Звіт за &#8544; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
+      <!-- <v-btn @click="kvartalZvit($event,3,6)" class="info__button zvit white--text">Звіт за &#8545; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
+      <!-- <v-btn @click="kvartalZvit($event, 6,9)" class="info__button blue zvit white--text">Звіт за 	&#8546; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
+      <!-- <v-btn @click="kvartalZvit($event, 9,0,true); " class="info__button zvit  white--text">Звіт за &#8547; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
    </v-layout>
    <v-layout row wrap class="buttons__section">
       <v-btn @click="halfYearZvit($event, 0, 6, false)" class="info__button zvit white--text">Звіт за &#8544; півроку <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
@@ -933,6 +1138,40 @@ export default {
 
    },
    methods: {
+      zvitFilter(){
+         let operationsToFilter = this.filteredAppointments.forEach(operation => {
+            if(this.operationPatients.includes(`${operation.user.firstName.toLowerCase().trim().replace(/ +/g, "")}${operation.user.lastName.toLowerCase().trim().replace(/ +/g, "")}`) == false){
+               this.operationPatients.push('1')
+            }
+            if(operation.complication === 'Більшої'){
+               this.operationsHarder.push('1')
+            } else {
+               this.operationsEasier.push('2')
+            }
+            if(operation.operationType === 'Відкрита'){
+               this.operationsOpen.push('1')
+            } else if(operation.operationType === 'Ендоскопічна') {
+               this.operationsEndo.push('2')
+            } else if(operation.operationType === 'Малоінвазивна'){
+               this.operationsMalo.push('3')
+            } else {
+               this.operationsLapo.push('4')
+            }
+         })
+
+         // Сomplexity
+
+      },
+      clearDialog(){
+         this.operationsHarder = []
+         this.operationsEasier = []
+         this.operationsOpen = []
+         this.operationsEndo = []
+         this.operationsMalo = []
+         this.operationsLapo = []
+         this.operationPatients = []
+
+      },
       clearClassesOfZvit(target){
 
          let buttons = document.querySelectorAll('.info__button')
@@ -1429,7 +1668,21 @@ export default {
       searchSicknessHistory: '',
       searchDiagnosisUltimate: '',
       searchComplication: 'без фільтру',
-      pickedComplexity: 'без фільтру'
+      pickedComplexity: 'без фільтру',
+      dialogWeek: false,
+      dialogMonth: false,
+      dialog1kvartal: false,
+      dialog2kvartal: false,
+      dialog3kvartal: false,
+      dialog4kvartal: false,
+      operationPatients: [],
+      operationsEasier: [],
+      operationsHarder: [],
+      operationsOpen: [],
+      operationsLapo: [],
+      operationsEndo: [],
+      operationsMalo: []
+
 
    }),
    created() {
@@ -1475,6 +1728,23 @@ export default {
 </script>
 
 <style scoped>
+.p-unit-z{
+    color: #000000;
+    display: block;
+    padding: 15px;
+    font-weight: 500;
+    font-size: 17px;
+    margin: 0px 5px!important;
+    margin-bottom: 7px!important;
+    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.26);
+}
+.p-unit-z:first-child{
+   margin-top: 15px!important;
+}
+.span-unit{
+    font-weight: 500;
+}
+
 .unit-color{
    /* background-color: #1f88ff47!important; */
    background-color: #05f77785!important;
