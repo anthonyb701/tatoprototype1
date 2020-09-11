@@ -148,18 +148,19 @@
           <v-icon class="white--text">assignment_turned_in</v-icon>
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title>Звіт за тиждень</v-card-title>
+      <v-card v-if="dialogWeek">
+        <v-card-title class="v-card-zvit">Показники роботи урологічного відділення за тиждень</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 600px;">
+           <p class="p-unit-z p-unit-date"><span class="span-unit">( </span>{{pickedDate[0] | dateZvit}}р. - {{pickedDate[1] | dateZvit}}р. )</p>
            <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкриті: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
 
             
 
@@ -182,18 +183,19 @@
           <v-icon class="white--text">assignment_turned_in</v-icon>
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title>Звіт за місяць</v-card-title>
+      <v-card v-if="dialogMonth">
+        <v-card-title class="v-card-zvit">Показники роботи урологічного відділення за місяць</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 600px;">
+           <p class="p-unit-z p-unit-date"><span class="span-unit">( </span>{{pickedDate[0] | dateZvit}}р. - {{pickedDate[1] | dateZvit}}р. )</p>
            <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкриті: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
 
             
 
@@ -216,18 +218,19 @@
           <v-icon class="white--text">assignment_turned_in</v-icon>
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title>Звіт за &#8544; квартал</v-card-title>
+      <v-card v-if="dialog1kvartal">
+        <v-card-title class="v-card-zvit">Показники роботи урологічного відділення за 1 квартал</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 600px;">
+           <p class="p-unit-z p-unit-date"><span class="span-unit">( </span>{{pickedDate[0] | dateZvit}}р. - {{pickedDate[1] | dateZvit}}р. )</p>
            <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкриті: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
 
             
 
@@ -250,18 +253,19 @@
           <v-icon class="white--text">assignment_turned_in</v-icon>
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title>Звіт за &#8545; квартал</v-card-title>
+      <v-card v-if="dialog2kvartal">   
+        <v-card-title class="v-card-zvit">Показники роботи урологічного відділення за 2 квартал</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 600px;">
+           <p class="p-unit-z p-unit-date"><span class="span-unit">( </span>{{pickedDate[0] | dateZvit}}р. - {{pickedDate[1] | dateZvit}}р. )</p>
            <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкриті: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
 
             
 
@@ -284,18 +288,19 @@
           <v-icon class="white--text">assignment_turned_in</v-icon>
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title>Звіт за &#8546; квартал</v-card-title>
+      <v-card v-if="dialog3kvartal">
+        <v-card-title class="v-card-zvit">Показники роботи урологічного відділення за 3 квартал</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 600px;">
+           <p class="p-unit-z p-unit-date"><span class="span-unit">( </span>{{pickedDate[0] | dateZvit}}р. - {{pickedDate[1] | dateZvit}}р. )</p>
            <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкриті: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
 
             
 
@@ -318,18 +323,19 @@
           <v-icon class="white--text">assignment_turned_in</v-icon>
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title>Звіт за &#8547; квартал</v-card-title>
+      <v-card v-if="dialog4kvartal">
+        <v-card-title class="v-card-zvit">Показники роботи урологічного відділення за 4 квартал</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 600px;">
+           <p class="p-unit-z p-unit-date"><span class="span-unit">( </span>{{pickedDate[0] | dateZvit}}р. - {{pickedDate[1] | dateZvit}}р. )</p>
            <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Відкритих: </span>{{operationsOpen.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Ендоскопічних: </span>{{operationsEndo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Лапароскопічних: </span>{{operationsLapo.length}}</p>
-           <p class="p-unit-z"><span class="span-unit">Малоінвазивних: </span>{{operationsMalo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкриті: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
 
             
 
@@ -348,9 +354,114 @@
       <!-- <v-btn @click="kvartalZvit($event, 9,0,true); " class="info__button zvit  white--text">Звіт за &#8547; квартал <v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
    </v-layout>
    <v-layout row wrap class="buttons__section">
-      <v-btn @click="halfYearZvit($event, 0, 6, false)" class="info__button zvit white--text">Звіт за &#8544; півроку <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="halfYearZvit($event, 6, 0, true)" class="info__button zvit white--text">Звіт за &#8545; півроку <v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
-      <v-btn @click="halfYearZvit($event, 0, 0, true)" class="info__button zvit white--text">Звіт за рік<v-icon class="white--text">assignment_turned_in</v-icon></v-btn>
+      <v-dialog v-model="dialog1half" scrollable max-width="800px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          @click="halfYearZvit($event, 0, 6, false); zvitFilter()"
+          v-bind="attrs"
+          v-on="on"
+          class="info__button zvit white--text"
+        >
+          Звіт за &#8544; півроку 
+          <v-icon class="white--text">assignment_turned_in</v-icon>
+        </v-btn>
+      </template>
+      <v-card v-if="dialog1half">
+        <v-card-title class="v-card-zvit">Показники роботи урологічного відділення за 1 півроку</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 600px;">
+           <p class="p-unit-z p-unit-date"><span class="span-unit">( </span>{{pickedDate[0] | dateZvit}}р. - {{pickedDate[1] | dateZvit}}р. )</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкриті: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
+
+            
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" class="ml-auto mr-5" text @click="dialog1half = false; clearDialog()">Закрити</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialog2half" scrollable max-width="800px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          @click="halfYearZvit($event, 6, 0, true); zvitFilter()"
+          v-bind="attrs"
+          v-on="on"
+          class="info__button zvit white--text"
+        >
+          Звіт за &#8545; півроку 
+          <v-icon class="white--text">assignment_turned_in</v-icon>
+        </v-btn>
+      </template>
+      <v-card v-if="dialog2half">
+        <v-card-title class="v-card-zvit">Показники роботи урологічного відділення за 2 півроку</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 600px;">
+           <p class="p-unit-z p-unit-date"><span class="span-unit">( </span>{{pickedDate[0] | dateZvit}}р. - {{pickedDate[1] | dateZvit}}р. )</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкриті: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
+
+            
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" class="ml-auto mr-5" text @click="dialog2half = false; clearDialog()">Закрити</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="dialogYear" scrollable max-width="800px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          @click="halfYearZvit($event, 0, 0, true); zvitFilter()"
+          v-bind="attrs"
+          v-on="on"
+          class="info__button zvit white--text"
+        >
+          Звіт за рік 
+          <v-icon class="white--text">assignment_turned_in</v-icon>
+        </v-btn>
+      </template>
+      <v-card v-if="dialogYear">
+        <v-card-title class="v-card-zvit">Показники роботи урологічного відділення за рік</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 600px;">
+           <p class="p-unit-z p-unit-date"><span class="span-unit">( </span>{{pickedDate[0] | dateZvit}}р. - {{pickedDate[1] | dateZvit}}р. )</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість операцій: </span>{{filteredAppointments.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Кількість пацієнтів: </span>{{operationPatients.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Більшої складності: </span>{{operationsHarder.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Меншої складності: </span>{{operationsEasier.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Відкриті: </span>{{operationsOpen.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
+           <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
+
+            
+
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" class="ml-auto mr-5" text @click="dialogYear = false; clearDialog()">Закрити</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+      <!-- <v-btn @click="halfYearZvit($event, 0, 6, false)" class="info__button zvit white--text">Звіт за &#8544; півроку <v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
+      <!-- <v-btn @click="halfYearZvit($event, 6, 0, true)" class="info__button zvit white--text">Звіт за &#8545; півроку <v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
+      <!-- <v-btn @click="halfYearZvit($event, 0, 0, true)" class="info__button zvit white--text">Звіт за рік<v-icon class="white--text">assignment_turned_in</v-icon></v-btn> -->
    </v-layout>
    <v-layout row wrap class="buttons__section">
       <p class="info__button-text blue darken-4 white--text">Кількість операцій: {{filteredAppointments.length}}</p>
@@ -1145,18 +1256,19 @@ export default {
             }
             if(operation.complication === 'Більшої'){
                this.operationsHarder.push('1')
-            } else {
+            }  else {
                this.operationsEasier.push('2')
             }
             if(operation.operationType === 'Відкрита'){
                this.operationsOpen.push('1')
-            } else if(operation.operationType === 'Ендоскопічна') {
+            } else  if(operation.operationType === 'Ендоскопічна') {
                this.operationsEndo.push('2')
-            } else if(operation.operationType === 'Малоінвазивна'){
-               this.operationsMalo.push('3')
-            } else {
+            } else if(operation.operationType === 'Лапараскопічна'){
                this.operationsLapo.push('4')
-            }
+            } else if(operation.operationType === 'Малоінвазивна'){
+               this.operationsMalo.push('3') 
+               }
+             
          })
 
          // Сomplexity
@@ -1195,40 +1307,55 @@ export default {
       },
       weekZvit(e){
          this.zvitTimes = true
-         this.pickedDate = new Date().toISOString().substr(0, 10)
+         // old week zvit
+         // this.pickedDate = new Date().toISOString().substr(0, 10)
          // let DaTE = new Date(this.pickedDate)
-         // DaTE.setHours(0)
+         // DaTE.setHours(23)
+         // DaTE.setMinutes(59)
+         // DaTE.setSeconds(59)
          // let result = new Date(DaTE);
-         // result.setDate(DaTE.getDate() + 7);
-         // result.setUTCHours(20)
-         // result.setUTCMinutes(59)
-         // result.setUTCSeconds(59)
+         // result.setDate(DaTE.getDate() - 7);
+         // result.setHours(0)
+         // result.setMinutes(0)
+         // result.setSeconds(0)
          // this.readyDate = []
-         // this.readyDate.push(DaTE, result)
+         // this.readyDate.push(result, DaTE)
          // this.pickedDate = []
-         // let dateForPickedDate = new Date(DaTE)
+         // let dateForPickedDate = new Date(result)
          // let pickedDay = dateForPickedDate.getDate()
          // dateForPickedDate.setDate(pickedDay + 1)
          // this.pickedDate.push(dateForPickedDate.toISOString().substr(0, 10))
-         // this.pickedDate.push(result.toISOString().substr(0, 10))
-         // this.$refs.menu.save(this.pickedDate);
-         let DaTE = new Date(this.pickedDate)
-         DaTE.setHours(23)
-         DaTE.setMinutes(59)
-         DaTE.setSeconds(59)
-         let result = new Date(DaTE);
-         result.setDate(DaTE.getDate() - 7);
-         result.setHours(0)
-         result.setMinutes(0)
-         result.setSeconds(0)
+         // this.pickedDate.push(DaTE.toISOString().substr(0, 10))
+         // this.clearClassesOfZvit(e.target)
+
+         // new week zvit
          this.readyDate = []
-         this.readyDate.push(result, DaTE)
          this.pickedDate = []
-         let dateForPickedDate = new Date(result)
-         let pickedDay = dateForPickedDate.getDate()
-         dateForPickedDate.setDate(pickedDay + 1)
-         this.pickedDate.push(dateForPickedDate.toISOString().substr(0, 10))
-         this.pickedDate.push(DaTE.toISOString().substr(0, 10))
+         let dayOfWeek = 5
+         let originDate = new Date()
+         // originDate.setDate(10)
+         originDate.setHours(23)
+         originDate.setMinutes(59)
+         originDate.setSeconds(59)
+         let resultDate = new Date(originDate.getTime())
+         resultDate.setDate(originDate.getDate() + (7 + dayOfWeek - originDate.getDay()) % 7)
+         if(originDate.getDay() !== dayOfWeek){
+            resultDate.setDate(resultDate.getDate() - 7)
+         }
+         let firstDate = new Date(resultDate)
+         firstDate.setDate(resultDate.getDate() - 7)
+         firstDate.setHours(0)
+         firstDate.setMinutes(0)
+         firstDate.setSeconds(0)
+         let secondDate = new Date(resultDate)
+         secondDate.setDate(resultDate.getDate() - 1)
+         this.readyDate.push(firstDate, secondDate)
+         firstDate.setHours(3)
+         secondDate.setHours(26)
+         this.pickedDate.push(firstDate.toISOString().substr(0, 10))
+         this.pickedDate.push(secondDate.toISOString().substr(0, 10))
+         console.log(this.readyDate)
+         console.log(this.pickedDate)
          this.clearClassesOfZvit(e.target)
          setTimeout(() => {
             this.zvitTimes = false
@@ -1316,7 +1443,6 @@ export default {
          dateForPickedFirstDate.setDate(pickedDay + 1)
          this.pickedDate.push(dateForPickedFirstDate.toISOString().substr(0, 10))
          this.pickedDate.push(secondDate.toISOString().substr(0, 10))
-         console.log(event.target)
          setTimeout(() => {
             this.zvitTimes = false
          }, 150)
@@ -1675,6 +1801,9 @@ export default {
       dialog2kvartal: false,
       dialog3kvartal: false,
       dialog4kvartal: false,
+      dialog1half: false,
+      dialog2half: false,
+      dialogYear: false,
       operationPatients: [],
       operationsEasier: [],
       operationsHarder: [],
@@ -1740,6 +1869,14 @@ export default {
 }
 .p-unit-z:first-child{
    margin-top: 15px!important;
+}
+.p-unit-z.p-unit-date{
+    text-align: center;
+    box-shadow: none;
+}
+.v-card-zvit{
+   text-align: center;
+   display: block;
 }
 .span-unit{
     font-weight: 500;

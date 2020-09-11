@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify';
 import moment from 'moment'
 import dateFilter from './filters/date'
 import dateRelease from './filters/dateRelease'
+import dateZvit from './filters/dateZvit'
 import uploadNewImg from './components/uploadImg.vue'
 import editDate from './components/edit/editdate.vue'
 import editTime from './components/edit/edittime.vue'
@@ -19,6 +20,7 @@ import { auth } from '../firebase'
 
 Vue.filter('dateF', dateFilter)
 Vue.filter('dateR', dateRelease)
+Vue.filter('dateZvit', dateZvit)
 Vue.component('upload-img', uploadNewImg)
 Vue.component('edit-date', editDate)
 Vue.component('edit-time', editTime)

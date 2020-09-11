@@ -39,6 +39,7 @@
                       <p class="p-unit">Звання: <span class="span-unit">{{singleAppointment.rank}}</span></p> 
                       <p class="p-unit">До: <span class="span-unit">{{sumOfBeforeBeds}} днів</span></p>   
                       <p class="p-unit">Після: <span class="span-unit">{{sumOfAfterBeds}} днів</span></p>
+                      <p class="p-unit">Загалом: <span class="span-unit">{{sumOfBeforeBeds + sumOfAfterBeds}} днів</span></p>
                       <p class="p-unit">Опис: <span class="span-unit">{{singleAppointment.description}}</span></p>     
                   </v-card-text>
                   <div class="p-wrapper p-wrapper-2">
