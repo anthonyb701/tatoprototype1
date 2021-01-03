@@ -361,18 +361,18 @@ export default new Vuex.Store({
       },
       async setCounter({dispatch}, payload){
         console.log(payload)
-         fs.collection('counter').add({
+         fs.collection('counter21').add({
            id: payload
          })
           .then(data => {
             const idCounter = data.id
-            fs.collection('counter').doc(idCounter).update({
+            fs.collection('counter21').doc(idCounter).update({
               idCounter: idCounter
             })
              fs.collection('posts').doc(payload).update({
               counterId: idCounter,
             })
-            fs.collection('counter').get()
+            fs.collection('counter21').get()
             .then(querySnapshot => {
               console.log(querySnapshot.size)
               console.log(querySnapshot.docs.length)

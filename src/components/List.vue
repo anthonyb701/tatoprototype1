@@ -144,6 +144,7 @@
           v-on="on"
           class="info__button zvit white--text"
         >
+        
           Звіт за тиждень
           <v-icon class="white--text">assignment_turned_in</v-icon>
         </v-btn>
@@ -161,7 +162,7 @@
            <p class="p-unit-z"><span class="span-unit">Ендоскопічні: </span>{{operationsEndo.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Лапароскопічні: </span>{{operationsLapo.length}}</p>
            <p class="p-unit-z"><span class="span-unit">Малоінвазивні: </span>{{operationsMalo.length}}</p>
-
+         
             
 
         </v-card-text>
@@ -487,7 +488,6 @@
                   </v-btn>
                 </div>
                   
-                  
                </v-card-title>
                <v-card-text @click="onOpenSingle(appointment.id)">
                   <h2 class="appo-unit">Операція: {{ appointment.date | dateF }}</h2>
@@ -512,6 +512,9 @@ export default {
       },
       featuredAppointments() {
          return this.$store.getters.featuredAppointments
+      },
+      dublicateAppointementsByInitials(){
+         
       },
       items() {
          let retArr = [
@@ -577,7 +580,6 @@ export default {
             
             return this.allAppointments;
          } else {
-
             this.allAppointments.forEach(appoint => {
                let el = document.querySelector('.unit_1')
                if (this.pickedSurgeon !== 'без фільтру') {
@@ -588,6 +590,8 @@ export default {
                } else {
                   filteredArray = this.allAppointments
                   el.classList.remove('unit-color')
+                  
+               
                }
                
 
@@ -666,6 +670,7 @@ export default {
                      }
                      } else {
                         arrOfComplexityIndexes.push(index)
+                        
                      }
                      
                   }
@@ -1109,6 +1114,7 @@ export default {
                   }
                })
                filteredArray = filteredArray.filter(function (value, index) {
+                  
                   return arrayOfDateEntryIndexes.indexOf(index) == -1;
                })
             } else {
@@ -1116,12 +1122,12 @@ export default {
             }
 
             // date left
-
             if (this.readyDateLeft !== null) {
                let arrayOfDateLeftIndexes = []
                document.querySelector('.unit_23').classList.add('unit-color')
 
                filteredArray.forEach(appoint => {
+                  
                   if (this.readyDateLeft !== null || appoint.dateLeft != undefined) {
                      let index = filteredArray.indexOf(appoint)
                      let newDate1
@@ -1129,9 +1135,12 @@ export default {
                      if (this.readyDateLeft.length < 3 && this.readyDateLeft[0].toString().substr(0, 15) != this.readyDateLeft[1].toString().substr(0, 15)) {
                         const date1 = new Date(this.readyDateLeft[0])
                         const date2 = new Date(this.readyDateLeft[1])
+
                         if(date1 < date2){
                            newDate1 = date1
                            newDate2 = date2
+                           
+                  
                         } else {
                            newDate1 = date2
                            newDate2 = date1
@@ -1145,6 +1154,7 @@ export default {
                      } else if(this.readyDateLeft[1] == undefined){
                         if (appoint.dateLeft.toDate().toString().substr(0, 15) != this.readyDateLeft.toString().substr(0, 15)) {
                            arrayOfDateLeftIndexes.push(index)
+                           
                         }
                      } else{
                         if (appoint.dateLeft.toDate().toString().substr(0, 15) != this.readyDateLeft[0].toString().substr(0, 15)) {
@@ -1249,6 +1259,10 @@ export default {
 
    },
    methods: {
+      searchDublicatesInitials() {
+         
+      },
+
       zvitFilter(){
          let operationsToFilter = this.filteredAppointments.forEach(operation => {
             if(this.operationPatients.includes(`${operation.user.firstName.toLowerCase().trim().replace(/ +/g, "")}${operation.user.lastName.toLowerCase().trim().replace(/ +/g, "")}`) == false){
@@ -1307,27 +1321,6 @@ export default {
       },
       weekZvit(e){
          this.zvitTimes = true
-         // old week zvit
-         // this.pickedDate = new Date().toISOString().substr(0, 10)
-         // let DaTE = new Date(this.pickedDate)
-         // DaTE.setHours(23)
-         // DaTE.setMinutes(59)
-         // DaTE.setSeconds(59)
-         // let result = new Date(DaTE);
-         // result.setDate(DaTE.getDate() - 7);
-         // result.setHours(0)
-         // result.setMinutes(0)
-         // result.setSeconds(0)
-         // this.readyDate = []
-         // this.readyDate.push(result, DaTE)
-         // this.pickedDate = []
-         // let dateForPickedDate = new Date(result)
-         // let pickedDay = dateForPickedDate.getDate()
-         // dateForPickedDate.setDate(pickedDay + 1)
-         // this.pickedDate.push(dateForPickedDate.toISOString().substr(0, 10))
-         // this.pickedDate.push(DaTE.toISOString().substr(0, 10))
-         // this.clearClassesOfZvit(e.target)
-
          // new week zvit
          this.readyDate = []
          this.pickedDate = []

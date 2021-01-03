@@ -12,6 +12,7 @@
               <v-card-text class="posada">
                   Посада: {{userProfile.title}} 
               </v-card-text>
+              
               <!-- <button @click="imgClick = !imgClick" class=" blue btn-width white--text mb-3 ml-3 mt-3">{{photoText}}</button> -->
               <button @click="logout" class="red btn-width white--text mb-3 ml-3 mt-3">Вийти</button>
               <button @click="resetPass" class="blue darken-2 btn-width white--text mb-3 ml-3 mt-3">Скинути пароль</button>

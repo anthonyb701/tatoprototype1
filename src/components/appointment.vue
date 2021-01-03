@@ -9,6 +9,7 @@
                       <h3 class="primary--text">Операція: {{singleAppointment.title}}</h3>
                   </v-card-title>
                   <v-card-text class="p-wrapper">
+                      
                       <p class="p-unit">Дата операції: <span class="span-unit">{{singleAppointment.date | dateF}}</span></p>
                       <p class="p-unit">Поступив: <span class="span-unit">{{singleAppointment.dateEntry | dateF}}</span></p>
                       <p class="p-unit" v-if="singleAppointment.ultimateType == 'Виписаний'">Дата виписки: <span class="span-unit">{{singleAppointment.dateLeft | dateF}}</span></p>
@@ -142,6 +143,7 @@ export default {
         },
         toList(){
             this.$router.push('/').catch(()=>{})
+            
             this.$destroy()
         }
     }
@@ -154,6 +156,7 @@ export default {
 }
 .p-wrapper{
     display: flex;
+    
     flex-wrap: wrap;
     flex-direction: row;
     

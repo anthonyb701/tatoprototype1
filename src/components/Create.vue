@@ -510,6 +510,7 @@ export default {
             }   
             if(this.timeStart == null || this.timeEnd == null){
                alert('Будь ласка, вкажіть тривалість операції')
+               
                return
             } else {
                this.$store.dispatch('setAppointment', {
@@ -549,9 +550,10 @@ export default {
             complication: this.complication,
             complexityPicked: this.complexityPicked
          })
+             
          this.$router.push('/')
          console.log('sended')
-         this.$destroy();
+         this.$destroy(); 
             }   
             
          }
