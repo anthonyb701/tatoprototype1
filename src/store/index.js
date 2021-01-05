@@ -159,6 +159,28 @@ export default new Vuex.Store({
         return a.date.toDate() - b.date.toDate()
       })
     },
+    sorted2020appointments(state, getters){
+      const startDate2020 = new Date(2020, 0, 1) 
+      const endDate2020 = new Date(2021, 0, 1) 
+      console.log(startDate2020)
+      console.log(endDate2020)
+      return getters.sortedAppointments.filter(appoint => {
+        if(appoint.date.toDate() >= startDate2020 && appoint.date.toDate() < endDate2020){
+          return appoint
+        }
+      })
+    },
+    sorted2021appointments(state, getters){
+      const startDate2021 = new Date(2021, 0, 1) 
+      const endDate2021 = new Date(2022, 0, 1) 
+      console.log(startDate2021)
+      console.log(endDate2021)
+      return getters.sortedAppointments.filter(appoint => {
+        if(appoint.date.toDate() >= startDate2021 && appoint.date.toDate() < endDate2021){
+          return appoint
+        }
+      })
+    },
     isLoading(state){
       return state.isLoading
     },
@@ -378,7 +400,7 @@ export default new Vuex.Store({
               console.log(querySnapshot.docs.length)
               const op_number_of_counter = querySnapshot.size
               dispatch('updateDocWithCounter', {
-                op_number_of_counter: op_number_of_counter,
+                op_numbertest1: op_number_of_counter,
                 id: payload
               })
             }, error => {
@@ -391,8 +413,15 @@ export default new Vuex.Store({
       async updateDocWithCounter({commit},payload){
         console.log(payload)  
         await fs.collection('posts').doc(payload.id).update({
-            op_number_of_counter: payload.op_number_of_counter
+            op_numbertest1: payload.op_numbertest1
           })
+      },
+      async updateDocOpNumber({commit},payload){
+        console.log(payload)  
+        fs.collection('posts').doc(payload.id).update({
+            op_numbertest1: payload.indexPos
+          })
+          
       },
       loadAppointments({commit}){
         commit('setLoading', true)
@@ -435,8 +464,8 @@ export default new Vuex.Store({
         if(payload.description){
           updatedObj.description = payload.description
         }
-        if(payload.op_number_of_counter){
-          updatedObj.op_number_of_counter = payload.op_number_of_counter
+        if(payload.op_numbertest1){
+          updatedObj.op_numbertest1 = payload.op_numbertest1
         }
         if(payload.rank){
           updatedObj.rank = payload.rank

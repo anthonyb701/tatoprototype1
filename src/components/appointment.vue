@@ -35,7 +35,7 @@
                       <p class="p-unit">Ассистент: <span class="span-unit">{{singleAppointment.assistant}}</span></p>
                       <p class="p-unit" v-if="singleAppointment.anesthesiaType !== 'Місцева'">Анестезіолог: <span class="span-unit">{{singleAppointment.anesthesiologist}}</span></p>
                       <p class="p-unit">Операційна сестра: <span class="span-unit">{{singleAppointment.medsister}}</span></p>
-                      <p class="p-unit">Номер Операції: <span class="span-unit">{{singleAppointment.op_number_of_counter}}</span></p>
+                      <p class="p-unit">Номер Операції: <span class="span-unit">{{singleAppointment.op_numbertest1}}</span></p>
                       <p class="p-unit">Код Операції: <span class="span-unit">{{singleAppointment.op_code}}</span></p>
                       <p class="p-unit">Звання: <span class="span-unit">{{singleAppointment.rank}}</span></p> 
                       <p class="p-unit">До: <span class="span-unit">{{sumOfBeforeBeds}} днів</span></p>   

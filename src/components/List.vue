@@ -474,6 +474,7 @@
          <v-btn @click="clearFilter" class=" blue white--text darken-2 btn-archive">Очистити фільтр</v-btn>
          <v-btn v-if="!isFilter" @click="isFilter = !isFilter" class="btn-archive green white--text">Відкрити фільтр</v-btn>
          <v-btn v-else @click="closeFilter" class=" btn-archive white--text red">Закрити фільтр</v-btn>
+         <v-btn v-if="isSuperAdmin" @click="updateSortedAppointments2021" class=" btn-archive white--text black">Update Data</v-btn>
       </v-flex>
    
    <v-layout row wrap class="layoutsec">
@@ -515,6 +516,22 @@ export default {
       },
       dublicateAppointementsByInitials(){
          
+      },
+      sorted2020appointments(){
+         return this.$store.getters.sorted2020appointments 
+      },
+      sorted2021appointments(){
+         return this.$store.getters.sorted2021appointments
+      },
+      currentUser(){
+         return this.$store.getters.currentUser
+      },
+      isSuperAdmin(){
+         if(this.currentUser === this.$store.getters.isAdmin){
+                return true
+            } else {
+                return false
+            }
       },
       items() {
          let retArr = [
@@ -961,14 +978,41 @@ export default {
                document.querySelector('.unit_15').classList.remove('unit-color')
             }
             // op_number
+            // if (this.searchOp_number.trim() !== '') {
+            //    let op_numberArray = []
+            //    document.querySelector('.unit_17').classList.add('unit-color')
+            //    filteredArray.forEach(appoint => {
+            //       if (this.searchOp_number.trim() !== '') {
+            //          let index = filteredArray.indexOf(appoint)
+            //          if(appoint.op_number_of_counter != undefined){
+            //             if (appoint.op_number_of_counter.toString().toLowerCase().includes(this.searchOp_number.toLowerCase()) == false) {
+            //             op_numberArray.push(index)
+            //          } 
+            //          } else {
+            //             console.log(appoint.op_number)
+            //             console.log('pushed')
+            //             op_numberArray.push(index)
+            //          }
+                     
+            //       }
+            //    })
+            //    filteredArray = filteredArray.filter(function (value, index) {
+            //       return op_numberArray.indexOf(index) == -1;
+            //    })
+            // } else {
+            //    document.querySelector('.unit_17').classList.remove('unit-color')
+            // }
+
+            // op_numberV2
+
             if (this.searchOp_number.trim() !== '') {
                let op_numberArray = []
                document.querySelector('.unit_17').classList.add('unit-color')
                filteredArray.forEach(appoint => {
                   if (this.searchOp_number.trim() !== '') {
                      let index = filteredArray.indexOf(appoint)
-                     if(appoint.op_number_of_counter != undefined){
-                        if (appoint.op_number_of_counter.toString().toLowerCase().includes(this.searchOp_number.toLowerCase()) == false) {
+                     if(appoint.op_numbertest1 != undefined){
+                        if (appoint.op_numbertest1.toString().toLowerCase() != this.searchOp_number.toLowerCase()) {
                         op_numberArray.push(index)
                      } 
                      } else {
@@ -985,6 +1029,7 @@ export default {
             } else {
                document.querySelector('.unit_17').classList.remove('unit-color')
             }
+
             // sickness history
             if (this.searchSicknessHistory.trim() !== '') {
                let sickArray = []
@@ -1684,6 +1729,28 @@ export default {
          }
 
       },
+      updateSortedAppointments2020(){
+         this.sorted2020appointments.forEach(appoint => {
+            const indexPos = this.sorted2020appointments.indexOf(appoint) + 1
+            // console.log(appoint.id)
+            // console.log(indexPos)
+            this.$store.dispatch('updateDocOpNumber', {
+               id: appoint.id,
+               indexPos: indexPos
+            })
+         })
+      },
+      updateSortedAppointments2021(){
+         this.sorted2021appointments.forEach(appoint => {
+            const indexPos = this.sorted2021appointments.indexOf(appoint) + 1
+            // console.log(appoint.id)
+            // console.log(indexPos)
+            this.$store.dispatch('updateDocOpNumber', {
+               id: appoint.id,
+               indexPos: indexPos
+            })
+         })
+      },
       closeFilter() {
          this.readyDate = null
          this.isFilter = !this.isFilter
@@ -1809,6 +1876,10 @@ export default {
    }),
    created() {
       this.$store.dispatch('loadAppointments')
+      console.log(this.isSuperAdmin)
+      setTimeout(() => {
+         console.log(this.sorted2021appointments)
+      }, 2500) 
    },
    watch: {
       filteredAppointments(){
