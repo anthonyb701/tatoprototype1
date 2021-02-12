@@ -94,7 +94,7 @@
                <v-spacer></v-spacer>
                <v-btn text color="primary" @click="onResetDate(); $refs.menu.save(pickedDate);">Очистити</v-btn>
                <v-btn text color="primary" @click="onClose">Скасувати</v-btn>
-               <v-btn text color="primary" @click="onSaveChanges(); $refs.menu.save(pickedDate); ">OK</v-btn>
+               <v-btn text color="primary" @click="onSaveChanges(); $refs.menu.save(pickedDate); dateChange() ">OK</v-btn>
             </v-date-picker>
          </v-menu>
       </v-flex>
@@ -475,6 +475,13 @@
          <v-btn v-if="!isFilter" @click="isFilter = !isFilter" class="btn-archive green white--text">Відкрити фільтр</v-btn>
          <v-btn v-else @click="closeFilter" class=" btn-archive white--text red">Закрити фільтр</v-btn>
          <v-btn v-if="isSuperAdmin" @click="updateSortedAppointments2021" class=" btn-archive white--text black">Update Data</v-btn>
+         <v-btn  @click="isYearFilterOpen = !isYearFilterOpen" class=" btn-archive yearChoose_button white--text">Вибрати рік
+            <v-icon class="white--text">mdi-chevron-down</v-icon>
+            </v-btn> 
+         <div v-show="isYearFilterOpen">
+            <v-btn @click="chooseOpYear($event, 2020)" class="btn-archive  yearChoose_button white--text">2020</v-btn>
+            <v-btn @click="chooseOpYear($event, 2021)" id="currentYearButton" class="btn-archive yearChoose_button white--text">2021</v-btn>
+         </div>
       </v-flex>
    
    <v-layout row wrap class="layoutsec">
@@ -1014,6 +1021,7 @@ export default {
                      if(appoint.op_numbertest1 != undefined){
                         if (appoint.op_numbertest1.toString().toLowerCase() != this.searchOp_number.toLowerCase()) {
                         op_numberArray.push(index)
+                        
                      } 
                      } else {
                         console.log(appoint.op_number)
@@ -1076,7 +1084,10 @@ export default {
             // Operation Date
             if (this.readyDate !== null) {
                let arrayOfNextIndexes = []
-               document.querySelector('.unit_21').classList.add('unit-color')
+               if(this.isTimePickerWasOpened){
+                  document.querySelector('.unit_21').classList.add('unit-color')
+               }
+               
 
                filteredArray.forEach(appoint => {
                   if (this.readyDate !== null) {
@@ -1304,10 +1315,30 @@ export default {
 
    },
    methods: {
-      searchDublicatesInitials() {
-         
+      dateChange(){
+         this.isTimePickerWasOpened = true
       },
-
+      chooseOpYear(event, year, isTarget){
+         let target
+         const startDate = new Date(year, 0, 1)
+         const endDate = new Date(year + 1, 0, 1)
+         const startDateForPicker = new Date(year, 0, 2)
+         const endDateForPicker = new Date(year + 1, 0, 2)
+         if(isTarget == true){
+            target = event;
+         } else {
+            target = event.target;
+         }
+         
+         this.pickedDate = []
+         this.readyDate = []
+         this.readyDate.push(startDate, endDate)
+         this.pickedDate.push(startDateForPicker.toISOString().substr(0, 10))
+         this.pickedDate.push(endDateForPicker.toISOString().substr(0, 10))
+         
+         this.clearClassesOfChosenYear(target)
+         this.isTimePickerWasOpened = false
+      },
       zvitFilter(){
          let operationsToFilter = this.filteredAppointments.forEach(operation => {
             if(this.operationPatients.includes(`${operation.user.firstName.toLowerCase().trim().replace(/ +/g, "")}${operation.user.lastName.toLowerCase().trim().replace(/ +/g, "")}`) == false){
@@ -1348,10 +1379,7 @@ export default {
          let buttons = document.querySelectorAll('.info__button')
          buttons.forEach(button => {
             if(button.classList.contains('clicked-zvit')){
-               button.classList.remove('clicked-zvit')
-            }
-            if(button.childNodes[0].classList.contains('clicked-zvit')){
-               button.childNodes[0].classList.remove('clicked-zvit')
+               button.classList.toggle('clicked-zvit')
             }
          })
          if(target == false){
@@ -1362,6 +1390,28 @@ export default {
             
          } else {
             target.parentElement.classList.add('clicked-zvit')
+         }
+      },
+      clearClassesOfChosenYear(target){
+
+         let buttons = document.querySelectorAll('.yearChoose_button')
+         buttons.forEach(button => {
+            if(button.classList.contains('clicked-zvit')){
+               button.classList.remove('clicked-zvit')}
+            }
+         )
+         if(target.classList.contains('yearChoose_button')){
+            
+               target.classList.add('clicked-zvit')
+         }
+         if(target.parentElement.classList.contains('yearChoose_button')) {
+               target.parentElement.classList.add('clicked-zvit')
+         }
+         setTimeout(() => {
+           document.querySelector('.unit_21').classList.remove('unit-color')
+         }, 100) 
+         if(target == false){
+            return
          }
       },
       weekZvit(e){
@@ -1752,9 +1802,11 @@ export default {
          })
       },
       closeFilter() {
-         this.readyDate = null
          this.isFilter = !this.isFilter
-         this.pickedDate = [new Date().toISOString().substr(0, 10)]
+         if(this.isTimePickerWasOpened){
+            this.readyDate = null
+            this.pickedDate = [new Date().toISOString().substr(0, 10)]
+         }
          this.readyDateEntry = null
          this.pickedDateEntry = [new Date().toISOString().substr(0, 10)]
          this.readyDateLeft = null
@@ -1785,8 +1837,16 @@ export default {
          this.pickedComplexity = 'без фільтру'
       },
       clearFilter() {
-         this.readyDate = null
-         this.pickedDate = [new Date().toISOString().substr(0, 10)]
+         // if(this.isTimePickerWasOpened){
+         //    this.readyDate = null
+         //    this.pickedDate = [new Date().toISOString().substr(0, 10)]
+         // } 
+         if(this.isTimePickerWasOpened){
+            const tar = document.querySelector('#currentYearButton')
+            this.chooseOpYear(tar, 2021, true)
+            
+         } 
+         
          this.readyDateEntry = null
          this.pickedDateEntry = [new Date().toISOString().substr(0, 10)]
          this.readyDateLeft = null
@@ -1818,6 +1878,7 @@ export default {
       }
    },
    data: () => ({
+      isYearFilterOpen: false,
       zvitTimes: false,
       isArchive: true,
       showSum: 'Показати',
@@ -1870,7 +1931,8 @@ export default {
       operationsOpen: [],
       operationsLapo: [],
       operationsEndo: [],
-      operationsMalo: []
+      operationsMalo: [],
+      isTimePickerWasOpened: false
 
 
    }),
@@ -1878,8 +1940,13 @@ export default {
       this.$store.dispatch('loadAppointments')
       console.log(this.isSuperAdmin)
       setTimeout(() => {
-         console.log(this.sorted2021appointments)
+         // console.log(this.sorted2021appointments)
       }, 2500) 
+      setTimeout(() => {
+         const tar = document.querySelector('#currentYearButton')
+         this.chooseOpYear(tar, 2021, true)
+      }, 1400)
+      
    },
    watch: {
       filteredAppointments(){
@@ -2067,6 +2134,9 @@ export default {
 /* .info__button > span.clicked-zvit .info__button{
    background-color: violet!important;
 } */
+.yearChoose_button{
+   background-color: #0D47A1!important;
+}
 .clicked-zvit{
    background-color: #d83535!important;
 }

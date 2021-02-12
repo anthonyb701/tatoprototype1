@@ -594,7 +594,6 @@ export default new Vuex.Store({
             .then(function(snapshot) {
               var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
               console.log('Upload is ' + progress + '% done');
-  
           }).then(() => {
             storageRef.getDownloadURL().then(function(downloadURL) {
               console.log('File available at', downloadURL);
