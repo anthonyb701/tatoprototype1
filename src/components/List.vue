@@ -1417,6 +1417,7 @@ export default {
       weekZvit(e){
          this.zvitTimes = true
          // new week zvit
+         this.isTimePickerWasOpened = true
          this.readyDate = []
          this.pickedDate = []
          let dayOfWeek = 5
@@ -1453,6 +1454,7 @@ export default {
       },
       monthZvit(e){
          this.zvitTimes = true
+         this.isTimePickerWasOpened = true
          let currentDate
          if(this.pickedDate.length > 1){
             currentDate = new Date(this.pickedDate[1])
@@ -1504,6 +1506,7 @@ export default {
       },
       kvartalZvit(event, fMonth, sMonth, isFourKvartal){
          this.zvitTimes = true
+         this.isTimePickerWasOpened = true
          this.pickedDate = []
          this.readyDate = []
          let firstDate = new Date()
@@ -1537,6 +1540,7 @@ export default {
          this.clearClassesOfZvit(event.target)
       },
       halfYearZvit(event, fMonth, sMonth, isSecondHalf){
+         this.isTimePickerWasOpened = true
          this.zvitTimes = true
          this.pickedDate = []
          this.readyDate = []
@@ -1845,7 +1849,7 @@ export default {
             const tar = document.querySelector('#currentYearButton')
             this.chooseOpYear(tar, 2021, true)
             
-         } 
+         }
          
          this.readyDateEntry = null
          this.pickedDateEntry = [new Date().toISOString().substr(0, 10)]
