@@ -10,7 +10,7 @@
       <input v-model.trim="loginForm.password" type="password" class="form__component" placeholder="Пароль" id="password1" />
       <button class="button form__component" @click="login()">УВІЙТИ</button>
       <div class="aButton-wrapper">
-         <a @click.prevent="toggleForm()" class="aButton">Створити Аккаунт</a>
+         <!-- <a @click.prevent="toggleForm()" class="aButton">Створити Аккаунт</a> -->
          <a @click.prevent="togglePasswordReset()" class="aButton">Забув пароль</a>
       </div>
       
@@ -88,22 +88,22 @@ export default {
             }
          })
       },
-      signup() {
-         this.$store.dispatch('signup', {
-            email: this.signupForm.email,
-            password: this.signupForm.password,
-            name: this.signupForm.name,
-            title: this.signupForm.title
-         }).then(() => {
-            this.errorMSG = false
-         })
-         .catch(err => {
-            console.log(err.message)
-            if(err){
-               this.errorMSG = err.message
-            }
-         })
-      },
+      // signup() {
+      //    this.$store.dispatch('signup', {
+      //       email: this.signupForm.email,
+      //       password: this.signupForm.password,
+      //       name: this.signupForm.name,
+      //       title: this.signupForm.title
+      //    }).then(() => {
+      //       this.errorMSG = false
+      //    })
+      //    .catch(err => {
+      //       console.log(err.message)
+      //       if(err){
+      //          this.errorMSG = err.message
+      //       }
+      //    })
+      // },
       reset(){
          if(this.resetForm !== ''){
             var auth = firebase.auth()
